@@ -1,2 +1,2 @@
-# Luis-el-mec-nico
+# LuisMecnico
 Trabajo de IV ingeniería informática UGR
