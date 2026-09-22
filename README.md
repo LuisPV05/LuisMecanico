@@ -2,90 +2,77 @@
 
 ## Problema
 
-Un taller mecánico tiene problemas para organizar las citas de los clientes durante el día. Cuando un cliente llama para pedir una cita, se apunta en un calendario, pero no siempre se comprueba si las máquinas y herramientas necesarias para realizar la reparación están disponibles en ese momento.
+Por mi experiecia, en un taller mecánico he observado problemas para organizar las citas de los clientes durante el día. Cuando se recibe la llamada de un cliente para pedir una cita, se apunta en un calendario, pero no se tiene en cuenta si las herramientas necesarias para realizar la reparación están disponibles en ese momento.
 
-Esto puede provocar que dos mecánicos necesiten utilizar la misma máquina o el mismo elevador a la misma hora, generando esperas, cambios de horario y retrasos en las reparaciones.
+Provoca que dos reparaciones necesiten utilizar la misma herramienta a la misma hora, generando retrasos y esperas en los clientes.
 
-## De dónde viene esto
+## De dónde viene mi conocimiento sobre el problema
 
-Este problema surge de una situación que he conocido de cerca. Tengo un tío que trabaja como mecánico en un taller y me ha explicado cómo se organizan actualmente las citas y algunos de los problemas que pueden aparecer durante la jornada.
+Mi experiencia al problema surge de una situación propia. En los ultimos tres años, durante vacaciones y fines de semana he trabajado como recepcionista del taller mecanico de mi tío y vi de primera mano cómo se organizaban las citas y los problemas que aparecian durante la jornada.
 
-Según su experiencia, las citas se suelen gestionar mediante llamadas telefónicas y se van apuntando en un calendario. El problema aparece cuando diferentes reparaciones necesitan utilizar las mismas máquinas, herramientas o elevadores al mismo tiempo. Aunque las citas estén correctamente apuntadas, puede ocurrir que el recurso que necesita un mecánico esté siendo utilizado por otro compañero.
+Durante este tiempo, las citas se suelen gestionar mediante llamadas telefónicas y se van apuntando en un calendario. El problema aparece cuando diferentes reparaciones necesitan utilizar las mismas herramientas al mismo tiempo. Aunque las citas estén correctamente apuntadas, ocurre con esto problemas en el uso de herramientas.
 
-Esto puede provocar esperas, cambios en la planificación y retrasos en las reparaciones. Por eso, a partir de la experiencia que me ha contado mi tío trabajando en un taller, he planteado este problema: conseguir que la organización de las citas tenga también en cuenta los recursos que necesita cada reparación.
+Además, mi conocimiento sobre el tema de reparaciones viene de mi tío y por parte mía, del interés que he tenido desde chico en los coches, habiendo aprendido poco a poco el tema de que herramientas necesitan ciertas reparaciones, entonces cuando llamaba un cliente sabía las herramientas necesarias para la reparación.
 
-Así, la aplicación no se limitaría a decir cuándo tiene una cita cada cliente, sino que también comprobaría si las máquinas y herramientas necesarias están disponibles en ese momento.
+Por tanto, el problema esta planteado por una situacion vivida de primera mano. Parte de esta de experiencia personal trabajando en la recepcion del taller y de la información obtenida por parte de mi tío.
 
 
 ## Cómo se organizan hoy las citas, y por qué no basta
 
-Actualmente las citas se gestionan mediante llamadas telefónicas y se apuntan en un calendario.
+Actualmente , el cliente llama para una cita, se recogen los datos del vehículo y el problema que tiene y se da una fecha a la cita.
 
-El problema es que el calendario únicamente permite saber cuándo hay una cita, pero no proporciona una visión completa de los recursos que serán necesarios para realizar cada trabajo.
+El problema es que el calendario permite saber cuándo hay cita, pero no los datos necesarios para saber que se tiene que reparar.
 
-Por ejemplo, si dos clientes tienen cita a las 10:00 y las dos reparaciones necesitan utilizar el mismo elevador, ambas citas pueden quedar registradas correctamente en el calendario, pero cuando llegue el momento de realizar las reparaciones uno de los mecánicos tendrá que esperar.
+Por ejemplo, si dos clientes tienen cita a las 10:00 y las dos reparaciones necesitan utilizar lo mismo, ambas citas se pueden dar a la misma hora. A la hora de la reparación, una de estas se tendra que esperar a que la otra termine.
 
-Además, durante la llamada el cliente puede explicar el problema que tiene el vehículo, pero es necesario relacionar ese problema con las herramientas y máquinas que pueden ser necesarias para solucionarlo.
+Por esto, el problema consiste en saber la cita que hay a una hora que necesita para realizarse para saber si las herramientas estan disponibles.
 
-## Quienes son los afectados por este problema
+## Afectados por este problema
 
-- **Mecánicos**: pueden encontrarse con que una herramienta, máquina o elevador que necesitan está siendo utilizado por otro compañero. Esto provoca tiempos de espera y dificulta la organización del trabajo.
+- **Mecánicos**: pueden encontrarse con que la herramienta necesaria este siendo usada en otra reparación, lo que provoca retrasos. 
+- **Clientes**: tienen la posiblidad de sufrir retrasos en la reparación de su vehículo por la falta de recursos para la reparación.
+- **El taller**: pierde tiempo con las esperas, provocando cambios en la planificación o retrasos.
+- **Encargado del taller**: tiene que organizar las citas teniendo en cuenta no solamente los horarios, sino también las máquinas y herramientas disponibles, coordinando las citas y recursos disponibles.
 
-- **Clientes**: pueden sufrir retrasos en la reparación de su vehículo porque los recursos necesarios no estaban disponibles cuando se había planificado la cita.
+## Datos que intervienen en el problema
 
-- **El taller**: pierde tiempo debido a una mala coordinación de los recursos y puede acumular retrasos durante el día.
+En el taller ya hay información en relación a este problema.
 
-- **Encargado del taller**: tiene que organizar las citas teniendo en cuenta no solamente los horarios, sino también las máquinas y herramientas disponibles.
+Por un lado, hay un listado de citas y horario en las que se realizarán. Por el otro, el taller dispone de herramientas que se utilizan en las diversas reparaciones.
 
-## Qué datos tenemos
+Además, durante la llamada el cliente dice el fallo o error de su vehículo, que determina el tipo de reparación que se hara y las herramientas que se utilizarán.
 
-El taller ya dispone de información que puede utilizarse para solucionar el problema.
+El problema viene dado de la gestion separada de esto. No hay una relación entre la cita, el trabajo que se hará y las herramientas necesarias durante la reparación
 
-Por un lado, existe un listado de las máquinas y herramientas disponibles en el taller. Por otro, se dispone de las citas de los clientes, que actualmente se registran en un calendario.
+## Cosas a tener en cuenta
 
-Además, durante la llamada el cliente proporciona información sobre el problema que presenta su vehículo. Esta información puede utilizarse para determinar qué recursos pueden ser necesarios para realizar la reparación.
+Al recibir una llamada, se tiene en cuanta al mismo tiempo:
 
-El problema no es tanto la falta de datos, sino que actualmente estos datos no están relacionados entre sí de una forma que permita comprobar automáticamente la disponibilidad de los recursos.
+1.El horario solicitado.
+2.El problema presentado.
+3.El tipo de reparación que puede ser realizado.
+4.Las herramientas que se usarán.
+5.Si las herramientas estan disponibles en ese horario.
+6.Si otra reparación va a usar esos recursos durante ese periodo
 
-## Quedan tareas pendientes de procesar.
+Cuando esto no se realiza de manera correcta, se producen los problemas ya comentados.
 
-Actualmente, cuando se recibe una llamada, habría que comprobar manualmente qué problema tiene el vehículo, qué herramientas o máquinas pueden ser necesarias y si estarán disponibles en el horario solicitado.
+## Necesidades detectadas desde la experiencia
 
-La aplicación debería centralizar esta información y relacionar las citas con los recursos necesarios para cada reparación.
+A partir de mi experiencia, el cambio de como se organizan las citas es necesario no solo viendo el horario, sino los recursos disponibles que hay para esa reparación al la hora de la cita.
 
-Por ejemplo, si un cliente solicita una cita para una reparación que necesita un elevador concreto, el sistema debería comprobar si ese elevador estará disponible durante el horario elegido.
+La necesidad principal es saber a tiempo si la cita crea conflicto a otra por el uso de ambas de una herramienta necesaria al mismto tiempo.
 
-Si otro mecánico ya tiene asignada una reparación que utiliza ese mismo recurso durante ese periodo, el sistema debería detectar el conflicto y evitar que ambas citas se programen de forma incompatible.
+De esta manera, el problema se detecta al momento de organizar la cita, en vez de verlo al momento de la reparación.
 
-De esta manera, el sistema podría ayudar al taller a organizar las citas teniendo en cuenta tanto el horario como las máquinas y herramientas disponibles, reduciendo los retrasos y los conflictos entre mecánicos.
+## Objetivo que se aborda en el problema
 
-También sería posible tener en cuenta que un cliente no acuda finalmente a su cita, de forma que el recurso reservado pueda quedar disponible para otra reparación.
+El objetivo es ver como se puede mejorar la organización de citas teniendo en cuenta los horarios, las citas previstas y la disponibilidad de herramientas.
 
-## Por qué es necesaria la app en la nube
+Con esto se pretende no tener conflictos y evitar tiempos de espera innecesarios y disminuir los retrasos que afectan a las reparaciones y los clientes.
 
-La aplicación necesita estar disponible desde el taller para que la información sobre las citas, máquinas, herramientas y recursos utilizados esté centralizada.
-
-Al estar en la nube, los datos pueden mantenerse en un único lugar y ser consultados y modificados por las personas encargadas de organizar el trabajo del taller.
-
-Esto permite que cuando se registre una nueva cita, el sistema pueda consultar inmediatamente las reservas existentes y comprobar si los recursos necesarios están disponibles.
-
-Además, cualquier cambio realizado en una cita puede quedar reflejado para el resto de usuarios que estén utilizando la aplicación.
-
-## Qué debería tener la aplicación para resolver este problema
-
-La aplicación debería permitir al taller:
-
-- Registrar las citas de los clientes.
-- Guardar información sobre el problema del vehículo.
-- Asociar una reparación con las máquinas y herramientas que necesita.
-- Consultar la disponibilidad de los recursos del taller.
-- Detectar conflictos entre citas que necesitan los mismos recursos.
-- Evitar que dos mecánicos tengan asignado el mismo recurso al mismo tiempo.
-- Organizar las citas teniendo en cuenta tanto el horario como los recursos disponibles.
-- Gestionar los cambios o cancelaciones de las citas.
-
-El objetivo final es que el taller pueda organizar su jornada de trabajo de una forma más eficiente, evitando que los mecánicos tengan que esperar porque una máquina, herramienta o elevador esté siendo utilizado por otro compañero.
-
+Para la solucíon, esta en comprender el foco del problema y definir correctamente los datos que tiene el problema para poder solucionarlo de manera correcta.
 
 ## Documentación adicional y configuración
+
 La documentación relativa al objetivo 0 se encuentra [aquí](doc/objetivos/objetivo-0.md).
