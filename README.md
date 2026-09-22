@@ -8,11 +8,14 @@ Esto puede provocar que dos mecánicos necesiten utilizar la misma máquina o el
 
 ## De dónde viene esto
 
-Este problema surge de la organización habitual de las citas en el taller. Actualmente, las citas se realizan mediante llamadas telefónicas y se van apuntando en un calendario.
+Este problema surge de una situación que he conocido de cerca. Tengo un tío que trabaja como mecánico en un taller y me ha explicado cómo se organizan actualmente las citas y algunos de los problemas que pueden aparecer durante la jornada.
 
-Durante la llamada, el cliente explica cuál es el problema que tiene su vehículo y se intenta asignar una fecha y una hora para llevarlo al taller. Sin embargo, al organizar la cita no siempre se tiene en cuenta qué máquinas, herramientas o elevadores serán necesarios para realizar el trabajo.
+Según su experiencia, las citas se suelen gestionar mediante llamadas telefónicas y se van apuntando en un calendario. El problema aparece cuando diferentes reparaciones necesitan utilizar las mismas máquinas, herramientas o elevadores al mismo tiempo. Aunque las citas estén correctamente apuntadas, puede ocurrir que el recurso que necesita un mecánico esté siendo utilizado por otro compañero.
 
-Por tanto, aunque exista una hora libre en el calendario, puede que los recursos necesarios para esa reparación estén ocupados por otro mecánico.
+Esto puede provocar esperas, cambios en la planificación y retrasos en las reparaciones. Por eso, a partir de la experiencia que me ha contado mi tío trabajando en un taller, he planteado este problema: conseguir que la organización de las citas tenga también en cuenta los recursos que necesita cada reparación.
+
+Así, la aplicación no se limitaría a decir cuándo tiene una cita cada cliente, sino que también comprobaría si las máquinas y herramientas necesarias están disponibles en ese momento.
+
 
 ## Cómo se organizan hoy las citas, y por qué no basta
 
@@ -85,4 +88,4 @@ El objetivo final es que el taller pueda organizar su jornada de trabajo de una 
 
 
 ## Documentación adicional y configuración
-La documentación del objetivo 0 está en doc/objetivos/objetivo-0.md.
+La documentación relativa al objetivo 0 se encuentra [aquí](doc/objetivos/objetivo-0.md).
