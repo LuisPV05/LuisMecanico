@@ -1,10 +1,14 @@
 # LuisMecánico
 
-## Problema
+## Administrador
 
-En el taller mecánico he observado problemas para organizar las citas de los clientes durante el día. Cuando se recibe la llamada de un cliente para pedir una cita, se apunta en un calendario, pero no se tiene en cuenta si las herramientas necesarias para realizar la reparación están disponibles en ese momento.
+Soy el recepcionista de un taller mecánico.
 
-Provoca que cuando dos o más reparaciones que coinciden en el tiempo necesitan utilizar la misma herramienta o máquina. En ese caso, aunque las citas estén correctamente registradas en el calendario, los trabajos no pueden realizarse de forma independiente porque existe un recurso que debe ser compartido.
+## Problema del administrador
+
+En el taller mecánico he observado problemas para organizar las citas de los clientes durante el día. Actualmente, cuando un cliente llama para pedir una cita, se apunta en un calendario, pero no se tiene en cuenta si las herramientas o máquinas necesarias para realizar la reparación están disponibles en ese momento.
+
+Este conflicto provoca que cuando dos o más reparaciones que coinciden en el tiempo necesitan utilizar la misma herramienta o máquina se pierda tiempo en el taller. En ese caso, aunque las citas estén correctamente registradas en el calendario, los trabajos no pueden realizarse de forma independiente porque existe un recurso que debe ser compartido.
 
 En los casos en los que hay retrasos en la reparación o revisión del vehículo por tema de que la herramienta necesaria este en uso, se llama al cliente y se le avisa del retraso inmediatamente. Las herramientas estan disponibles para uso si no están siendo usadas por ningún mecánico, si están en uso se tiene que esperar la finalización de su uso para usarlas.
 
@@ -12,7 +16,7 @@ Esto genera perdida de tiempo en la eficiencia de la reparación y que el client
 
 Por tanto, el problema no es simplemente organizar las citas, sino detectar y evitar los conflictos entre citas que coinciden en el tiempo y necesitan los mismos recursos.
 
-## De dónde viene mi conocimiento sobre el problema
+## De dónde viene mi conocimiento y relación sobre el problema
 
 Mi experiencia al problema surge de una situación propia. En los ultimos tres años, durante vacaciones y fines de semana he trabajado como recepcionista del taller mecanico de mi tío y vi de primera mano cómo se organizaban las citas y los problemas que aparecian durante la jornada.
 
@@ -23,64 +27,67 @@ Además, mi conocimiento sobre el tema de reparaciones viene de mi tío y por pa
 Por tanto, el problema esta planteado por una situacion vivida de primera mano. Parte de esta de experiencia personal trabajando en la recepcion del taller y de la información obtenida por parte de mi tío.
 
 
-## Cómo se organizan hoy las citas, y por qué no basta
+## Casos dados desde la experiencia
 
-Actualmente , el cliente llama para solicitar una cita, se recogen los datos del vehículo y el problema que tiene y se acuerda una fecha y una hora. Esa cita se registra en un calendario para saber qué trabajos están previstos durante la jornada.
+Tengo dos clientes con cita a las 10:00. Una de las reparaciones necesita utilizar un elevador y la otra también. Si ambos trabajos comienzan a la misma hora, uno de los vehículos tendrá que esperar a que el elevador quede libre.
 
-El problema es que el calendario permite saber cuándo hay cita, pero no los datos necesarios para saber que se tiene que reparar.
+En una jornada con carga alta, se pueden producir aproximadamente varios conflictos de este tipo. La espera de una cita afectada puede estar habitualmente entre 20 y 60 minutos, dependiendo de la reparación y de los recursos que necesite
 
-Por ejemplo, si dos clientes tienen cita a las 10:00 y las dos reparaciones necesitan utilizar lo mismo, ambas citas se pueden dar a la misma hora. A la hora de la reparación, una de estas se tendra que esperar a que la otra termine.
 
-Para entender y medir este problema es necesario relacionar, para cada cita, al menos la fecha y hora, la duración estimada de la reparación, el tipo de reparación y los recursos necesarios. También es necesario conocer para cada recurso cuántas unidades hay disponibles y durante qué periodos están ocupadas.
+## Por qué el enfoque actual resulta insuficiente
+
+- El calendario permite saber cuándo hay una cita y de que trata, pero no relaciona directamente la cita con los recursos necesarios para realizar la reparación.
+- No se comprueba automáticamente si las herramientas o máquinas necesarias están disponibles durante toda la reparación.
+- Dos citas pueden coincidir en el tiempo aunque necesiten utilizar el mismo recurso.
+- Los conflictos se detectan cuando llega el momento de realizar la reparación, en lugar de detectarse al organizar la cita.
+- Cuando aparece un conflicto, el encargado/recepcionista tiene que reorganizar manualmente la planificación y avisar al cliente si se produce un retraso.
 
 ## Afectados por este problema
 
 - **Mecánicos**: pueden encontrarse con que la herramienta necesaria este siendo usada en otra reparación, lo que provoca retrasos. 
 - **Clientes**: tienen la posiblidad de sufrir retrasos en la reparación de su vehículo por la falta de recursos para la reparación.
 - **El taller**: pierde tiempo con las esperas, provocando cambios en la planificación o retrasos.
-- **Encargado del taller**: tiene que organizar las citas teniendo en cuenta no solamente los horarios, sino también las máquinas y herramientas disponibles, coordinando las citas y recursos disponibles.
+- **Encargado/recepcionista del taller**: tiene que organizar las citas teniendo en cuenta no solamente los horarios, sino también las máquinas y herramientas disponibles, coordinando las citas y recursos disponibles.
 
-## Datos que intervienen en el problema
+## Datos que intervienen en el problema y datos que no se tienen en cuenta al apuntar la cita
 
-En el taller existen datos relacionados con las citas y con los recursos utilizados en las reparaciones. Para poder estudiar el problema de forma cuantitativa, estos datos deben identificarse y obtenerse del funcionamiento real del taller.
+Actualmente, las citas se gestionan mediante llamadas telefónicas y se registran en un calendario.
 
-Por un lado, de las citas interesa conocer datos como la fecha, la hora prevista de inicio, la duración estimada, el tipo de reparación y los recursos necesarios. Un ejemplo de registro podría tener la forma: fecha, hora, duración, reparación, herramientas o máquinas necesarias y mecánico asignado. También es importante registrar, cuando existan, los retrasos producidos y su duración.
+Según la experiencia en el taller, se registra la información de la cita de:
 
-Por otro lado, de las herramientas y máquinas interesa conocer qué recursos existen, cuántas unidades hay de cada uno y qué reparaciones necesitan cada recurso. También hay que confirmar si un mismo recurso puede utilizarse simultáneamente o si cada unidad solo puede atender una reparación cada vez.
+- Fecha y hora prevista de la cita.
+- Duración estimada de la reparación.
+- Tipo de reparación.
+- Problema o síntomas indicados por el cliente.
+- Herramientas o máquinas necesarias.
+- Mecánico asignado.
+- Retrasos producidos y su duración, cuando los haya.
 
-Además, durante la llamada el cliente dice el fallo o error de su vehículo, que determina el tipo de reparación que se hara y las herramientas que se utilizarán.
+A parte de esta información del taller, a la hora de registrar los datos que una cita no se apuntan:
+- Disponibilidad de cada herramienta o máquina.
+- Número de unidades disponibles de cada recurso ( Si de esa herramienta/máquina hay más de una unidad )
+- Periodos en los que cada recurso está ocupado.
 
-Para comprender mejor el problema que ocurreen el taller una experiencia propia que vi en primizia, el taller diariamente gestiona alrededor de 12 citas en una jornada habitual. Las reparaciones pueden durar desde unos 45 minutos hasta varias horas, dependiendo del trabajo que tenga que realizarse. Por ejemplo, si es hacer una diagnosis electrónica del vehículo se tarda unos 60 minutos, mientras que un cambio de amortiguadores llega a tardar 2 horas.
+En una jornada habitual se gestionan alrededor de 12 citas. Las reparaciones pueden durar desde unos 45 minutos hasta varias horas. Por ejemplo, una diagnosis electrónica puede tardar aproximadamente 60 minutos, mientras que un cambio de amortiguadores puede llegar a durar unas 2 horas.
 
-Entre los recursos compartidos durantes las reparaciones se consideran, por ejemplo, dos elevadores, una máquina de diagnosis y una desmontadora/equilibradora, de forma que una reparación puede impedir que otra utilice el mismo recurso durante parte de su duración.
 
-Cuando dos reparaciones requieren el mismo recurso en un periodo coincidente, la situación se resuelve de la siguiente manera: el encargado mantiene una de las reparaciones en espera y el mecánico continúa con el trabajo que ya está utilizando el recurso. Cuando termina, el recurso pasa a la siguiente reparación; si la espera afecta demasiado al resto de la jornada, también se puede mover la cita a otro momento, avisando al dueño del vehículo del retraso en la reparación. En este escenario, el problema se puede medir mediante el número de conflictos entre citas, el número de citas afectadas y el tiempo de espera producido hasta que el recurso queda disponible. Como referencia, consideramos que en una jornada con carga alta, como la de ese día, se produjo aproximadamente tres conflictos de este tipo y que la espera de la cita afectada puede encontrarse habitualmente entre 20 y 60 minutos, dependiendo de la reparacion y de los recursos que necesite.
+## Cosas a tener en cuenta y mejorar para la resolución del problema
 
-El problema viene dado de la gestion separada de esto. No hay una relación entre la cita, el trabajo que se hará y las herramientas necesarias durante la reparación
+Las citas, los mecánicos y los recursos del taller deben poder consultarse desde el lugar donde se organiza la jornada. La información sobre las citas y la disponibilidad de las máquinas debe estar centralizada para que se pueda comprobar en tiempo real si una nueva cita entra en conflicto con las que ya están programadas.
 
-## Cosas a tener en cuenta
+Por este motivo, el método actual no permite mantener la información accesible y actualizada para las personas que necesiten gestionar las citas y los recursos del taller.
 
-Al recibir una llamada, se tiene en cuanta al mismo tiempo:
+Ante una nueva cita, se debería comprobar:
 
-1.El horario solicitado.
-2.El problema presentado.
-3.El tipo de reparación que puede ser realizado.
-4.Las herramientas que se usarán.
-5.Si las herramientas estan disponibles en ese horario.
-6.Si otra reparación va a usar esos recursos durante ese periodo
-7.La duración prevista de la reparación y, por tanto, durante cuánto tiempo estarán ocupados esos recursos.
+- Identificar el tipo de reparación a partir del problema indicado por el cliente.
+- Determinar qué herramientas y máquinas son necesarias para realizar la reparación.
+- Comprobar la disponibilidad de esos recursos en el horario solicitado.
+- Comparar la nueva cita con las citas ya programadas.
+- Detectar si existe algún conflicto por utilizar el mismo recurso durante un periodo coincidente.
+- Calcular la duración prevista de la reparación y durante cuánto tiempo estarán ocupados los recursos.
+- Avisar si la cita genera un conflicto y permitir buscar otro horario disponible.
 
-La información exacta de cada uno de estos puntos debe comprobarse con el personal del taller. Esto permitirá conocer cómo se toman las decisiones actualmente y qué parte del proceso provoca los conflictos.
-
-Cuando no se tiene en cuenta la disponibilidad de los recursos durante todo el periodo de la reparación, pueden producirse los problemas ya comentados. 
-
-## Necesidades detectadas desde la experiencia
-
-A partir de mi experiencia, el cambio de como se organizan las citas es necesario no solo viendo el horario, sino los recursos disponibles que hay para esa reparación al la hora de la cita.
-
-La necesidad principal es saber a tiempo si la cita crea conflicto a otra por el uso de ambas de una herramienta necesaria al mismto tiempo.
-
-De esta manera, el problema se detecta al momento de organizar la cita, en vez de verlo al momento de la reparación.
+El valor de la solución está en detectar el conflicto cuando se organiza la cita, en vez de descubrirlo cuando empieza la reparación.
 
 ## Objetivo que se aborda en el problema
 
