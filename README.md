@@ -20,7 +20,15 @@ Por tanto, el problema no es simplemente organizar las citas, sino detectar y ev
 
 Mi experiencia al problema surge de una situación propia. En los ultimos tres años, durante vacaciones y fines de semana he trabajado como recepcionista del taller mecanico de mi tío y vi de primera mano cómo se organizaban las citas y los problemas que aparecian durante la jornada.
 
-En el calendario, como he comentado antes, se apunta el tipo de vehículo que es, el problema que tiene con el vehículo, sea cambio de ruedas, fallos en la transmisión o lo que el cliente note que no funciona bien en si vehículo, y su respectiva sensaciones y efectos que sienten con este fallo que permita reconocer el error que sucede para saber cuales seran las herramientas/máquinas necesarias para revisar y reparar el vehículo. 
+En el calendario, que es una libreta que tiene todos los dias del año con un horario de 8:00 a 21:00, en el que se apuntan el tipo de vehículo que es, el problema que tiene con el vehículo, sea cambio de ruedas, fallos en la transmisión o lo que el cliente note que no funciona bien en si vehículo, y su respectiva sensaciones y efectos que sienten con este fallo que permita reconocer el error que sucede para saber cuales seran las herramientas/máquinas necesarias para revisar y reparar el vehículo. 
+
+Respecto a la fecha, esta puede ser cambio principalmente por el cliente si tiene algún incomveniente que le surga, o bien, si al avisarle de algún retraso durante el día en el taller que se acumula y afecta en la reparación de su vehículo, se llama al cliente avisando de la situación, dejando en sus manos si quiere dejar la cita como esta, sabiendo el retraso, o cambiarla a otro día u otro momento del mismo día.
+
+En cuanto a las herramientas y máquinas, empezando por las herramientas, se organizan según su tipo, sean herramientas de mano, como llaves fijas y mixtas, destornilladores o alicates. Estas se guardan principalmente en carros de herramientas con ruedas para que el mecánico pueda desplazarlas fácilmente hasta el vehículo, o se cuelgan en paneles perforados de pared para tenerlas a la vista y liberar espacio en las mesas. Su uso es intermitente durante la fase de desmontaje y montaje; no se usan todo el tiempo de la reparación, sino de forma secuencial según el componente a manipular, de todas maneras, se suelen usar durante 20 minutos y se dejan en el sitio donde deben estar para ayudar al resto de los mecánico si la necesitan. En el caso en el que el mismo mecánico la necesite, la volveria a utilizar. Para saber si esta en uso, hay unos papeles al lado de la mesa donde se dejan estas herramientas, que tienen la información de que mecánico la usa y a que hora la tomó, que permiten identificar al instante si la herramienta esta libre o quién la utiliza.
+
+Luego hay herramientas neumáticas y eléctricas, como compresores de aire, taladros o llaves de impacto. Estas se almacenan en armarios pesados o cajoneras fijas con el fin de protegerlas del polvo, los impactos y la grasa del taller, mientras que el compresor suele ubicarse en una zona fija y ventilada, conectándose a través de una red de mangueras de aire. Estas herramientas experimentan un uso muy puntual, concentrado habitualmente en los primeros y últimos minutos de la reparación (por ejemplo, para aflojar o apretar tuercas pesadas rápidamente), por lo que pasan la mayor parte del tiempo disponibles en sus armarios para el resto de los operarios, no siendo usadas más de 5 minutos seguidos.
+
+Por último, hay equipos de elevación y diagnóstico, como gatos hidráulicos, escáner automotriz o multímetros. Los equipos de diagnóstico electrónico se guardan en maletines protectores dentro de armarios cerrados debido a su delicadeza. Por su parte, los equipos de elevación pesados (como los elevadores de columnas) están instalados de forma permanente en el suelo de las bahías de trabajo, mientras que los elementos de elevación móviles, como los gatos de patín y las torres de soporte, se recogen y se colocan en el perímetro del taller o zonas de paso despejadas cuando no se están utilizando para evitar tropiezos y mantener el área de trabajo segura. A diferencia de los demás equipos, el elevador es el único que sufre un uso continuo, ya que retiene el coche durante toda la operación, por lo que su uso es constante durante lo que dure cierta reparación, por ejemplo, el cambio de pastillas y discos de freno dura 1 hora y 30 minutos, mientras que un manteniemiento básico dura alrededor de 30 minutos. Al final el tiempo depende completamente del tipo de reparación que se tenga que hacer. Al haber 3 elevadores en el taller ayuda para tener un mayor ritmo de reparaciones y no estar parados a que se libere uno que este ocupado. En el caso de que sea un gato hidráulico, se necesitarian solo unos 10 minutos de uso para colocar las torres de soporte estables.
 
 Mi conocimiento y experiencia sobre que es necesario en cada  reparación viene del interés propio que he tenido desde chico en los coches y de la expereciencia de estos años trabajando e informadome sobre esto, habiendo aprendido poco a poco sobre que herramientas necesitan ciertas reparaciones y como se realizan, entonces cuando llamaba un cliente y comenta el problema o la revisión que ncesita su vehículo, puedo comentar de vuelta al cliente el tipo de reaparación es, cuanto suele tarda, los recursos que se usarán durante la reparación y como se realizará la reparación, para que el cliente sepa que se va a realizar en el vehículo, además de una estimación del precio total.
 
@@ -70,6 +78,18 @@ A parte de esta información del taller, a la hora de registrar los datos que un
 
 En una jornada habitual se gestionan alrededor de 12 citas. Las reparaciones pueden durar desde unos 45 minutos hasta varias horas. Por ejemplo, una diagnosis electrónica puede tardar aproximadamente 60 minutos, mientras que un cambio de amortiguadores puede llegar a durar unas 2 horas.
 
+Para tener en cuenta, se nombran el tiempo esperado de algunas reparaciones que se hacen en el taller: 
+
+- Mantenimiento básico( Cambio de aceite y filtros ): 45 minutos.
+- Cambio de pastillas y discos de freno: 1 hora y 30 minutos.
+- Cambio de neumáticos y alineación: 1 hora.
+- Cambio de kit de distribución (Bomba de agua y correas): 4 horas.
+- Reparación del sistema de embrague: 5 horas.
+- Sustitución del alternador o motor de arranque: 2 horas.
+- Diagnóstico y reparación de falla eléctrica (Cortocircuito o sensor defectuoso): 2 a 3 horas
+- Reemplazo de la batería principal y comprobación del alternador: 30 minutos.
+- Sustitución de amortiguadores (Suspensión delantera o trasera): 2 horas y 30 minutos.
+- Sustitución completa del motor: 2 a 3 días laborables.
 
 ## Cosas a tener en cuenta y mejorar para la resolución del problema
 
