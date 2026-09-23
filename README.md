@@ -1,6 +1,6 @@
 # LuisMecánico
 
-## Administrador
+## Administrador 
 
 Soy el recepcionista de un taller mecánico.
 
@@ -20,9 +20,9 @@ Por tanto, el problema no es simplemente organizar las citas, sino detectar y ev
 
 Mi experiencia al problema surge de una situación propia. En los ultimos tres años, durante vacaciones y fines de semana he trabajado como recepcionista del taller mecanico de mi tío y vi de primera mano cómo se organizaban las citas y los problemas que aparecian durante la jornada.
 
-Durante este tiempo, las citas se suelen gestionar mediante llamadas telefónicas y se van apuntando en un calendario. En este se apunta el tipo de vehículo que es, el problema que tiene con el vehículo, sea cambio de ruedas, fallos en la transmisión o lo que el cliente note que no funciona bien en si vehículo, y su respectiva sensaciones y efectos que sienten con este fallo que permita reconocer el error que sucede para saber cuales seran las herramientas/máquinas necesarias para revisar y reparar el vehículo. 
+En el calendario, como he comentado antes, se apunta el tipo de vehículo que es, el problema que tiene con el vehículo, sea cambio de ruedas, fallos en la transmisión o lo que el cliente note que no funciona bien en si vehículo, y su respectiva sensaciones y efectos que sienten con este fallo que permita reconocer el error que sucede para saber cuales seran las herramientas/máquinas necesarias para revisar y reparar el vehículo. 
 
-Además, mi conocimiento sobre el tema de reparaciones viene de mi tío y por parte mía, del interés que he tenido desde chico en los coches, habiendo aprendido poco a poco el tema de que herramientas necesitan ciertas reparaciones, entonces cuando llamaba un cliente sabía las herramientas necesarias para la reparación.
+Mi conocimiento y experiencia sobre que es necesario en cada  reparación viene del interés propio que he tenido desde chico en los coches y de la expereciencia de estos años trabajando e informadome sobre esto, habiendo aprendido poco a poco sobre que herramientas necesitan ciertas reparaciones y como se realizan, entonces cuando llamaba un cliente y comenta el problema o la revisión que ncesita su vehículo, puedo comentar de vuelta al cliente el tipo de reaparación es, cuanto suele tarda, los recursos que se usarán durante la reparación y como se realizará la reparación, para que el cliente sepa que se va a realizar en el vehículo, además de una estimación del precio total.
 
 Por tanto, el problema esta planteado por una situacion vivida de primera mano. Parte de esta de experiencia personal trabajando en la recepcion del taller y de la información obtenida por parte de mi tío.
 
