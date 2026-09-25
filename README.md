@@ -119,4 +119,13 @@ Para la solucíon, esta en comprender el foco del problema y definir correctamen
 
 ## Documentación adicional y configuración
 
-La documentación relativa al objetivo 0 se encuentra [aquí](doc/objetivos/objetivo-0.md).
+La documentación relativa al objetivo 0 se encuentra [aquí](docs/objetivos/objetivo-0.md).
+
+## Planificación
+
+La planificación relativa al objetivo 1 se encuentra respectivamente en los siguientes puntos:
+
+- [Personas](docs/objetivos/objetivo-1/personas.md)
+- [Jornadas de usuario](docs/objetivos/objetivo-1/user-journeys.md)
+- [Historias de usuario](docs/objetivos/objetivo-1/historias-usuarios.md)
+- [Milestones](docs/objetivos/objetivo-1/milestones.md)
