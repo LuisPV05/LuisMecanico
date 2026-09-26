@@ -1,31 +1,24 @@
 # Milestones
 
-Definen qué se quiere entregar, no cómo entregarlo.
+Determinan el nivel de generalización o detalle del problema se va a mostrar al cliente en cada entrega, no qué características técnicas va a tener el producto ni qué HU se "cierra" con cada uno.
+
 
 ## Milestone 0: Modelo de reparaciones y recursos del taller
 
 ### Qué se entrega
 
-Un producto mínimamente viable (MVP) que permite representar los tipos de reparación del taller (con su duración estimada, según los tiempos que manejo habitualmente) y qué herramientas, máquinas o elevadores necesita cada uno, junto con las citas ya registradas y los recursos que ocupan.
+Un modelo mínimo pero fiel del dominio del taller: qué tipos de reparación existen, qué recursos necesita cada una, cómo son las citas y cómo se relacionan entre sí. Este milestone corresponde al objetivo de entender y modelizar el problema antes de automatizar nada.
 
 ### Cuál es el objetivo del milestone
 
-Resolver la falta de relación entre la cita apuntada en la libreta y los recursos que realmente necesita esa reparación. Como recepcionista, obtengo valor inmediato al poder consultar automáticamente qué recursos requiere una reparación en lugar de calcularlo solo con mi experiencia.
+Asegurar que cualquier decisión de diseño posterior se apoya en una representación correcta de cómo funciona realmente el taller, en lugar de en supuestos. Es la base necesaria para poder empezar a razonar sobre conflictos de recursos en el siguiente milestone.
 
-### Historias de usuario asignadas
-
-- [HU001]
-
-## Milestone 1: Comprobación automática de disponibilidad
+## Milestone 1: Lógica de negocio y comprobación automática
 
 ### Qué se entrega
 
-Una funcionalidad que, dada una nueva cita, comprueba si los recursos necesarios (en particular los elevadores, que se usan de forma continua durante toda la reparación) están disponibles durante toda la franja horaria solicitada, comparándola contra las citas ya programadas.
+La infraestructura que permite comprobar, a partir del modelo del milestone anterior, si un conjunto de recursos está disponible durante una franja horaria determinada, junto con los tests automáticos que validan ese comportamiento. Cómo se le presenta esto finalmente al recepcionista (interfaz, formato, canal) es una decisión que se toma durante el propio desarrollo, no en este documento.
 
 ### Cuál es el objetivo del milestone
 
-Aportar el valor diferencial del producto: evitar que, como recepcionista, descubra un conflicto de recursos cuando ya es tarde para reorganizar la cita o avisar al cliente. El compromiso es que, al registrar una cita, el sistema responda con claridad si hay disponibilidad real o no.
-
-### Historias de usuario asignadas
-
-- [HU002]
+Empezar a resolver el problema central del taller —detectar conflictos de recursos antes de que ocurran, en lugar de cuando ya es tarde— apoyándose en el modelo construido en el Milestone 0.

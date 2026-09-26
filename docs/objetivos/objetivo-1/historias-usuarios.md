@@ -1,19 +1,19 @@
 # Historias de Usuario
 
-Se usa el tag 'user-stories' y pertenecen a un milestone cada una.
+Se usa el tag 'user-stories'. No necesariamente cada HU pertenecen a un milestone: dentro de cada milestone se desarrollan issues asociados a una o varias HUs, pero la relación no es una asignación fija.
 
-## [HU001] No sé qué herramientas o máquinas necesita cada tipo de reparación
+## [HU001] No sé si el recurso que necesita una reparación estará libre cuando apunto la cita
 
-Como recepcionista, no tengo forma de que el sistema me indique automáticamente qué herramientas y máquinas necesita un tipo de reparación (mantenimiento básico, cambio de pastillas y discos de freno, cambio de kit de distribución, etc.), así que dependo por completo de mi propia experiencia para calcularlo, y eso hace que a veces no tenga en cuenta algún recurso necesario.
+Como recepcionista, en el momento de apuntar una cita en la libreta no tengo ninguna forma de saber si la herramienta, máquina o elevador que esa reparación va a necesitar estará libre a esa hora, así que solo descubro el conflicto cuando la reparación ya ha empezado y el mecánico se encuentra el recurso ocupado.
 
-## [HU002] No sé si un recurso estará libre a la hora que pide el cliente
+## [HU002] No sé qué citas se van a ver afectadas cuando una reparación se retrasa
 
-Como recepcionista, cuando un cliente me pide una cita no tengo forma de comprobar si las herramientas o máquinas que necesitará su reparación (en especial los elevadores, que están ocupados durante toda la reparación) estarán disponibles en ese horario, así que apunto la cita en la libreta sin saber si de verdad hay recursos suficientes.
+Como recepcionista, cuando una reparación en curso se alarga y mantiene ocupado un recurso compartido, no tengo forma de saber qué citas posteriores dependen de ese mismo recurso, así que el aviso al cliente afectado depende por completo de que un mecánico se acuerde de decírmelo a tiempo.
 
-## [HU003] No detecto que dos citas coincidan en el mismo recurso
+## [HU003] No sé si mi cita se va a cumplir hasta que llego al taller
 
-Como recepcionista, cuando registro una nueva cita el sistema no me avisa si entra en conflicto con otra cita ya programada por necesitar el mismo elevador u otro recurso compartido, así que dos vehículos pueden acabar esperándose entre sí sin que yo lo sepa hasta que llega el momento de la reparación.
+Como cliente, cuando pido cita por teléfono no tengo ninguna garantía de que la reparación vaya a empezar a la hora acordada, porque el taller no puede saber de antemano si habrá conflictos de recursos, así que a veces llego con el coche y me encuentro con que tengo que esperar sin que nadie me haya avisado antes.
 
-## [HU004] No puedo avisar al cliente cuando se produce un retraso
+## [HU004] No sé si podré usar el recurso que necesito al terminar mi tarea actual
 
-Como recepcionista, cuando una reparación en curso se alarga y bloquea un recurso que necesita la siguiente cita, no tengo forma automática de saberlo ni de avisar al cliente con margen, así que hoy en día el aviso depende de que un mecánico venga a decírmelo y de que yo tenga tiempo de llamar antes de que el cliente llegue.
+Como mecánico, cuando estoy a punto de terminar con un vehículo no tengo forma de saber si el elevador o la herramienta que necesito para el siguiente coche va a estar libre, así que muchas veces me quedo esperando sin poder planificar el orden en que atiendo los trabajos que tengo asignados.
