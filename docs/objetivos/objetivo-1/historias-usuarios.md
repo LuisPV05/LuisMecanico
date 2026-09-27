@@ -1,6 +1,13 @@
 # Historias de Usuario
 
-Se usa el tag 'user-stories'. No necesariamente cada HU pertenecen a un milestone: dentro de cada milestone se desarrollan issues asociados a una o varias HUs, pero la relación no es una asignación fija.
+Cada HU lleva su identificador [HUxxx] y la etiqueta `user-stories` en el issue correspondiente. No necesariamente cada HU pertenecen a un milestone: dentro de cada milestone se desarrollan issues asociados a una o varias HUs, pero la relación no es una asignación fija.
+
+| ID | Título |
+|----|--------|
+| HU001 | No sé si el recurso que necesita una reparación estará libre cuando apunto la cita |
+| HU002 | No sé qué citas se van a ver afectadas cuando una reparación se retrasa |
+| HU003 | No sé si mi cita se va a cumplir hasta que llego al taller |
+| HU004 | No sé si podré usar el recurso que necesito al terminar mi tarea actual |
 
 ## [HU001] No sé si el recurso que necesita una reparación estará libre cuando apunto la cita
 

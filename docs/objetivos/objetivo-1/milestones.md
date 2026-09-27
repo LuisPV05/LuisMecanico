@@ -1,24 +1,27 @@
 # Milestones
 
-Determinan el nivel de generalización o detalle del problema se va a mostrar al cliente en cada entrega, no qué características técnicas va a tener el producto ni qué HU se "cierra" con cada uno.
+Cada milestone es un entregable comprobable, no una lista de tareas ni qué HU se "cierra" con cada uno.
 
 
 ## Milestone 0: Modelo de reparaciones y recursos del taller
 
-### Qué se entrega
+**¿Qué representa este hito?**
+El conocimiento del taller convertido en modelo: tipos de reparación, recursos que exige cada una (herramientas, máquinas, elevadores), su duración habitual, y cómo se conecta todo con una cita.
 
-Un modelo mínimo pero fiel del dominio del taller: qué tipos de reparación existen, qué recursos necesita cada una, cómo son las citas y cómo se relacionan entre sí. Este milestone corresponde al objetivo de entender y modelizar el problema antes de automatizar nada.
+**¿Por qué hace falta antes que nada?**
+Porque no se puede detectar un conflicto de recursos si antes no existe una representación fiable de qué recurso ocupa cada reparación y durante cuánto tiempo. Este milestone es la base sobre la que se apoya todo lo demás.
 
-### Cuál es el objetivo del milestone
+**¿Cómo se sabe que está conseguido?**
+Cuando, dada una reparación cualquiera del taller, el modelo permite responder sin ambigüedad qué recursos necesita y cuánto tiempo los va a ocupar.
 
-Asegurar que cualquier decisión de diseño posterior se apoya en una representación correcta de cómo funciona realmente el taller, en lugar de en supuestos. Es la base necesaria para poder empezar a razonar sobre conflictos de recursos en el siguiente milestone.
 
 ## Milestone 1: Lógica de negocio y comprobación automática
 
-### Qué se entrega
+**¿Qué representa este hito?**
+La comprobación automática de disponibilidad: dado un recurso y una franja horaria, el sistema determina si está libre, y si no lo está, señala con qué cita choca. Incluye los tests que garantizan que esa comprobación es correcta.
 
-La infraestructura que permite comprobar, a partir del modelo del milestone anterior, si un conjunto de recursos está disponible durante una franja horaria determinada, junto con los tests automáticos que validan ese comportamiento. Cómo se le presenta esto finalmente al recepcionista (interfaz, formato, canal) es una decisión que se toma durante el propio desarrollo, no en este documento.
+**¿Por qué es el siguiente paso lógico?**
+Porque ataca directamente el problema que motiva el proyecto: pasar de descubrir el conflicto cuando el mecánico ya está parado, a detectarlo en el momento de organizar la cita. Depende del modelo construido en el Milestone 0.
 
-### Cuál es el objetivo del milestone
-
-Empezar a resolver el problema central del taller —detectar conflictos de recursos antes de que ocurran, en lugar de cuando ya es tarde— apoyándose en el modelo construido en el Milestone 0.
+**¿Cómo se sabe que está conseguido?**
+Cuando, al intentar registrar una cita que compite por un recurso ya ocupado, el sistema lo detecta y lo comunica antes de guardar la cita.

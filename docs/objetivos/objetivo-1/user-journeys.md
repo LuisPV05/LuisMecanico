@@ -1,15 +1,29 @@
 # Jornadas de usuario
 
-Las siguientes jornadas describen el uso completo del sistema una vez desarrollado. Alguna funcionalidad (como el aviso automático de retrasos en Jornada 3) corresponde a historias de usuario que se implementarán en milestones futuros.
+Recorridos completos de uso una vez desarrollado el sistema.
 
-## Jornada 1: Luis registra una cita sin conflictos
 
-Kips llama porque su coche pierde presión en los frenos. Luis apunta el vehículo y el síntoma, y el sistema identifica que se trata probablemente de un cambio de pastillas y discos de freno, indicando que se necesitará un elevador durante 1 hora y 30 minutos. Luis consulta la disponibilidad de los elevadores para las 10:00, que es cuando el cliente puede acercarse. El sistema confirma que hay uno de los tres elevadores libre en ese tramo, así que Luis registra la cita y le da al cliente una hora aproximada de finalización.
+## Jornada 1: Luis cierra una cita por teléfono sin colgar dos veces
 
-## Jornada 2: Luis detecta un conflicto antes de confirmar la cita
+1. Kips llama describiendo un ruido al frenar.
+2. Luis introduce el síntoma en el sistema.
+3. El sistema deduce que la reparación requiere un elevador durante 1h30.
+4. Kips le pide que la cita sea a las 10:00, Luis registra la cita para las 10:00; el sistema comprueba los tres elevadores y ve que están ocupados.
+5. El sistema devuelve el primer hueco libre (11:30) y Luis se lo ofrece a Kips en la misma llamada.
 
-Poco después, otro cliente llama pidiendo cita también a las 10:00 para un cambio de amortiguadores (2 horas y 30 minutos, también con elevador). Al intentar registrar la cita, el sistema avisa a Luis de que a esa hora los tres elevadores ya estarán ocupados por reparaciones en curso. Luis consulta las franjas libres que le propone el sistema y ofrece al cliente el primer horario disponible, evitando así que el cliente llegue con el coche y tenga que esperar sin saberlo de antemano.
 
-## Jornada 3: Snoopy sufre un retraso que afecta a la siguiente cita
+## Jornada 2: Luis encaja un imprevisto sin repasar toda la agenda
 
-Snoopy, el mecánico está haciendo un cambio de kit de distribución, que ocupa un elevador durante 4 horas, y la reparación se alarga más de lo previsto. El sistema detecta que ese elevador seguirá bloqueado cuando empiece la siguiente cita programada sobre el mismo recurso, y avisa a Luis del posible retraso para que pueda llamar al cliente afectado antes de que llegue al taller, tal y como se hace actualmente pero sin depender de que Luis se dé cuenta a tiempo por sí mismo.
+1. Un cliente se presenta sin cita para una reparación urgente.
+2. Luis necesita saber si el gato hidráulico está libre en la próxima hora.
+3. Consulta la disponibilidad de ese recurso concreto.
+4. El sistema muestra un hueco libre de una hora.
+5. Luis acepta el trabajo sin descuadrar el resto del día.
+
+
+## Jornada 3: Snoopy sufre un retraso que afecta a la siguiente cita, detectanado el efecto dominó de un retraso 
+
+1. Snoopy lleva 45 minutos de retraso sobre lo previsto en una reparación.
+2. El sistema compara la duración real con la estimada para ese recurso.
+3. Identifica que la siguiente cita en el mismo elevador se verá afectada.
+4. Genera un aviso para que recepción llame al cliente antes de que llegue.
