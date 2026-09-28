@@ -26,5 +26,5 @@ Recorridos completos de uso una vez desarrollado el sistema.
 1. Snoopy lleva ya 45 minutos de retraso sobre lo que se había calculado para una reparación.
 2. El sistema compara ese tiempo real con la duración estimada del recurso que está usando.
 3. Se da cuenta de que la siguiente cita en ese mismo elevador se va a ver afectada.
-4. En vez de esperar a que alguien se acuerde de avisar, genera directamente un aviso.
+4. Identifica qué cita se ve afectada y se lo muestra a recepción, que decide si llama al cliente.
 5. Recepción llama al cliente antes de que este se presente en el taller.
