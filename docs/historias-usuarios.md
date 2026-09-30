@@ -1,7 +1,5 @@
 # Historias de Usuario
 
-En estas se usa la etiqueta `user-stories` y cada HU, con su identificador [HUxxx], se resuleve mediante issues etiquetados en los diferentes milestones.
-
 ## Índice
 
 | ID | Título |
@@ -9,8 +7,8 @@ En estas se usa la etiqueta `user-stories` y cada HU, con su identificador [HUxx
 | HU001 | No sé si el recurso que necesita una reparación estará libre cuando apunto la cita |
 | HU002 | No sé qué citas se van a ver afectadas cuando una reparación se retrasa |
 | HU003 | No sé si mi cita se va a cumplir hasta que llego al taller |
-| HU004 | No sé si podré usar el recurso que necesito al terminar mi tarea actual |
-| HU005 | No puedo consultar las citas y los recursos desde donde estoy trabajando |
+| HU004 | No puedo consultar las citas y los recursos desde donde estoy trabajando |
+| HU005 | No sé si podré usar el recurso que necesito al terminar mi tarea actual |
 
 ## HU001
 | Campo | Descripción |
@@ -42,17 +40,17 @@ En estas se usa la etiqueta `user-stories` y cada HU, con su identificador [HUxx
 ## HU004
 | Campo | Descripción |
 |----|--------|
-| Persona | Mecánico |
-| Situación | Está a punto de acabar con un vehículo y tiene que pasar al siguiente trabajo. |
-| Información que interviene | recurso necesario para el siguiente trabajo asignado, estado de ese recurso en el momento en que el mecánico lo va a necesitar, y orden de los trabajos pendientes de ese mecánico.s |
-| Obstáculo | No sabe de antemano si el recurso que necesitará para el próximo coche estará disponible. |
-| Consecuencia | Se ve obligado a  esperar y no puede organizar en qué orden abordará los trabajos que tiene pendientes. |
-
-## HU005
-| Campo | Descripción |
-|----|--------|
 | Persona | Recepcionista y mecánico |
 | Situación | La información de las citas está en un calendario físico que permanece en recepción. |
 | Información que interviene | el conjunto de citas y recursos del taller como información compartida, y desde qué puesto (recepción o zona de trabajo) se consulta esa información en cada momento. |
 | Obstáculo | Solo se puede consultar desde donde está el calendario, así que el mecánico no puede ver las citas ni el estado de los recursos sin preguntar antes en recepción. |
 | Consecuencia | Cada persona trabaja con una información distinta y desactualizada según dónde se encuentre en ese momento. |
+
+## HU005
+| Campo | Descripción |
+|----|--------|
+| Persona | Mecánico |
+| Situación | Está a punto de acabar con un vehículo y tiene que pasar al siguiente trabajo. |
+| Información que interviene | recurso necesario para el siguiente trabajo asignado, estado de ese recurso en el momento en que el mecánico lo va a necesitar, y orden de los trabajos pendientes de ese mecánico.s |
+| Obstáculo | No sabe de antemano si el recurso que necesitará para el próximo coche estará disponible. |
+| Consecuencia | Se ve obligado a  esperar y no puede organizar en qué orden abordará los trabajos que tiene pendientes. |
