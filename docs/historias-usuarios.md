@@ -17,7 +17,7 @@ En estas se usa la etiqueta `user-stories` y cada HU, con su identificador [HUxx
 |----|--------|
 | Persona | Recepcionista |
 | Situación | Un cliente llama para pedir cita y hay que apuntarla en el calendario. |
-| Información que interviene | xperiencia directa como recepcionista del taller, recogida en el [README](README.md). Datos que intervienen: tipo de reparación indicado a partir del síntoma del cliente, recurso o recursos que exige esa reparación, franja horaria solicitada y ocupación actual de esos recursos en ese tramo. |
+| Información que interviene | xperiencia directa como recepcionista del taller, recogida en el [README](../README.md). Datos que intervienen: tipo de reparación indicado a partir del síntoma del cliente, recurso o recursos que exige esa reparación, franja horaria solicitada y ocupación actual de esos recursos en ese tramo. |
 | Obstáculo | No hay forma de saber si la herramienta, máquina o elevador que necesitará la reparación estará libre a esa hora. |
 | Consecuencia | El conflicto no aparece hasta que la reparación ya ha empezado, cuando el mecánico llega y se encuentra el recurso ocupado por otra cosa. |
 
