@@ -1,6 +1,5 @@
 # Historias de Usuario
-
-## Índice
+## Índice sobre los HUs que se trabaja
 
 | ID | Título |
 |----|--------|
