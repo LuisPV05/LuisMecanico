@@ -14,15 +14,15 @@ En estas se usa la etiqueta `user-stories` y cada HU, con su identificador [HUxx
 
 ## HU001
 - **Quién:** Recepcionista
-- **Datos:** experiencia directa como recepcionista del taller, recogida en el [README](../../../README.md). Datos que intervienen: tipo de reparación indicado a partir del síntoma del cliente, recurso o recursos que exige esa reparación, franja horaria solicitada y ocupación actual de esos recursos en ese tramo.
 - **Situación:** Un cliente llama para pedir cita y hay que apuntarla en el calendario.
+- **Datos:** experiencia directa como recepcionista del taller, recogida en el [README](../../../README.md). Datos que intervienen: tipo de reparación indicado a partir del síntoma del cliente, recurso o recursos que exige esa reparación, franja horaria solicitada y ocupación actual de esos recursos en ese tramo.
 - **Obstáculo:** No hay forma de saber si la herramienta, máquina o elevador que necesitará la reparación estará libre a esa hora.
 - **Consecuencia:** El conflicto no aparece hasta que la reparación ya ha empezado, cuando el mecánico llega y se encuentra el recurso ocupado por otra cosa.
 
 ## HU002
 - **Quién:** Recepcionista
-- **Datos:** duración estimada frente a duración real de la reparación en curso, recurso concreto que sigue ocupado, y qué citas posteriores tienen asignado ese mismo recurso. Se considera que una cita está "afectada" cuando su hora de inicio prevista es posterior al momento en que el recurso queda libre según la duración real de la reparación en curso, pero anterior o igual a la hora en que el recurso vuelve a quedar libre.
 - **Situación:** Una reparación en curso se alarga y sigue ocupando un recurso compartido.
+- **Datos:** duración estimada frente a duración real de la reparación en curso, recurso concreto que sigue ocupado, y qué citas posteriores tienen asignado ese mismo recurso. Se considera que una cita está "afectada" cuando su hora de inicio prevista es posterior al momento en que el recurso queda libre según la duración real de la reparación en curso, pero anterior o igual a la hora en que el recurso vuelve a quedar libre.
 - **Obstáculo:** No hay forma de saber qué citas posteriores dependen de ese mismo recurso.
 - **Consecuencia:** Si nadie se acuerda de avisar, el cliente afectado no se entera del retraso hasta que ya está en camino o incluso hasta que llega al taller.
 
@@ -35,14 +35,14 @@ En estas se usa la etiqueta `user-stories` y cada HU, con su identificador [HUxx
 
 ## HU004
 - **Quién:** Mecánico
-- **Datos:** recurso necesario para el siguiente trabajo asignado, estado de ese recurso en el momento en que el mecánico lo va a necesitar, y orden de los trabajos pendientes de ese mecánico.
 - **Situación:** Está a punto de acabar con un vehículo y tiene que pasar al siguiente trabajo.
+- **Datos:** recurso necesario para el siguiente trabajo asignado, estado de ese recurso en el momento en que el mecánico lo va a necesitar, y orden de los trabajos pendientes de ese mecánico.s
 - **Obstáculo:** No sabe de antemano si el recurso que necesitará para el próximo coche estará disponible.
 - **Consecuencia:** Se ve obligado a  esperar y no puede organizar en qué orden abordará los trabajos que tiene pendientes.
 
 ## HU005
 - **Quién:** Recepcionista y mecánico
-- **Datos:** el conjunto de citas y recursos del taller como información compartida, y desde qué puesto (recepción o zona de trabajo) se consulta esa información en cada momento.
 - **Situación:** La información de las citas está en un calendario físico que permanece en recepción.
+- **Datos:** el conjunto de citas y recursos del taller como información compartida, y desde qué puesto (recepción o zona de trabajo) se consulta esa información en cada momento.
 - **Obstáculo:** Solo se puede consultar desde donde está el calendario, así que el mecánico no puede ver las citas ni el estado de los recursos sin preguntar antes en recepción.
 - **Consecuencia:** Cada persona trabaja trabajando con una información distinta y desactualizada según dónde se encuentre en ese momento.
