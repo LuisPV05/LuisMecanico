@@ -1,5 +1,6 @@
 # Historias de Usuario
-Cada historia de usuario lleva su identificador [HUxxx] y la etiqueta `user-stories` en el issue correspondiente de GitHub.
+
+Cada historia de usuario incluye su identificador [HUxxx] y la etiqueta `user-stories` en el issue de GitHub correspondiente.
 
 ## Índice
 
@@ -34,9 +35,9 @@ Cada historia de usuario lleva su identificador [HUxxx] y la etiqueta `user-stor
 
 ## HU004
 - **Quién:** Mecánico
-- **Situación:** Está terminando  un vehículo y le toca pasar al siguiente.
-- **Obstáculo:** No tiene forma de saber si el recurso que necesita para el siguiente coche va a estar libre.
-- **Consecuencia:** Se queda esperando y no puede organizar en qué orden atacar los trabajos que tiene pendientes.
+- **Situación:** Está a punto de acabar con un vehículo y tiene que pasar al siguiente trabajo.
+- **Obstáculo:** No sabe de antemano si el recurso que necesitará para el próximo coche estará disponible.
+- **Consecuencia:** Se ve obligado a  esperar y no puede organizar en qué orden abordará los trabajos que tiene pendientes.
 - **Datos:** recurso necesario para el siguiente trabajo asignado, estado de ese recurso en el momento en que el mecánico lo va a necesitar, y orden de los trabajos pendientes de ese mecánico.
 
 ## HU005
