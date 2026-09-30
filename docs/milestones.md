@@ -1,5 +1,4 @@
 # Milestones
-
 Cada milestone es un entregable comprobable, no una lista de tareas ni qué HU se "cierra" con cada uno.
 
 ## Milestone 0: Modelo de reparaciones y recursos del taller

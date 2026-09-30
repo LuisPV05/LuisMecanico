@@ -1,6 +1,5 @@
 # Historias de Usuario
-
-Cada HU lleva su identificador [HUxxx] y la etiqueta `user-stories` en el issue correspondiente que la representa en GitHub. 
+Cada historia de usuario lleva su identificador [HUxxx] y la etiqueta `user-stories` en el issue correspondiente de GitHub.
 
 ## Índice
 
@@ -35,14 +34,14 @@ Cada HU lleva su identificador [HUxxx] y la etiqueta `user-stories` en el issue 
 
 ## HU004
 - **Quién:** Mecánico
-- **Situación:** Está a punto de terminar con un vehículo y le toca pasar al siguiente.
-- **Obstáculo:** No hay forma de saber si el elevador o la herramienta que necesita para el siguiente coche va a estar libre.
-- **Consecuencia:** Se queda parado esperando y no puede organizar en qué orden atacar los trabajos que tiene pendientes.
+- **Situación:** Está terminando  un vehículo y le toca pasar al siguiente.
+- **Obstáculo:** No tiene forma de saber si el recurso que necesita para el siguiente coche va a estar libre.
+- **Consecuencia:** Se queda esperando y no puede organizar en qué orden atacar los trabajos que tiene pendientes.
 - **Datos:** recurso necesario para el siguiente trabajo asignado, estado de ese recurso en el momento en que el mecánico lo va a necesitar, y orden de los trabajos pendientes de ese mecánico.
 
 ## HU005
 - **Quién:** Recepcionista y mecánico
-- **Situación:** La información de las citas está en una libreta física que se queda en recepción.
-- **Obstáculo:** Solo se puede consultar desde donde está la libreta, así que el mecánico no puede ver las citas ni el estado de los recursos sin preguntar a recepción.
-- **Consecuencia:** Cada persona trabaja con una información distinta y desactualizada según dónde esté en ese momento.
+- **Situación:** La información de las citas está en un calendario físico que permanece en recepción.
+- **Obstáculo:** Solo se puede consultar desde donde está el calendario, así que el mecánico no puede ver las citas ni el estado de los recursos sin preguntar antes en recepción.
+- **Consecuencia:** Cada persona trabaja trabajando con una información distinta y desactualizada según dónde se encuentre en ese momento.
 - **Datos:** el conjunto de citas y recursos del taller como información compartida, y desde qué puesto (recepción o zona de trabajo) se consulta esa información en cada momento.
