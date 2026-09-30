@@ -1,6 +1,6 @@
 # Historias de Usuario
 
-Cada HU lleva su identificador [HUxxx] y la etiqueta `user-stories` en el issue correspondiente que la representa en GitHub. No necesariamente cada HU pertenece a un milestone concreto: dentro de cada milestone se van desarrollando issues asociados que se apoyan en una o varias HUs, pero la relación no es una asignación fija de "esta HU pertenece a este milestone".
+Cada HU lleva su identificador [HUxxx] y la etiqueta `user-stories` en el issue correspondiente que la representa en GitHub. 
 
 ## Índice
 
