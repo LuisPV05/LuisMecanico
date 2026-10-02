@@ -2,7 +2,7 @@
 
 ## Milestone 0: Modelo de reparaciones y recursos del taller
 
-El modelo del dominio del taller se obtiene aplicando una metodología de diseño de dominio a partir de las [historias de usuario](historias-usuarios.md), las [jornadas de usuario](user-journeys.md) y lo descrito en el [objetivo 0](objetivo-0.md). Se considera que se ha seguido ese proceso cuando, junto al modelo, existe un documento de decisiones de diseño que cualquier otra persona pueda revisar y contrastar contra las historias de usuario de las que parte, sin necesidad de juzgar subjetivamente si el código "está bien". A partir de ahí se entrega el modelo en sí, sin ninguna lógica de negocio todavía, junto con ese documento de decisiones.
+A partir de las [historias de usuario](historias-usuarios.md) y las [jornadas de usuario](user-journeys.md) se plantean issues que enuncian los problemas de su dominio, identificando los conceptos clave que aparecen en ellas (por ejemplo, qué es una cita, qué es un recurso, qué tipos de recurso existen). Esos issues guían la aplicación de domain driven design: en cada uno se discute qué conceptos son objetos valor, cuáles entidades y qué relaciones hay entre ellos, y se codifican en el lenguaje elegido siguiendo sus buenas prácticas. Cada commit resuelve un issue y lo referencia. Todavía no se incluye ninguna lógica de negocio: el objetivo es tener una representación correcta del dominio sobre la que trabajar en el siguiente milestone.
 
 ## Milestone 1: Lógica de negocio y comprobación automática
 
