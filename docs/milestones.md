@@ -8,7 +8,7 @@ HU Relacionada: HU001.
 
 ## Milestone 1: Lógica de negocio y comprobación automática
 
-La primera lógica de negocio se desarrolla sobre el modelo del Milestone 0 siguiendo una metodología dirigida por pruebas, con la infraestructura de comprobación automática funcionando desde el principio. Se considera que se ha seguido ese proceso cuando existen las pruebas automáticas correspondientes y estas se ejecutan y pasan, en lugar de valorar si la lógica implementada "parece" correcta a simple vista. Qué regla concreta se resuelve y cómo se implementa se decide durante el propio desarrollo; lo que se entrega es esa lógica mínima junto con sus pruebas.
+La primera lógica de negocio se desarrolla sobre el modelo del Milestone 0 siguiendo una metodología dirigida por pruebas, con la infraestructura de comprobación automática funcionando desde el principio. Se considera que el proceso se ha seguido cuando existen las pruebas automáticas correspondientes, estas se ejecutan y pasan correctamente, en lugar de evaluar si la lógica implementada «parece» correcta a simple vista. La regla concreta que se resuelve y la forma de implementarla se determinan durante el propio desarrollo; lo que se entrega es esa lógica mínima junto con sus respectivas pruebas.
 
 HU Relaconada: HU002.
 
