@@ -2,7 +2,7 @@
 
 ## Milestone 0: Modelo de reparaciones y recursos del taller
 
-A partir de las [historias de usuario](historias-usuarios.md) y las [jornadas de usuario](user-journeys.md) se plantean issues que enuncian los problemas de su dominio, identificando los conceptos clave que aparecen en ellas (por ejemplo, qué es una cita, qué es un recurso, qué tipos de recurso existen). Esos issues guían la aplicación de domain driven design: en cada uno se discute qué conceptos son objetos valor, cuáles entidades y qué relaciones hay entre ellos, y se codifican en el lenguaje elegido siguiendo sus buenas prácticas. Cada commit resuelve un issue y lo referencia. Todavía no se incluye ninguna lógica de negocio: el objetivo es tener una representación correcta del dominio sobre la que trabajar en el siguiente milestone.
+A partir de las [historias de usuario](historias-usuarios.md) y las [jornadas de usuario](user-journeys.md) se plantean issues que enuncian los problemas de su dominio, identificando los conceptos clave que aparecen en ellas. Esos issues guían la aplicación de domain driven design: en cada uno se discute qué conceptos son objetos valor, cuáles entidades y qué relaciones hay entre ellos, y se codifican en el lenguaje elegido siguiendo sus buenas prácticas. Cada commit resuelve un issue y lo referencia. Todavía no se incluye ninguna lógica de negocio: el objetivo es tener una representación correcta del dominio sobre la que trabajar en el siguiente milestone.
 
 ## Milestone 1: Lógica de negocio y comprobación automática
 
