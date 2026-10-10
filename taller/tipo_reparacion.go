@@ -1,0 +1,31 @@
+package taller
+
+import "time"
+
+type TipoReparacion struct {
+	duracion    time.Duration
+	usaElevador bool
+}
+
+// Getters
+func (t TipoReparacion) Duracion() time.Duration {
+	return t.duracion
+}
+
+func (t TipoReparacion) UsaElevador() bool {
+	return t.usaElevador
+}
+
+// Map con todos los tipos de reparacion con su nombre como clave
+var TiposReparacion = map[string]TipoReparacion{
+	"Mantenimiento básico":                                                            {duracion: 45 * time.Minute, usaElevador: true},
+	"Cambio de pastillas y discos de freno":                                           {duracion: 90 * time.Minute, usaElevador: true},
+	"Cambio de neumáticos y alineación":                                               {duracion: 60 * time.Minute, usaElevador: true},
+	"Cambio de kit de distribución (Bomba de agua y correas)":                         {duracion: 240 * time.Minute, usaElevador: true},
+	"Reparación del sistema de embrague":                                              {duracion: 300 * time.Minute, usaElevador: true},
+	"Sustitución del alternador o motor de arranque":                                  {duracion: 120 * time.Minute, usaElevador: true},
+	"Diagnóstico y reparación de falla eléctrica (Cortocircuito o sensor defectuoso)": {duracion: 180 * time.Minute, usaElevador: true},
+	"Reemplazo de la batería principal y comprobación del alternador":                 {duracion: 30 * time.Minute, usaElevador: false},
+	"Sustitución de amortiguadores (Suspensión delantera o trasera)":                  {duracion: 150 * time.Minute, usaElevador: true},
+	"Sustitución completa del motor":                                                  {duracion: 3 * 13 * time.Hour, usaElevador: true}, // 3 días laborables de 13h
+}
