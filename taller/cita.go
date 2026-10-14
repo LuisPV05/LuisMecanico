@@ -8,7 +8,18 @@ type Cita struct {
 	tipo   TipoReparacion
 }
 
+const (
+	horaApertura = 8
+	horaCierre   = 21
+)
+
 func NuevaCita(id int, inicio time.Time, nombreTipo string) (Cita, error) {
+	if inicio.Weekday() == time.Sunday {
+		return Cita{}, ErrDomingo
+	}
+	if inicio.Hour() < horaApertura || inicio.Hour() >= horaCierre {
+		return Cita{}, ErrFueraDeHorario
+	}
 	tipo, ok := tiposReparacion[nombreTipo]
 	if !ok {
 		return Cita{}, ErrTipoDesconocido
