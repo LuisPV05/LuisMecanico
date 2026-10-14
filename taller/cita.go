@@ -5,14 +5,13 @@ import "time"
 type Cita struct {
 	id     int
 	inicio time.Time
-	tipo   string // nombre del tipo, clave de TiposReparacion
+	tipo   string
 }
 
 func NuevaCita(id int, inicio time.Time, tipo string) Cita {
 	return Cita{id: id, inicio: inicio, tipo: tipo}
 }
 
-// Getters
 func (c Cita) ID() int {
 	return c.id
 }
