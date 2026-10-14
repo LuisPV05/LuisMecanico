@@ -8,6 +8,10 @@ type Cita struct {
 	tipo   TipoReparacion
 }
 
-func NuevaCita(id int, inicio time.Time, tipo TipoReparacion) Cita {
-	return Cita{id: id, inicio: inicio, tipo: tipo}
+func NuevaCita(id int, inicio time.Time, nombreTipo string) (Cita, error) {
+	tipo, ok := tiposReparacion[nombreTipo]
+	if !ok {
+		return Cita{}, ErrTipoDesconocido
+	}
+	return Cita{id: id, inicio: inicio, tipo: tipo}, nil
 }
