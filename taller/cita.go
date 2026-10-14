@@ -5,9 +5,9 @@ import "time"
 type Cita struct {
 	id     int
 	inicio time.Time
-	tipo   string
+	tipo   TipoReparacion
 }
 
-func NuevaCita(id int, inicio time.Time, tipo string) Cita {
+func NuevaCita(id int, inicio time.Time, tipo TipoReparacion) Cita {
 	return Cita{id: id, inicio: inicio, tipo: tipo}
 }
