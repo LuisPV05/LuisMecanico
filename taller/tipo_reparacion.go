@@ -7,14 +7,6 @@ type TipoReparacion struct {
 	usaElevador bool
 }
 
-func (t TipoReparacion) Duracion() time.Duration {
-	return t.duracion
-}
-
-func (t TipoReparacion) UsaElevador() bool {
-	return t.usaElevador
-}
-
 var TiposReparacion = map[string]TipoReparacion{
 	"Mantenimiento básico":                                                            {duracion: 45 * time.Minute, usaElevador: true},
 	"Cambio de pastillas y discos de freno":                                           {duracion: 90 * time.Minute, usaElevador: true},
@@ -25,5 +17,5 @@ var TiposReparacion = map[string]TipoReparacion{
 	"Diagnóstico y reparación de falla eléctrica (Cortocircuito o sensor defectuoso)": {duracion: 180 * time.Minute, usaElevador: true},
 	"Reemplazo de la batería principal y comprobación del alternador":                 {duracion: 30 * time.Minute, usaElevador: false},
 	"Sustitución de amortiguadores (Suspensión delantera o trasera)":                  {duracion: 150 * time.Minute, usaElevador: true},
-	"Sustitución completa del motor":                                                  {duracion: 3 * 13 * time.Hour, usaElevador: true}, 
+	"Sustitución completa del motor":                                                  {duracion: 3 * 13 * time.Hour, usaElevador: true},
 }
