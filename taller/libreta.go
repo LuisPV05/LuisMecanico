@@ -10,6 +10,13 @@ func NuevaLibreta() Libreta {
 }
 
 func (l *Libreta) Apuntar(cita Cita) error {
+	_, tipoValido := tiposReparacion[cita.tipo.nombre]
+	if !tipoValido {
+		return ErrTipoDesconocido
+	}
+	if l.citas == nil {
+		*l = NuevaLibreta()
+	}
 	_, existe := l.citas[cita.id]
 	if existe {
 		return ErrCitaRepetida
