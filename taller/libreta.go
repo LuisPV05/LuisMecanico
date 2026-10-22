@@ -1,12 +1,14 @@
 package taller
 
+const elevadoresTaller = 3
+
 type Libreta struct {
 	elevadores int
 	citas      map[int]Cita
 }
 
 func NuevaLibreta() Libreta {
-	return Libreta{elevadores: 3, citas: map[int]Cita{}}
+	return Libreta{elevadores: elevadoresTaller, citas: map[int]Cita{}}
 }
 
 func (l *Libreta) Apuntar(cita Cita) error {
