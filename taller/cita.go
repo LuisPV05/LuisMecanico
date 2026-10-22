@@ -2,6 +2,7 @@ package taller
 
 import "time"
 
+
 type Cita struct {
 	id     int
 	inicio time.Time
