@@ -1,7 +1,8 @@
 package taller
 
 import (
-	"os"
+	_ "embed"
+	"encoding/csv"
 	"strconv"
 	"strings"
 	"time"
@@ -13,22 +14,30 @@ type TipoReparacion struct {
 	usaElevador bool
 }
 
+//go:embed tipos_reparacion.csv
+var contenidoCSV string
+
 var tiposReparacion = leerTiposReparacion()
 
 func leerTiposReparacion() map[string]TipoReparacion {
-	contenido, err := os.ReadFile("tipos_reparacion.csv")
+	filas, err := csv.NewReader(strings.NewReader(contenidoCSV)).ReadAll()
 	if err != nil {
 		panic(err)
 	}
 	tipos := map[string]TipoReparacion{}
-	lineas := strings.Split(strings.TrimSpace(string(contenido)), "\n")
-	for _, linea := range lineas[1:] {
-		campos := strings.Split(linea, ",")
-		minutos, _ := strconv.Atoi(campos[1])
+	for _, campos := range filas[1:] {
+		minutos, err := strconv.Atoi(campos[1])
+		if err != nil {
+			panic(err)
+		}
+		usaElevador, err := strconv.ParseBool(campos[2])
+		if err != nil {
+			panic(err)
+		}
 		tipos[campos[0]] = TipoReparacion{
 			nombre:      campos[0],
 			duracion:    time.Duration(minutos) * time.Minute,
-			usaElevador: campos[2] == "true",
+			usaElevador: usaElevador,
 		}
 	}
 	return tipos
