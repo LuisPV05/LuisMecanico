@@ -2,11 +2,10 @@ package taller
 
 import "time"
 
-
 type Cita struct {
-	id     int
 	inicio time.Time
 	tipo   TipoReparacion
+	id	int
 }
 
 const (
