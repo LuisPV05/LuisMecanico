@@ -5,7 +5,7 @@ import "time"
 type Cita struct {
 	inicio time.Time
 	tipo   TipoReparacion
-	id	int
+	id     int
 }
 
 const (
