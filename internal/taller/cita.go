@@ -6,8 +6,8 @@ import (
 )
 
 var (
-	ErrFueraDeHorario  = errors.New("La cita empieza fuera del horario del taller")
-	ErrDomingo         = errors.New("La cita no puede realizarse en domingo")
+	ErrFueraDeHorario = errors.New("La cita empieza fuera del horario del taller")
+	ErrDomingo        = errors.New("La cita no puede realizarse en domingo")
 )
 
 type Cita struct {
@@ -21,16 +21,12 @@ const (
 	horaCierre   = 21
 )
 
-func NuevaCita(id int, inicio time.Time, nombreTipo string) (Cita, error) {
+func NuevaCita(id int, inicio time.Time, tipo TipoReparacion) (Cita, error) {
 	if inicio.Weekday() == time.Sunday {
 		return Cita{}, ErrDomingo
 	}
 	if inicio.Hour() < horaApertura || inicio.Hour() >= horaCierre {
 		return Cita{}, ErrFueraDeHorario
-	}
-	tipo, ok := tiposReparacion[nombreTipo]
-	if !ok {
-		return Cita{}, ErrTipoDesconocido
 	}
 	return Cita{id: id, inicio: inicio, tipo: tipo}, nil
 }
