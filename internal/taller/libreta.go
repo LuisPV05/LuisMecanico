@@ -1,6 +1,12 @@
 package taller
 
+import "errors"
+
 const elevadoresTaller = 3
+
+var (
+	ErrCitaRepetida    = errors.New("La cita ya está apuntada en la libreta")
+)
 
 type Libreta struct {
 	elevadores int

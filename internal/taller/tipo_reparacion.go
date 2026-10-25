@@ -6,6 +6,11 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"errors"
+)
+
+var (
+	ErrTipoDesconocido = errors.New("El tipo de reparación que se ha indicado no está en la lista")
 )
 
 type TipoReparacion struct {
