@@ -1,6 +1,10 @@
 package taller
 
-const elevadoresTaller = 3
+const (
+	horaApertura     = 8
+	horaCierre       = 21
+	elevadoresTaller = 3
+)
 
 type Libreta struct {
 	citas []Cita

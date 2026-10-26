@@ -17,11 +17,6 @@ type Cita struct {
 	id     int
 }
 
-const (
-	horaApertura = 8
-	horaCierre   = 21
-)
-
 func NuevaCita(id int, inicio time.Time, tipo TipoReparacion) (Cita, error) {
 	if inicio.Weekday() == time.Sunday {
 		return Cita{}, ErrDomingo
