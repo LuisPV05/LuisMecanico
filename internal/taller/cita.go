@@ -14,10 +14,9 @@ var (
 type Cita struct {
 	inicio time.Time
 	tipo   TipoReparacion
-	id     int
 }
 
-func NuevaCita(id int, inicio time.Time, tipo TipoReparacion) (Cita, error) {
+func NuevaCita(inicio time.Time, tipo TipoReparacion) (Cita, error) {
 	if inicio.Weekday() == time.Sunday {
 		return Cita{}, ErrDomingo
 	}
@@ -28,5 +27,5 @@ func NuevaCita(id int, inicio time.Time, tipo TipoReparacion) (Cita, error) {
 		return Cita{}, ErrDuracionNoPositiva
 	}
 
-	return Cita{id: id, inicio: inicio, tipo: tipo}, nil
+	return Cita{inicio: inicio, tipo: tipo}, nil
 }
