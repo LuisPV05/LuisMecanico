@@ -7,5 +7,5 @@ const (
 )
 
 type Libreta struct {
-	citas []Cita
+	citas map[Cita]bool
 }
