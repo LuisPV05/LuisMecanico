@@ -6,6 +6,4 @@ const (
 	elevadoresTaller = 3
 )
 
-type Libreta struct {
-	citas map[Cita]bool
-}
+type Libreta map[Cita]bool
