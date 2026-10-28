@@ -9,6 +9,6 @@ const (
 )
 
 type Libreta struct {
-	elevadores [elevadoresTaller]map[time.Time]Cita
+	elevadores  [elevadoresTaller]map[time.Time]Cita
 	sinElevador []Cita
 }
