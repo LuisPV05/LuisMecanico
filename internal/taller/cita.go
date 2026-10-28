@@ -29,3 +29,9 @@ func NuevaCita(inicio time.Time, tipo TipoReparacion) (Cita, error) {
 
 	return Cita{inicio: inicio, tipo: tipo}, nil
 }
+
+type TipoReparacion struct {
+	nombre      string
+	duracion    time.Duration
+	usaElevador bool
+}
