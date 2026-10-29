@@ -1,7 +1,5 @@
 package taller
 
-import "time"
-
 const (
 	horaApertura     = 8
 	horaCierre       = 21
@@ -9,6 +7,5 @@ const (
 )
 
 type Libreta struct {
-	elevadores  [elevadoresTaller]map[time.Time]TipoReparacion
-	sinElevador []Cita
+	citas []Cita
 }
