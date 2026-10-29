@@ -8,7 +8,7 @@ type Cita struct {
 }
 
 type TipoReparacion struct {
-	nombre      string
-	duracion    time.Duration
-	usaElevador bool
+	nombreEnCatalogo string
+	duracion         time.Duration
+	usaElevador      bool
 }
