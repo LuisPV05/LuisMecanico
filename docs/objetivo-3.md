@@ -54,3 +54,27 @@ El comando `go` ejecuta subcomandos sueltos (`go build`, `go test`, `go mod down
 4. Cuánto hay que mantener: si las tareas son configuración o código del proyecto.
 
 **Decisión: Task.** Task y Mage se instalan con el toolchain de Go; make y just obligan a instalar algo ajeno a Go (el sistema operativo o un binario de Rust). Los dos están mantenidos, con versiones de octubre y abril de 2026. Mage escribe las tareas como código Go, que habría que mantener y compilar para tres tareas de una línea. Task las declara en `Taskfile.yml`. El coste asumido es una herramienta externa que se instala una vez con `go install`.
+
+## Tarea `check`
+
+El enunciado pide que `check` compruebe la sintaxis de los fuentes existentes y solo eso.
+
+**Opciones**, probadas con Go 1.24.7 sobre un paquete con un error de sintaxis y otro con un error de tipos (una variable no definida):
+
+| Comando | Error de sintaxis | Error de tipos | Qué más hace |
+|---|---|---|---|
+| `gofmt -e .` | Lo detecta | No lo detecta | Imprime el código formateado |
+| `go build ./...` | Lo detecta | Lo detecta | Compila |
+| `go vet ./...` | Lo detecta | Lo detecta | Análisis estático de construcciones sospechosas |
+| `go test ./...` | Lo detecta | Lo detecta | Ejecuta los tests |
+
+**Criterio:** que compruebe la sintaxis y nada más.
+
+**Decisión: `gofmt -e . > /dev/null`.** Es el único comando que detecta los errores de sintaxis sin detectar los de tipos ni hacer nada más. Los demás van más allá de la sintaxis. Se descarta la salida estándar porque, sin eso, imprime todo el código formateado, y los errores salen por la salida de error. El coste asumido es que no comprueba que el código compile; eso lo hace `task test`.
+
+## Dónde está cada cosa
+
+- `go.mod`: módulo de Go.
+- `Taskfile.yml`: tareas `install`, `test` y `check`.
+- `iv.yaml`: clave `automatizar` con `fichero: Taskfile.yml` y `orden: task`.
+- `README.md`: cómo instalar Task y ejecutar las tareas, y descripción de la entidad.
