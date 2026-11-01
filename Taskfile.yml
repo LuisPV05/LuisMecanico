@@ -10,3 +10,8 @@ tasks:
     desc: Ejecuta los tests del proyecto
     cmds:
       - go test ./...
+      
+  check:
+    desc: Comprueba la sintaxis de los fuentes y nada más
+    cmds:
+      - gofmt -e . > /dev/null
