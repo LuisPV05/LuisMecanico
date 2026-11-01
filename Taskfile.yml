@@ -1,0 +1,12 @@
+version: '3'
+
+tasks:
+  install:
+    desc: Descarga las dependencias del módulo
+    cmds:
+      - go mod download
+
+  test:
+    desc: Ejecuta los tests del proyecto
+    cmds:
+      - go test ./...
