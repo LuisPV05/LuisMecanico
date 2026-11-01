@@ -30,3 +30,27 @@ Este documento recoge cómo se eligieron las herramientas que automatizan las ta
 **Decisión: módulos de Go.** Son el sistema oficial desde Go 1.11 y vienen en el propio comando `go` (`go help modules`: "Modules are how Go manages dependencies"), así que no hay nada que instalar. dep está archivado, glide y govendor están retirados de Heroku, que solo admite módulos. Bazel y Nix no resuelven ningún problema de un proyecto sin dependencias externas y añadirían una herramienta más.
 
 Consecuencia: `go.mod` en la raíz, con el módulo `github.com/LuisPV05/LuisMecanico`, y la tarea `install` ejecuta `go mod download`, que hoy no descarga nada porque no hay dependencias externas.
+
+## Gestor de tareas
+
+El comando `go` ejecuta subcomandos sueltos (`go build`, `go test`, `go mod download`), pero ninguno lee un fichero con tareas con nombre. `go generate` ejecuta comandos escritos en comentarios de los fuentes con la intención de crear o actualizar código Go. Los módulos de Go gestionan dependencias, no tareas, así que no se usan también como gestor de tareas: hace falta una herramienta aparte.
+
+**Opciones:**
+
+| Opción | Fichero de tareas | Instalación | Última versión |
+|---|---|---|---|
+| make | `Makefile` | Del sistema operativo, ajena a Go | 4.4.1, 26-02-2023 ([NEWS](https://fossies.org/linux/make/NEWS)) |
+| just | `justfile` | Binario externo escrito en Rust | 1.59.0, 15-10-2026 ([crates.io](https://crates.io/crates/just)) |
+| Task | `Taskfile.yml` | `go install`, con el toolchain de Go que el proyecto ya necesita | v3.54.0, 01-10-2026 ([GitHub](https://github.com/go-task/task/releases/tag/v3.54.0)) |
+| Mage | `magefile.go`, con las tareas escritas en Go | `go install` | v1.17.2, 23-04-2026 ([GitHub](https://github.com/magefile/mage/releases)) |
+| Scripts de shell | Scripts propios | Ninguna | No aplica: no hay un fichero de tareas común |
+| Bazel | Ficheros `BUILD` | Sí | No se evalúa en detalle: es un sistema de construcción general |
+
+**Criterios:**
+
+1. Instalación: si se instala con el toolchain de Go que el proyecto ya exige o hay que instalar algo ajeno.
+2. Mantenimiento: fecha de la última versión.
+3. Si tiene un fichero de tareas con nombre, versionado en el repositorio, al que pueda apuntar `iv.yaml`.
+4. Cuánto hay que mantener: si las tareas son configuración o código del proyecto.
+
+**Decisión: Task.** Task y Mage se instalan con el toolchain de Go; make y just obligan a instalar algo ajeno a Go (el sistema operativo o un binario de Rust). Los dos están mantenidos, con versiones de octubre y abril de 2026. Mage escribe las tareas como código Go, que habría que mantener y compilar para tres tareas de una línea. Task las declara en `Taskfile.yml`. El coste asumido es una herramienta externa que se instala una vez con `go install`.
