@@ -131,6 +131,12 @@ La planificación relativa al objetivo 1 se encuentra respectivamente en los sig
 - [Historias de usuario](docs/historias-usuarios.md)
 - [Milestones](docs/milestones.md)
 
+## La entidad: `Libreta`
+
+La entidad del modelo es `Libreta`, en [`internal/taller/libreta.go`](internal/taller/libreta.go). Es el único sitio donde están todas las citas del taller. Cada [`Cita`](internal/taller/cita.go) tiene un inicio y un tipo de reparación (nombre, duración y si usa elevador). El horario del taller (de 8:00 a 21:00) y el número de elevadores (3) son constantes de la propia libreta.
+
+Dentro del servicio, de la libreta saldrá qué elevadores están ocupados en cada momento, que nunca pueden ser más de tres. Así se detectará el conflicto al organizar la cita y no cuando empieza la reparación. Por ahora es solo el modelo: la lógica llega en el Milestone 1.
+
 ## Instalación y tareas
 
 Las tareas del proyecto se describen en [`Taskfile.yml`](Taskfile.yml) y se ejecutan con [Task](https://github.com/go-task/task). Hace falta tener instalado [Go](https://go.dev/dl/).
@@ -149,5 +155,14 @@ Después, desde la raíz del repositorio:
 ```bash
 task install   # descarga las dependencias del módulo
 task test      # ejecuta los tests
+task check     # comprueba la sintaxis de los fuentes
 task --list    # lista las tareas
 ```
+
+### Comprobar la sintaxis de la entidad
+
+```bash
+task check
+```
+
+Ejecuta `gofmt -e` sobre todo el repositorio, incluida `internal/taller/libreta.go`. Informa de los errores de sintaxis y de nada más: no comprueba tipos, formato ni estilo, ni ejecuta tests.
