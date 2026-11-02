@@ -41,7 +41,7 @@ Se mide cuánto cuesta dejar el proyecto listo en una máquina limpia, porque es
 
 ## Gestor de tareas
 
-El comando `go` ejecuta subcomandos sueltos (`go build`, `go test`, `go mod download`), pero ninguno lee un fichero con tareas con nombre. `go generate` ejecuta comandos escritos en comentarios de los fuentes con la intención de crear o actualizar código Go. Los módulos de Go gestionan dependencias, no tareas, así que no se usan también como gestor de tareas: hace falta una herramienta aparte.
+El comando `go` ejecuta subcomandos sueltos (`go build`, `go test`, `go mod download`), pero ninguno lee un fichero con tareas con nombre. `go generate` ejecuta comandos escritos en comentarios de los fuentes con la intención de crear o actualizar código Go. Los módulos de Go gestionan dependencias, no tareas, así que hace falta una herramienta aparte.
 
 **Opciones:**
 
@@ -50,17 +50,14 @@ El comando `go` ejecuta subcomandos sueltos (`go build`, `go test`, `go mod down
 | make | `Makefile` | Del sistema operativo, ajena a Go | 4.4.1, 26-02-2023 ([NEWS](https://fossies.org/linux/make/NEWS)) |
 | Task | `Taskfile.yml` | `go install`, con el toolchain de Go que el proyecto ya necesita | v3.54.0, 01-10-2026 ([GitHub](https://github.com/go-task/task/releases/tag/v3.54.0)) |
 | Mage | `magefile.go`, con las tareas escritas en Go | `go install` | v1.17.2, 23-04-2026 ([GitHub](https://github.com/magefile/mage/releases)) |
-| Scripts de shell | Scripts propios | Ninguna | No aplica: no hay un fichero de tareas común |
-| Bazel | Ficheros `BUILD` | Sí | No se evalúa en detalle: es un sistema de construcción general |
 
 **Criterios:**
 
-1. Instalación: si se instala con el toolchain de Go que el proyecto ya exige o hay que instalar algo ajeno.
-2. Mantenimiento: fecha de la última versión.
-3. Si tiene un fichero de tareas con nombre, versionado en el repositorio, al que pueda apuntar `iv.yaml`.
-4. Cuánto hay que mantener: si las tareas son configuración o código del proyecto.
-
-**Decisión: Task.** Task y Mage se instalan con el toolchain de Go; make y just obligan a instalar algo ajeno a Go (el sistema operativo o un binario de Rust). Los dos están mantenidos, con versiones de octubre y abril de 2026. Mage escribe las tareas como código Go, que habría que mantener y compilar para tres tareas de una línea. Task las declara en `Taskfile.yml`. El coste asumido es una herramienta externa que se instala una vez con `go install`.
+1. Mantenimiento: fecha de la última versión. Según el enunciado, una herramienta que no se mantiene con asiduidad aumenta la deuda técnica.
+2. Coste de instalación: tiempo y tamaño medidos, porque se usará en los objetivos 5 y 6.
+3. Coste de ejecución: sobrecoste medido frente a `go test ./...` directo.
+4. Cuánto hay que mantener: tamaño del fichero de tareas y si las tareas son configuración o código del proyecto.
+5. Si se instala con el toolchain de Go que el proyecto ya exige.
 
 ### Mediciones de los gestores de tareas
 
@@ -72,20 +69,7 @@ Se mide lo que cuesta tener cada herramienta disponible en una máquina limpia, 
 | Mage | `go install` (v1.17.2) | 2,497 s | 7.531.520 B | [captura](../media/tareas-instalacion.png) |
 | make | Ya presente en el entorno (GNU Make 4.4.1, compilado para Cygwin); no se instala con Go | No medido | No medido | [captura](../media/tareas-instalacion.png) |
 
-Limitación: los métodos de obtención no son idénticos. Task y Mage se compilan con Go durante la instalación; just se descarga ya compilado con `winget`. Los tiempos indican el coste real de cada vía, no una comparación entre binarios idénticos. La presencia de make depende del entorno: no viene con Go.
-
-## Tarea `check`
-
-El enunciado pide que `check` compruebe la sintaxis de los fuentes existentes y solo eso.
-
-**Opciones**, probadas con Go 1.24.7 sobre un paquete con un error de sintaxis y otro con un error de tipos (una variable no definida):
-
-| Comando | Error de sintaxis | Error de tipos | Qué más hace |
-|---|---|---|---|
-| `gofmt -e .` | Lo detecta | No lo detecta | Imprime el código formateado |
-| `go build ./...` | Lo detecta | Lo detecta | Compila |
-| `go vet ./...` | Lo detecta | Lo detecta | Análisis estático de construcciones sospechosas |
-| `go test ./...` | Lo detecta | Lo detecta | Ejecuta los tests |
+Limitación: Task y Mage se compilan con Go durante la instalación, y make ya estaba disponible en el entorno. Los tiempos indican el coste real de cada vía, no una comparación entre binarios idénticos. La presencia de make depende del entorno: no viene con Go.
 
 #### Ejecución de la tarea `test` y tamaño del fichero de tareas
 
@@ -100,6 +84,29 @@ Se crea una carpeta de prueba fuera del repositorio con el mismo `go.mod`, el mi
 
 Limitaciones: el proyecto todavía no tiene tests, así que las diferencias reflejan sobre todo el tiempo de arranque de cada herramienta. Son dos ejecuciones por herramienta y las diferencias entre make y Task (unas decenas de milisegundos) pueden ser ruido. El `Taskfile.yml` tiene una línea `desc` por tarea, que sirve para `task --list`; el `Makefile` no tiene equivalente.
 
+**Decisión: Task.** Las medidas no dan un ganador en todos los criterios. make es el más rápido de ejecutar (+0,047 s frente a `go test` directo) y tiene el fichero más corto (8 líneas). Mage es el más barato de instalar (2,497 s y 7,5 MB), pero el más lento de ejecutar (+0,376 s). Task queda en medio en ejecución (+0,082 s) y en líneas (16), pero su binario es el más grande (75 MB) y tarda 4,629 s en instalarse.
+
+Se elige Task por tres razones:
+
+- **Frente a make:** make 4.4.1 es de 26-02-2023 y no ha tenido versión nueva desde entonces, mientras que Task tiene v3.54.0 del 01-10-2026. Según el enunciado, una herramienta que no se mantiene con asiduidad aumenta la deuda técnica. Es el argumento más débil: que no haya versiones nuevas también puede indicar madurez y no abandono. Además, make no viene con Go.
+- **Frente a Mage:** Task tiene menos sobrecoste de ejecución (+0,082 s frente a +0,376 s) y un fichero más corto (16 líneas frente a 21). Mage, además, escribe las tareas como código Go que se compila en cada ejecución.
+- **Con el proyecto:** Task se instala con el toolchain de Go que el proyecto ya exige y declara las tareas como configuración en `Taskfile.yml`.
+
+Costes asumidos: 75 MB y 4,629 s de instalación, y unos 35 ms más por ejecución que make. Si en los objetivos 5 y 6 el tiempo de instalación resulta un problema, se revisará la decisión.
+
+## Tarea `check`
+
+El enunciado pide que `check` compruebe la sintaxis de los fuentes existentes y solo eso.
+
+**Opciones**, probadas con Go 1.24.7 sobre un paquete con un error de sintaxis y otro con un error de tipos (una variable no definida):
+
+| Comando | Error de sintaxis | Error de tipos | Qué más hace |
+|---|---|---|---|
+| `gofmt -e .` | Lo detecta | No lo detecta | Imprime el código formateado |
+| `go build ./...` | Lo detecta | Lo detecta | Compila |
+| `go vet ./...` | Lo detecta | Lo detecta | Análisis estático de construcciones sospechosas |
+| `go test ./...` | Lo detecta | Lo detecta | Ejecuta los tests |
+
 **Criterio:** que compruebe la sintaxis y nada más.
 
 **Decisión: `gofmt -e . > /dev/null`.** Es el único comando que detecta los errores de sintaxis sin detectar los de tipos ni hacer nada más. Los demás van más allá de la sintaxis. Se descarta la salida estándar porque, sin eso, imprime todo el código formateado, y los errores salen por la salida de error. El coste asumido es que no comprueba que el código compile; eso lo hace `task test`.
@@ -110,3 +117,4 @@ Limitaciones: el proyecto todavía no tiene tests, así que las diferencias refl
 - `Taskfile.yml`: tareas `install`, `test` y `check`.
 - `iv.yaml`: clave `automatizar` con `fichero: Taskfile.yml` y `orden: task`.
 - `README.md`: cómo instalar Task y ejecutar las tareas, y descripción de la entidad.
+- `media/`: capturas de las mediciones.
