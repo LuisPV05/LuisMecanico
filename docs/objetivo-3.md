@@ -31,6 +31,14 @@ Este documento recoge cómo se eligieron las herramientas que automatizan las ta
 
 Consecuencia: `go.mod` en la raíz, con el módulo `github.com/LuisPV05/LuisMecanico`, y la tarea `install` ejecuta `go mod download`, que hoy no descarga nada porque no hay dependencias externas.
 
+### Mediciones del gestor de dependencias
+
+Se mide cuánto cuesta dejar el proyecto listo en una máquina limpia, porque esta herramienta se usará en entornos donde la velocidad de instalación importa (objetivos 5 y 6). Máquina: Windows, Git Bash, Go 1.27.3 (`go version go1.27.3 windows/amd64`).
+
+| Herramienta | Instalación aparte de Go | `go mod download` o equivalente | Compilar el proyecto | Captura |
+|---|---|---|---|---|
+| Módulos de Go | Ninguna | 0,152 s | 0,491 s | [captura](../media/dep-go-modules.png) |
+
 ## Gestor de tareas
 
 El comando `go` ejecuta subcomandos sueltos (`go build`, `go test`, `go mod download`), pero ninguno lee un fichero con tareas con nombre. `go generate` ejecuta comandos escritos en comentarios de los fuentes con la intención de crear o actualizar código Go. Los módulos de Go gestionan dependencias, no tareas, así que no se usan también como gestor de tareas: hace falta una herramienta aparte.
