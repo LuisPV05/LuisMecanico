@@ -103,9 +103,16 @@ Captura: [captura](../media/check-comandos.png). Cada celda indica si el comando
 
 Limitaciones: una sola ejecución por comando y proyectos de pocas líneas, así que los tiempos reflejan sobre todo el arranque de cada herramienta y las diferencias de decenas de milisegundos pueden ser ruido.
 
-**Criterio:** que compruebe la sintaxis y nada más.
+**Criterios:**
 
-**Decisión: `gofmt -e . > /dev/null`.** Es el único comando que detecta los errores de sintaxis sin detectar los de tipos ni hacer nada más. Los demás van más allá de la sintaxis. Se descarta la salida estándar porque, sin eso, imprime todo el código formateado, y los errores salen por la salida de error. El coste asumido es que no comprueba que el código compile; eso lo hace `task test`.
+1. Que detecte los errores de sintaxis.
+2. Que detecte que el código no compila, porque el enunciado entiende comprobar la sintaxis como "si compila correctamente".
+3. Que no haga nada más allá de eso, como ejecutar tests.
+4. Tiempo de ejecución.
+
+**Decisión: `go build ./...`.** Según la medición, `gofmt -e .` detecta el error de sintaxis (salida 2), pero deja pasar el error de tipos (salida 0): daría por buenos fuentes que no compilan. `go build ./...`, `go vet ./...` y `go test ./...` detectan los dos errores (salida 1). Entre ellos, `go build ./...` es el que hace solo lo que define el enunciado, compilar: según la documentación de Go, `go vet` añade análisis estático y `go test` ejecuta los tests, que no se piden en esta tarea.
+
+Costes asumidos: `go build ./...` tarda algo más que `gofmt -e .` en un proyecto correcto (0,435 s frente a 0,294 s, con las limitaciones ya indicadas), y compilar es más que comprobar la sintaxis en sentido estricto. Se asume porque así coincide con la definición del enunciado.
 
 ## Dónde está cada cosa
 
