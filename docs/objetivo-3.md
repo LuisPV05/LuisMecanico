@@ -87,6 +87,19 @@ El enunciado pide que `check` compruebe la sintaxis de los fuentes existentes y 
 | `go vet ./...` | Lo detecta | Lo detecta | Análisis estático de construcciones sospechosas |
 | `go test ./...` | Lo detecta | Lo detecta | Ejecuta los tests |
 
+#### Ejecución de la tarea `test` y tamaño del fichero de tareas
+
+Se crea una carpeta de prueba fuera del repositorio con el mismo `go.mod`, el mismo código y un fichero de tareas por herramienta (`Taskfile.yml`, `Makefile`, `magefile.go`) con las tres tareas `install`, `test` y `check`. Se calienta la caché de Go una vez y se ejecuta `test` dos veces con cada herramienta. Para comparar, se mide también `go test ./...` directo. El sobrecoste es la media de las diferencias con `go test` directo en cada pasada.
+
+| Herramienta | 1.ª ejecución | 2.ª ejecución | Sobrecoste medio | Líneas del fichero de tareas | Captura |
+|---|---|---|---|---|---|
+| `go test ./...` directo | 0,245 s | 0,248 s | — | — | [captura](../media/tareas-ejecucion.png) |
+| make | 0,295 s | 0,291 s | +0,047 s | 8 | [captura](../media/tareas-ejecucion.png) |
+| Task | 0,337 s | 0,320 s | +0,082 s | 16 | [captura](../media/tareas-ejecucion.png) |
+| Mage | 0,722 s (compila el `magefile.go`) | 0,522 s | +0,376 s | 21 | [captura](../media/tareas-ejecucion.png) |
+
+Limitaciones: el proyecto todavía no tiene tests, así que las diferencias reflejan sobre todo el tiempo de arranque de cada herramienta. Son dos ejecuciones por herramienta y las diferencias entre make y Task (unas decenas de milisegundos) pueden ser ruido. El `Taskfile.yml` tiene una línea `desc` por tarea, que sirve para `task --list`; el `Makefile` no tiene equivalente.
+
 **Criterio:** que compruebe la sintaxis y nada más.
 
 **Decisión: `gofmt -e . > /dev/null`.** Es el único comando que detecta los errores de sintaxis sin detectar los de tipos ni hacer nada más. Los demás van más allá de la sintaxis. Se descarta la salida estándar porque, sin eso, imprime todo el código formateado, y los errores salen por la salida de error. El coste asumido es que no comprueba que el código compile; eso lo hace `task test`.
