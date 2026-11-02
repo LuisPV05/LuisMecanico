@@ -98,14 +98,18 @@ Costes asumidos: 75 MB y 4,629 s de instalación, y unos 35 ms más por ejecuci�
 
 El enunciado pide que `check` compruebe la sintaxis de los fuentes existentes y solo eso.
 
-**Opciones**, probadas con Go 1.24.7 sobre un paquete con un error de sintaxis y otro con un error de tipos (una variable no definida):
+**Opciones:** se prueban cuatro comandos sobre tres proyectos mínimos creados fuera del repositorio: uno correcto, uno con un error de sintaxis (una llave sin cerrar) y otro con un error de tipos (una variable que no existe). Se anota el código de salida de cada comando y lo que tarda. Máquina: Windows, Git Bash, Go 1.27.3. Antes de medir se calienta la caché de Go.
 
-| Comando | Error de sintaxis | Error de tipos | Qué más hace |
+| Comando | Proyecto correcto | Error de sintaxis | Error de tipos |
 |---|---|---|---|
-| `gofmt -e .` | Lo detecta | No lo detecta | Imprime el código formateado |
-| `go build ./...` | Lo detecta | Lo detecta | Compila |
-| `go vet ./...` | Lo detecta | Lo detecta | Análisis estático de construcciones sospechosas |
-| `go test ./...` | Lo detecta | Lo detecta | Ejecuta los tests |
+| `gofmt -e .` | Pasa (0, 0,294 s) | Falla (2, 0,269 s) | Pasa (0, 0,271 s) |
+| `go build ./...` | Pasa (0, 0,435 s) | Falla (1, 0,347 s) | Falla (1, 0,357 s) |
+| `go vet ./...` | Pasa (0, 0,399 s) | Falla (1, 0,410 s) | Falla (1, 0,405 s) |
+| `go test ./...` | Pasa (0, 0,343 s) | Falla (1, 0,352 s) | Falla (1, 0,366 s) |
+
+Captura: [captura](../media/check-comandos.png). Cada celda indica si el comando pasa o falla, su código de salida y su tiempo.
+
+Limitaciones: una sola ejecución por comando y proyectos de pocas líneas, así que los tiempos reflejan sobre todo el arranque de cada herramienta y las diferencias de decenas de milisegundos pueden ser ruido.
 
 **Criterio:** que compruebe la sintaxis y nada más.
 
