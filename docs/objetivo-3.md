@@ -10,34 +10,26 @@ Este documento recoge cómo se eligieron las herramientas que automatizan las ta
 
 ## Gestor de dependencias
 
-**Opciones:**
-
-| Opción | Qué es | Instalación aparte del toolchain de Go | Estado |
-|---|---|---|---|
-| Módulos de Go (`go.mod`, `go.sum`) | Sistema integrado en el comando `go` | Ninguna | Soporte oficial desde Go 1.11 ([README de golang/dep](https://github.com/golang/dep)) |
-| dep | Gestor anterior a los módulos | Sí | Obsoleto y archivado en 2020 a favor de los módulos ([README de golang/dep](https://github.com/golang/dep)) |
-| glide | Gestor anterior a los módulos | Sí | Retirado, junto con dep y otros, del buildpack de Go de Heroku el 10-03-2026 ([Heroku](https://devcenter.heroku.com/changelog-items/3619)) |
-| govendor | Gestor anterior a los módulos | Sí | Retirado igual que glide ([Heroku](https://devcenter.heroku.com/changelog-items/3619)) |
-| Bazel y Nix | Sistemas de construcción generales, no específicos de Go | Sí | No se evalúan en detalle |
+Go tiene un estándar propio para gestionar dependencias: los módulos (`go.mod` y `go.sum`), integrados en el comando `go` y oficiales desde Go 1.11. La guía del objetivo dice que, si hay un estándar, primero hay que conocerlo y después seguirlo, adaptando el resto de criterios. Por eso no se comparan otras herramientas.
 
 **Criterios:**
 
-1. Si es el estándar del lenguaje (si lo hay, se sigue).
-2. Estado de mantenimiento: que no esté archivado ni retirado.
-3. Si requiere instalar algo aparte del toolchain de Go.
+1. Si es el estándar del lenguaje.
+2. Si hay que instalar algo aparte del toolchain de Go.
+3. Cuánto cuesta dejar el proyecto listo, porque se usará en los objetivos 5 y 6, donde la velocidad importa.
 4. Número de dependencias del proyecto: hoy, ninguna externa.
-
-**Decisión: módulos de Go.** Son el sistema oficial desde Go 1.11 y vienen en el propio comando `go` (`go help modules`: "Modules are how Go manages dependencies"), así que no hay nada que instalar. dep está archivado, glide y govendor están retirados de Heroku, que solo admite módulos. Bazel y Nix no resuelven ningún problema de un proyecto sin dependencias externas y añadirían una herramienta más.
-
-Consecuencia: `go.mod` en la raíz, con el módulo `github.com/LuisPV05/LuisMecanico`, y la tarea `install` ejecuta `go mod download`, que hoy no descarga nada porque no hay dependencias externas.
 
 ### Mediciones del gestor de dependencias
 
-Se mide cuánto cuesta dejar el proyecto listo en una máquina limpia, porque esta herramienta se usará en entornos donde la velocidad de instalación importa (objetivos 5 y 6). Máquina: Windows, Git Bash, Go 1.27.3 (`go version go1.27.3 windows/amd64`).
+Se mide cuánto cuesta dejar el proyecto listo en una máquina limpia. Máquina: Windows, Git Bash, Go 1.27.3 (`go version go1.27.3 windows/amd64`).
 
 | Herramienta | Instalación aparte de Go | `go mod download` o equivalente | Compilar el proyecto | Captura |
 |---|---|---|---|---|
 | Módulos de Go | Ninguna | 0,152 s | 0,491 s | [captura](../media/dep-go-modules.png) |
+
+**Decisión: módulos de Go.** Son el estándar del lenguaje, vienen en el propio comando `go` y no hay nada que instalar. Preparar el proyecto cuesta 0,152 s y compilarlo 0,491 s, y el proyecto no tiene dependencias externas, así que no hay ninguna razón para añadir otra herramienta. Tampoco se usan los módulos como gestor de tareas: gestionan dependencias, no tareas, y por eso hace falta una herramienta aparte, que se elige a continuación.
+
+Consecuencia: `go.mod` en la raíz, con el módulo `github.com/LuisPV05/LuisMecanico`, y la tarea `install` ejecuta `go mod download`, que hoy no descarga nada porque no hay dependencias externas.
 
 ## Gestor de tareas
 
