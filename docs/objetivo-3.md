@@ -48,7 +48,6 @@ El comando `go` ejecuta subcomandos sueltos (`go build`, `go test`, `go mod down
 | Opción | Fichero de tareas | Instalación | Última versión |
 |---|---|---|---|
 | make | `Makefile` | Del sistema operativo, ajena a Go | 4.4.1, 26-02-2023 ([NEWS](https://fossies.org/linux/make/NEWS)) |
-| just | `justfile` | Binario externo escrito en Rust | 1.59.0, 15-10-2026 ([crates.io](https://crates.io/crates/just)) |
 | Task | `Taskfile.yml` | `go install`, con el toolchain de Go que el proyecto ya necesita | v3.54.0, 01-10-2026 ([GitHub](https://github.com/go-task/task/releases/tag/v3.54.0)) |
 | Mage | `magefile.go`, con las tareas escritas en Go | `go install` | v1.17.2, 23-04-2026 ([GitHub](https://github.com/magefile/mage/releases)) |
 | Scripts de shell | Scripts propios | Ninguna | No aplica: no hay un fichero de tareas común |
@@ -62,6 +61,18 @@ El comando `go` ejecuta subcomandos sueltos (`go build`, `go test`, `go mod down
 4. Cuánto hay que mantener: si las tareas son configuración o código del proyecto.
 
 **Decisión: Task.** Task y Mage se instalan con el toolchain de Go; make y just obligan a instalar algo ajeno a Go (el sistema operativo o un binario de Rust). Los dos están mantenidos, con versiones de octubre y abril de 2026. Mage escribe las tareas como código Go, que habría que mantener y compilar para tres tareas de una línea. Task las declara en `Taskfile.yml`. El coste asumido es una herramienta externa que se instala una vez con `go install`.
+
+### Mediciones de los gestores de tareas
+
+Se mide lo que cuesta tener cada herramienta disponible en una máquina limpia, porque se usarán en entornos donde la velocidad de instalación importa (objetivos 5 y 6). Máquina: Windows, Git Bash, Go 1.27.3.
+
+| Herramienta | Cómo se obtiene | Tiempo | Tamaño en disco | Captura |
+|---|---|---|---|---|
+| Task | `go install` | 4,629 s | 75.064.320 B | [captura](../media/tareas-instalacion.png) |
+| Mage | `go install` (v1.17.2) | 2,497 s | 7.531.520 B | [captura](../media/tareas-instalacion.png) |
+| make | Ya presente en el entorno (GNU Make 4.4.1, compilado para Cygwin); no se instala con Go | No medido | No medido | [captura](../media/tareas-instalacion.png) |
+
+Limitación: los métodos de obtención no son idénticos. Task y Mage se compilan con Go durante la instalación; just se descarga ya compilado con `winget`. Los tiempos indican el coste real de cada vía, no una comparación entre binarios idénticos. La presencia de make depende del entorno: no viene con Go.
 
 ## Tarea `check`
 
