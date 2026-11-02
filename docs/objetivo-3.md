@@ -86,6 +86,8 @@ Se elige Task por tres razones:
 
 Costes asumidos: 75 MB y 4,629 s de instalación, y unos 35 ms más por ejecución que make. Si en los objetivos 5 y 6 el tiempo de instalación resulta un problema, se revisará la decisión.
 
+Consecuencia: `Taskfile.yml` en la raíz con las tareas `install`, `test` y `check`, y `iv.yaml` con la clave `automatizar`, que apunta a ese fichero y a la orden `task`.
+
 ## Tarea `check`
 
 El enunciado pide que `check` compruebe la sintaxis de los fuentes existentes y solo eso.
