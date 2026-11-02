@@ -155,7 +155,7 @@ Después, desde la raíz del repositorio:
 ```bash
 task install   # descarga las dependencias del módulo
 task test      # ejecuta los tests
-task check     # comprueba la sintaxis de los fuentes
+task check     # comprueba que los fuentes compilan
 task --list    # lista las tareas
 ```
 
@@ -165,4 +165,4 @@ task --list    # lista las tareas
 task check
 ```
 
-Ejecuta `gofmt -e` sobre todo el repositorio, incluida `internal/taller/libreta.go`. Informa de los errores de sintaxis y de nada más: no comprueba tipos, formato ni estilo, ni ejecuta tests.
+Ejecuta `go build ./...`, que compila todos los paquetes del proyecto, incluida la entidad `internal/taller/libreta.go`. Si hay un error de sintaxis o de tipos, lo muestra y termina con error; si todo es correcto, no imprime nada. No ejecuta tests.
