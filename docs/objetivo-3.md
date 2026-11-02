@@ -90,7 +90,7 @@ Consecuencia: `Taskfile.yml` en la raíz con las tareas `install`, `test` y `che
 
 ## Tarea `check`
 
-El enunciado pide que `check` compruebe la sintaxis de los fuentes existentes y solo eso.
+El enunciado pide que `check` compruebe la sintaxis de los fuentes existentes y solo eso, y aclara que se trata de comprobar si el código compila correctamente.
 
 **Opciones:** se prueban cuatro comandos sobre tres proyectos mínimos creados fuera del repositorio: uno correcto, uno con un error de sintaxis (una llave sin cerrar) y otro con un error de tipos (una variable que no existe). Se anota el código de salida de cada comando y lo que tarda. Máquina: Windows, Git Bash, Go 1.27.3. Antes de medir se calienta la caché de Go.
 
