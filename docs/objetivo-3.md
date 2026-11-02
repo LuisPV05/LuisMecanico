@@ -53,7 +53,7 @@ El comando `go` ejecuta subcomandos sueltos (`go build`, `go test`, `go mod down
 
 ### Mediciones de los gestores de tareas
 
-Se mide lo que cuesta tener cada herramienta disponible en una máquina limpia, porque se usarán en entornos donde la velocidad de instalación importa (objetivos 5 y 6). Máquina: Windows, Git Bash, Go 1.27.3.
+Se mide lo que cuesta tener cada herramienta disponible en la máquina de desarrollo, porque se usarán en entornos donde la velocidad de instalación importa (objetivos 5 y 6). Máquina: Windows, Git Bash, Go 1.27.3.
 
 | Herramienta | Cómo se obtiene | Tiempo | Tamaño en disco | Captura |
 |---|---|---|---|---|
