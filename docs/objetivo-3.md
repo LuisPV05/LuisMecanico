@@ -10,7 +10,7 @@ Este documento recoge cómo se eligieron las herramientas que automatizan las ta
 
 ## Gestor de dependencias
 
-Go tiene un estándar propio para gestionar dependencias: los módulos (`go.mod` y `go.sum`), integrados en el comando `go` y oficiales desde Go 1.11. La guía del objetivo dice que, si hay un estándar, primero hay que conocerlo y después seguirlo, adaptando el resto de criterios. Por eso no se comparan otras herramientas.
+Go tiene un estándar propio para gestionar dependencias: los módulos (`go.mod` y `go.sum`), integrados en el comando `go`   y oficiales desde Go 1.11 ([notas de la versión](https://go.dev/doc/go1.11#modules)),. La guía del objetivo dice que, si hay un estándar, primero hay que conocerlo y después seguirlo, adaptando el resto de criterios. Por eso no se comparan otras herramientas.
 
 **Criterios:**
 
@@ -21,7 +21,7 @@ Go tiene un estándar propio para gestionar dependencias: los módulos (`go.mod`
 
 ### Mediciones del gestor de dependencias
 
-Se mide cuánto cuesta dejar el proyecto listo en una máquina limpia. Máquina: Windows, Git Bash, Go 1.27.3 (`go version go1.27.3 windows/amd64`).
+Se mide cuánto cuesta dejar el proyecto listo. Máquina: la de desarrollo, con Windows, Git Bash y Go 1.27.3 (`go version go1.27.3 windows/amd64`).
 
 | Herramienta | Instalación aparte de Go | `go mod download` o equivalente | Compilar el proyecto | Captura |
 |---|---|---|---|---|
