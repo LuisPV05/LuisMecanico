@@ -120,6 +120,7 @@ Para la solucíon, esta en comprender el foco del problema y definir correctamen
 ## Documentación adicional y configuración
 
 La documentación relativa al objetivo 0 se encuentra [aquí](docs/objetivo-0.md).
+La justificación de las herramientas que automatizan las tareas del proyecto (objetivo 3) se encuentra [aquí](docs/objetivo-3.md).
 
 ## Planificación
 
@@ -129,3 +130,39 @@ La planificación relativa al objetivo 1 se encuentra respectivamente en los sig
 - [Jornadas de usuario](docs/user-journeys.md)
 - [Historias de usuario](docs/historias-usuarios.md)
 - [Milestones](docs/milestones.md)
+
+## La entidad: `Libreta`
+
+La entidad del modelo es `Libreta`, en [`internal/taller/libreta.go`](internal/taller/libreta.go). Es el único sitio donde están todas las citas del taller. Cada [`Cita`](internal/taller/cita.go) tiene un inicio y un tipo de reparación (nombre, duración y si usa elevador). El horario del taller (de 8:00 a 21:00) y el número de elevadores (3) son constantes de la propia libreta.
+
+Dentro del servicio, de la libreta saldrá qué elevadores están ocupados en cada momento, que nunca pueden ser más de tres. Así se detectará el conflicto al organizar la cita y no cuando empieza la reparación. Por ahora es solo el modelo: la lógica llega en el Milestone 1.
+
+## Instalación y tareas
+
+Las tareas del proyecto se describen en [`Taskfile.yml`](Taskfile.yml) y se ejecutan con [Task](https://github.com/go-task/task). Hace falta tener instalado [Go](https://go.dev/dl/).
+
+Task se instala una vez con el propio Go:
+
+```bash
+go install github.com/go-task/task/v3/cmd/task@latest
+task --version
+```
+
+Si `task` no se encuentra, añade `$(go env GOPATH)/bin` al `PATH`.
+
+Después, desde la raíz del repositorio:
+
+```bash
+task install   # descarga las dependencias del módulo
+task test      # ejecuta los tests
+task check     # comprueba que los fuentes compilan
+task --list    # lista las tareas
+```
+
+### Comprobar la sintaxis de la entidad
+
+```bash
+task check
+```
+
+Ejecuta `go build ./...`, que compila todos los paquetes del proyecto, incluida la entidad `internal/taller/libreta.go`. Si hay un error de sintaxis o de tipos, lo muestra y termina con error; si todo es correcto, no imprime nada. No ejecuta tests.
