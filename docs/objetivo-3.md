@@ -42,6 +42,7 @@ El comando `go` ejecuta subcomandos sueltos (`go build`, `go test`, `go mod down
 | make | `Makefile` | Del sistema operativo, ajena a Go | 4.4.1, 26-02-2023 ([NEWS](https://fossies.org/linux/make/NEWS)) |
 | Task | `Taskfile.yml` | `go install`, con el toolchain de Go que el proyecto ya necesita | v3.54.0, 01-10-2026 ([GitHub](https://github.com/go-task/task/releases/tag/v3.54.0)) |
 | Mage | `magefile.go`, con las tareas escritas en Go | `go install` | v1.17.2, 23-04-2026 ([GitHub](https://github.com/magefile/mage/releases)) |
+| just | `justfile` | Binario ya compilado, escrito en Rust; en Windows se instala con `winget` | 1.59.0, 15-10-2026 ([crates.io](https://crates.io/crates/just)) |
 
 **Criterios:**
 
@@ -60,8 +61,9 @@ Se mide lo que cuesta tener cada herramienta disponible en la máquina de desarr
 | Task | `go install` | 4,629 s | 75.064.320 B | [captura](../media/tareas-instalacion.png) |
 | Mage | `go install` (v1.17.2) | 2,497 s | 7.531.520 B | [captura](../media/tareas-instalacion.png) |
 | make | Ya presente en el entorno (GNU Make 4.4.1, compilado para Cygwin); no se instala con Go | No medido | No medido | [captura](../media/tareas-instalacion.png) |
+| just | `winget install --id Casey.Just -e` | 12,209 s | 5.922.304 B | [captura](../media/tareas-just-instalacion.jpg) |
 
-Limitación: Task y Mage se compilan con Go durante la instalación, y make ya estaba disponible en el entorno. Los tiempos indican el coste real de cada vía, no una comparación entre binarios idénticos. La presencia de make depende del entorno: no viene con Go.
+Limitación: Task y Mage se compilan con Go durante la instalación; just se descarga ya compilado con `winget`, así que su tiempo incluye la descarga y depende de la red; y make ya estaba disponible en el entorno. Los tiempos indican el coste real de cada vía, no una comparación entre binarios idénticos. La presencia de make depende del entorno: no viene con Go.
 
 #### Ejecución de la tarea `test` y tamaño del fichero de tareas
 
