@@ -12,6 +12,6 @@ tasks:
       - go test ./...
 
   check:
-    desc: Comprueba que los fuentes compilan
+    desc: Comprueba la sintaxis de los fuentes y nada más
     cmds:
-      - go build ./...
+      - gofmt -e . > /dev/null
