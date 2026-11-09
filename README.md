@@ -161,8 +161,6 @@ task --list    # lista las tareas
 
 ### Comprobar la sintaxis de la entidad
 
-### Comprobar la sintaxis de la entidad
-
 ```bash
 task check
 ```
