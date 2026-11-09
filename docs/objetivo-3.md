@@ -89,12 +89,10 @@ El enunciado pide que `check` compruebe la sintaxis de los fuentes existentes y 
 
 **Opciones:** se prueban cuatro comandos sobre tres proyectos mínimos creados fuera del repositorio: uno correcto, uno con un error de sintaxis (una llave sin cerrar) y otro con un error de tipos (una variable que no existe). Se anota el código de salida de cada comando y lo que tarda. Máquina: Windows, Git Bash, Go 1.27.3. Antes de medir se calienta la caché de Go.
 
-| Comando | Proyecto correcto | Error de sintaxis | Error de tipos |
-|---|---|---|---|
-| `gofmt -e .` | Pasa (0, 0,294 s) | Falla (2, 0,269 s) | Pasa (0, 0,271 s) |
-| `go build ./...` | Pasa (0, 0,435 s) | Falla (1, 0,347 s) | Falla (1, 0,357 s) |
-| `go vet ./...` | Pasa (0, 0,399 s) | Falla (1, 0,410 s) | Falla (1, 0,405 s) |
-| `go test ./...` | Pasa (0, 0,343 s) | Falla (1, 0,352 s) | Falla (1, 0,366 s) |
+- `gofmt -e .`: pasa en el proyecto correcto (salida 0, 0,294 s), falla con el error de sintaxis (salida 2, 0,269 s) y **pasa** con el error de tipos (salida 0, 0,271 s).
+- `go build ./...`: pasa en el proyecto correcto (salida 0, 0,435 s), falla con el error de sintaxis (salida 1, 0,347 s) y falla con el error de tipos (salida 1, 0,357 s).
+- `go vet ./...`: pasa en el proyecto correcto (salida 0, 0,399 s), falla con el error de sintaxis (salida 1, 0,410 s) y falla con el error de tipos (salida 1, 0,405 s).
+- `go test ./...`: pasa en el proyecto correcto (salida 0, 0,343 s), falla con el error de sintaxis (salida 1, 0,352 s) y falla con el error de tipos (salida 1, 0,366 s).
 
 Captura: [captura](../media/check-comandos.png). Cada celda indica si el comando pasa o falla, su código de salida y su tiempo.
 
