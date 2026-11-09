@@ -71,15 +71,15 @@ Se crea una carpeta de prueba fuera del repositorio con el mismo `go.mod`, el mi
 
 Limitaciones: el proyecto todavía no tiene tests, así que las diferencias reflejan sobre todo el tiempo de arranque de cada herramienta. Son dos ejecuciones por herramienta y las diferencias entre make y Task (unas decenas de milisegundos) pueden ser ruido. El `Taskfile.yml` tiene una línea `desc` por tarea, que sirve para `task --list`; el `Makefile` no tiene equivalente.
 
-**Decisión: Task.** Las medidas no dan un ganador en todos los criterios. make es el más rápido de ejecutar (+0,047 s frente a `go test` directo) y tiene el fichero más corto (8 líneas). Mage es el más barato de instalar (2,497 s y 7,5 MB), pero el más lento de ejecutar (+0,376 s). Task queda en medio en ejecución (+0,082 s) y en líneas (16), pero su binario es el más grande (75 MB) y tarda 4,629 s en instalarse.
+**Decisión: Task.** Las medidas no dan un ganador claro. make y just son los que menos líneas necesitan (8), y just ocupa unas diez veces menos que Task (5,9 MB frente a 75 MB) con un sobrecoste de ejecución casi igual (+0,077 s frente a +0,082 s). Mage es el más barato de instalar con Go (2,497 s y 7,5 MB), pero el más lento de ejecutar (+0,376 s). Task es el que más ocupa (75 MB) y su fichero es el doble de largo que el de make o just (16 líneas, de las cuales tres son líneas `desc`).
 
-Se elige Task por tres razones:
+Se elige Task por estas razones:
 
-- **Frente a make:** make 4.4.1 es de 26-02-2023 y no ha tenido versión nueva desde entonces, mientras que Task tiene v3.54.0 del 01-10-2026. Según el enunciado, una herramienta que no se mantiene con asiduidad aumenta la deuda técnica. Es el argumento más débil: que no haya versiones nuevas también puede indicar madurez y no abandono. Además, make no viene con Go.
-- **Frente a Mage:** Task tiene menos sobrecoste de ejecución (+0,082 s frente a +0,376 s) y un fichero más corto (16 líneas frente a 21). Mage, además, escribe las tareas como código Go que se compila en cada ejecución.
-- **Con el proyecto:** Task se instala con el toolchain de Go que el proyecto ya exige y declara las tareas como configuración en `Taskfile.yml`.
+- **Se instala con el toolchain de Go que el proyecto ya exige.** Con `go install` (4,629 s) no hace falta ningún gestor de paquetes del sistema ni descargar un binario aparte. make no viene con Go, y just lo conseguí con `winget` (12,209 s, con descarga). Es el único criterio medido en el que Task mejora a make y a just.
+- **Frente a Mage:** Task tiene menos sobrecoste de ejecución (+0,082 s frente a +0,376 s) y un fichero más corto (16 líneas frente a 21). Además, Mage escribe las tareas como código Go que se compila en cada ejecución.
+- **Mantenimiento:** Task tiene la versión v3.54.0, de 01-10-2026. Este criterio no lo separa de just (1.59.0, 15-10-2026) ni de Mage (v1.17.2, 23-04-2026), que también están activos. Frente a make, la última versión que he encontrado es la 4.4.1, de 26-02-2023: es un argumento débil, porque que no haya versiones nuevas también puede indicar madurez y no abandono.
 
-Costes asumidos: 75 MB y 4,629 s de instalación, y unos 35 ms más por ejecución que make. Si en los objetivos 5 y 6 el tiempo de instalación resulta un problema, se revisará la decisión.
+Costes asumidos: 75 MB de binario, un fichero de tareas más largo que el de make o just, y unos 35 ms más por ejecución que make. just ofrece lo mismo con un binario diez veces menor, así que será la primera alternativa si en los objetivos 5 y 6 el tamaño o el tiempo de instalación resultan un problema.
 
 Consecuencia: `Taskfile.yml` en la raíz con las tareas `install`, `test` y `check`, y `iv.yaml` con la clave `automatizar`, que apunta a ese fichero y a la orden `task`.
 
