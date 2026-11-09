@@ -75,6 +75,7 @@ Se crea una carpeta de prueba fuera del repositorio con el mismo `go.mod`, el mi
 | make | 0,295 s | 0,291 s | +0,047 s | 8 | [captura](../media/tareas-ejecucion.png) |
 | Task | 0,337 s | 0,320 s | +0,082 s | 16 | [captura](../media/tareas-ejecucion.png) |
 | Mage | 0,722 s (compila el `magefile.go`) | 0,522 s | +0,376 s | 21 | [captura](../media/tareas-ejecucion.png) |
+| just | 0,344 s | 0,314 s | +0,077 s | 8 | [captura](../media/tareas-just-ejecucion.png) |
 
 Limitaciones: el proyecto todavía no tiene tests, así que las diferencias reflejan sobre todo el tiempo de arranque de cada herramienta. Son dos ejecuciones por herramienta y las diferencias entre make y Task (unas decenas de milisegundos) pueden ser ruido. El `Taskfile.yml` tiene una línea `desc` por tarea, que sirve para `task --list`; el `Makefile` no tiene equivalente.
 
