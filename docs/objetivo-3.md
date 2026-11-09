@@ -35,12 +35,10 @@ El comando `go` ejecuta subcomandos sueltos (`go build`, `go test`, `go mod down
 
 **Opciones:**
 
-| Opción | Fichero de tareas | Instalación | Última versión |
-|---|---|---|---|
-| make | `Makefile` | Del sistema operativo, ajena a Go | 4.4.1, 26-02-2023 ([NEWS](https://fossies.org/linux/make/NEWS)) |
-| Task | `Taskfile.yml` | `go install`, con el toolchain de Go que el proyecto ya necesita | v3.54.0, 01-10-2026 ([GitHub](https://github.com/go-task/task/releases/tag/v3.54.0)) |
-| Mage | `magefile.go`, con las tareas escritas en Go | `go install` | v1.17.2, 23-04-2026 ([GitHub](https://github.com/magefile/mage/releases)) |
-| just | `justfile` | Binario ya compilado, escrito en Rust; en Windows se instala con `winget` | 1.59.0, 15-10-2026 ([crates.io](https://crates.io/crates/just)) |
+- make: fichero de tareas `Makefile`. Viene del sistema operativo, no con Go. La última versión que he encontrado es la 4.4.1, de 26-02-2023 ([NEWS](https://fossies.org/linux/make/NEWS)).
+- just: fichero de tareas `justfile`. Es un binario ya compilado, escrito en Rust; en Windows se instala con `winget`. Versión 1.59.0, de 15-10-2026 ([crates.io](https://crates.io/crates/just)).
+- Task: fichero de tareas `Taskfile.yml`. Se instala con `go install`, con el toolchain de Go que el proyecto ya necesita. Versión v3.54.0, de 01-10-2026 ([GitHub](https://github.com/go-task/task/releases/tag/v3.54.0)).
+- Mage: fichero de tareas `magefile.go`, con las tareas escritas en Go. Se instala con `go install`. Versión v1.17.2, de 23-04-2026 ([GitHub](https://github.com/magefile/mage/releases)).
 
 **Criterios:**
 
@@ -54,12 +52,10 @@ El comando `go` ejecuta subcomandos sueltos (`go build`, `go test`, `go mod down
 
 Se mide lo que cuesta tener cada herramienta disponible en la máquina de desarrollo, porque se usarán en entornos donde la velocidad de instalación importa (objetivos 5 y 6). Máquina: Windows, Git Bash, Go 1.27.3.
 
-| Herramienta | Cómo se obtiene | Tiempo | Tamaño en disco | Captura |
-|---|---|---|---|---|
-| Task | `go install` | 4,629 s | 75.064.320 B | [captura](../media/tareas-instalacion.png) |
-| Mage | `go install` (v1.17.2) | 2,497 s | 7.531.520 B | [captura](../media/tareas-instalacion.png) |
-| make | Ya presente en el entorno (GNU Make 4.4.1, compilado para Cygwin); no se instala con Go | No medido | No medido | [captura](../media/tareas-instalacion.png) |
-| just | `winget install --id Casey.Just -e` | 12,209 s | 5.922.304 B | [captura](../media/tareas-just-instalacion.jpg) |
+- Task: la instalé con `go install`. Tardó 4,629 s y el binario ocupa 75.064.320 B (unos 75 MB). Captura: [captura](../media/tareas-instalacion.png).
+- Mage: la instalé con `go install` (v1.17.2). Tardó 2,497 s y el binario ocupa 7.531.520 B (unos 7,5 MB). Captura: [captura](../media/tareas-instalacion.png).
+- just: lo instalé con `winget install --id Casey.Just -e`. Tardó 12,209 s y el binario ocupa 5.922.304 B (unos 5,9 MB). Captura: [captura](../media/tareas-just-instalacion.png).
+- make: ya estaba presente en el entorno (GNU Make 4.4.1, compilado para Cygwin). No se instala con Go, así que no medí su instalación. Captura: [captura](../media/tareas-instalacion.png).
 
 Limitación: Task y Mage se compilan con Go durante la instalación; just se descarga ya compilado con `winget`, así que su tiempo incluye la descarga y depende de la red; y make ya estaba disponible en el entorno. Los tiempos indican el coste real de cada vía, no una comparación entre binarios idénticos. La presencia de make depende del entorno: no viene con Go.
 
@@ -67,13 +63,11 @@ Limitación: Task y Mage se compilan con Go durante la instalación; just se des
 
 Se crea una carpeta de prueba fuera del repositorio con el mismo `go.mod`, el mismo código y un fichero de tareas por herramienta (`Taskfile.yml`, `Makefile`, `magefile.go`) con las tres tareas `install`, `test` y `check`. Se calienta la caché de Go una vez y se ejecuta `test` dos veces con cada herramienta. Para comparar, se mide también `go test ./...` directo. El sobrecoste es la media de las diferencias con `go test` directo en cada pasada.
 
-| Herramienta | 1.ª ejecución | 2.ª ejecución | Sobrecoste medio | Líneas del fichero de tareas | Captura |
-|---|---|---|---|---|---|
-| `go test ./...` directo | 0,245 s | 0,248 s | — | — | [captura](../media/tareas-ejecucion.png) |
-| make | 0,295 s | 0,291 s | +0,047 s | 8 | [captura](../media/tareas-ejecucion.png) |
-| Task | 0,337 s | 0,320 s | +0,082 s | 16 | [captura](../media/tareas-ejecucion.png) |
-| Mage | 0,722 s (compila el `magefile.go`) | 0,522 s | +0,376 s | 21 | [captura](../media/tareas-ejecucion.png) |
-| just | 0,344 s | 0,314 s | +0,077 s | 8 | [captura](../media/tareas-just-ejecucion.png) |
+- `go test ./...` directo: 0,245 s y 0,248 s. Captura: [captura](../media/tareas-ejecucion.png).
+- make: 0,295 s y 0,291 s, un sobrecoste medio de +0,047 s. El `Makefile` tiene 8 líneas. Captura: [captura](../media/tareas-ejecucion.png).
+- Task: 0,337 s y 0,320 s, un sobrecoste medio de +0,082 s. El `Taskfile.yml` tiene 16 líneas. Captura: [captura](../media/tareas-ejecucion.png).
+- Mage: 0,722 s la primera vez, porque compila el `magefile.go`, y 0,522 s la segunda, un sobrecoste medio de +0,376 s. El `magefile.go` tiene 21 líneas. Captura: [captura](../media/tareas-ejecucion.png).
+- just: 0,344 s y 0,314 s, un sobrecoste medio de +0,077 s. El `justfile` tiene 8 líneas. Captura: [captura](../media/tareas-just-ejecucion.png).
 
 Limitaciones: el proyecto todavía no tiene tests, así que las diferencias reflejan sobre todo el tiempo de arranque de cada herramienta. Son dos ejecuciones por herramienta y las diferencias entre make y Task (unas decenas de milisegundos) pueden ser ruido. El `Taskfile.yml` tiene una línea `desc` por tarea, que sirve para `task --list`; el `Makefile` no tiene equivalente.
 
