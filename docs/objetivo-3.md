@@ -85,7 +85,7 @@ Consecuencia: `Taskfile.yml` en la raíz con las tareas `install`, `test` y `che
 
 ## Tarea `check`
 
-El enunciado pide que `check` compruebe la sintaxis de los fuentes existentes y solo eso, y aclara que se trata de comprobar si el código compila correctamente.
+El enunciado pide que `check` compruebe la sintaxis de los fuentes existentes y solo eso.
 
 **Opciones:** se prueban cuatro comandos sobre tres proyectos mínimos creados fuera del repositorio: uno correcto, uno con un error de sintaxis (una llave sin cerrar) y otro con un error de tipos (una variable que no existe). Se anota el código de salida de cada comando y lo que tarda. Máquina: Windows, Git Bash, Go 1.27.3. Antes de medir se calienta la caché de Go.
 
@@ -101,13 +101,13 @@ Limitaciones: una sola ejecución por comando y proyectos de pocas líneas, así
 **Criterios:**
 
 1. Que detecte los errores de sintaxis.
-2. Que detecte que el código no compila, porque el enunciado entiende comprobar la sintaxis como "si compila correctamente".
-3. Que no haga nada más allá de eso, como ejecutar tests.
+2. Que no falle por nada que no sea sintaxis, porque la tarea comprueba solo eso.
+3. Que no ejecute nada más, como los tests.
 4. Tiempo de ejecución.
 
-**Decisión: `go build ./...`.** Según la medición, `gofmt -e .` detecta el error de sintaxis (salida 2), pero deja pasar el error de tipos (salida 0): daría por buenos fuentes que no compilan. `go build ./...`, `go vet ./...` y `go test ./...` detectan los dos errores (salida 1). Entre ellos, `go build ./...` es el que hace solo lo que define el enunciado, compilar: según la documentación de Go, `go vet` añade análisis estático y `go test` ejecuta los tests, que no se piden en esta tarea.
+**Decisión: `gofmt -e . > /dev/null`.** Según la medición, es el único de los cuatro comandos que falla ante el error de sintaxis (salida 2) y pasa ante el error de tipos (salida 0): comprueba la sintaxis y nada más. `go build ./...`, `go vet ./...` y `go test ./...` fallan también ante el error de tipos, que no es un error de sintaxis, así que hacen más de lo que pide la tarea: según la documentación de Go, compilan, analizan el código o ejecutan los tests. Además, `gofmt -e .` es el más rápido en el proyecto correcto (0,294 s frente a 0,343 s - 0,435 s). Se redirige la salida estándar a `/dev/null` porque, según la documentación de `gofmt`, imprime el código formateado; los errores salen por la salida de error y siguen apareciendo.
 
-Costes asumidos: `go build ./...` tarda algo más que `gofmt -e .` en un proyecto correcto (0,435 s frente a 0,294 s, con las limitaciones ya indicadas), y compilar es más que comprobar la sintaxis en sentido estricto. Se asume porque así coincide con la definición del enunciado.
+Costes asumidos: `gofmt -e` no detecta los errores de tipos ni que el código no compile. Eso lo detecta `task test`, porque `go test ./...` falla ante los dos errores, como muestra la medición.
 
 ## Dónde está cada cosa
 
