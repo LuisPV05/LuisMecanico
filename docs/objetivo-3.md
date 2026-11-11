@@ -87,9 +87,7 @@ El enunciado pide que `check` compruebe la sintaxis de los fuentes existentes y 
 - `go vet ./...`: pasa en el proyecto correcto (salida 0, 0,399 s), falla con el error de sintaxis (salida 1, 0,410 s) y falla con el error de tipos (salida 1, 0,405 s).
 - `go test ./...`: pasa en el proyecto correcto (salida 0, 0,343 s), falla con el error de sintaxis (salida 1, 0,352 s) y falla con el error de tipos (salida 1, 0,366 s).
 
-Captura: [captura](../media/check-comandos.png). Cada celda indica si el comando pasa o falla, su código de salida y su tiempo.
-
-Limitaciones: una sola ejecución por comando y proyectos de pocas líneas, así que los tiempos reflejan sobre todo el arranque de cada herramienta y las diferencias de decenas de milisegundos pueden ser ruido.
+Captura: [captura](../media/check-comandos.png).
 
 **Criterios:**
 
