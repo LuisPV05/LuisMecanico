@@ -40,7 +40,7 @@ El comando `go` ejecuta subcomandos sueltos (`go build`, `go test`, `go mod down
 **Criterios:**
 
 1. Mantenimiento: fecha de la última versión. Según el enunciado, una herramienta que no se mantiene con asiduidad aumenta la deuda técnica.
-2. Coste de instalación: tiempo y tamaño medidos, porque se usará en los objetivos 5 y 6.
+2. Coste de instalación: tiempo medido, porque se usará en los objetivos 5 y 6.
 3. Coste de ejecución: sobrecoste medido frente a `go test ./...` directo.
 4. Cuánto hay que mantener: tamaño del fichero de tareas y si las tareas son configuración o código del proyecto.
 5. Si se instala con el toolchain de Go que el proyecto ya exige.
@@ -64,7 +64,7 @@ Se mide ejecutar `test` con cada herramienta frente a `go test ./...` directo, e
 - Mage: 0,722 s la primera vez, porque compila el `magefile.go`, y 0,522 s la segunda, un sobrecoste medio de +0,376 s. El `magefile.go` tiene 21 líneas. Captura: [captura](../media/tareas-ejecucion.png).
 - just: 0,344 s y 0,314 s, un sobrecoste medio de +0,077 s. El `justfile` tiene 8 líneas. Captura: [captura](../media/tareas-just-ejecucion.png).
 
-**Decisión: Task.** Las medidas no dan un ganador claro. make y just son los que menos líneas necesitan (8), y just ocupa unas diez veces menos que Task (5,9 MB frente a 75 MB) con un sobrecoste de ejecución casi igual (+0,077 s frente a +0,082 s). Mage es el más barato de instalar con Go (2,497 s y 7,5 MB), pero el más lento de ejecutar (+0,376 s). Task es el que más ocupa (75 MB) y su fichero es el doble de largo que el de make o just (16 líneas en la prueba, con las tres tareas, de las cuales tres son líneas `desc`).
+**Decisión: Task.** Las medidas no dan un ganador en todos los criterios. make es el más rápido de ejecutar (+0,047 s frente a `go test` directo) y tiene el fichero más corto (8 líneas). Mage es el más barato de instalar (2,497 s), pero el más lento de ejecutar (+0,376 s). Task queda en medio en ejecución (+0,082 s) y en líneas (16), pero tarda 4,629 s en instalarse.
 
 Se elige Task por estas razones:
 
@@ -72,7 +72,7 @@ Se elige Task por estas razones:
 - **Frente a Mage:** Task tiene menos sobrecoste de ejecución (+0,082 s frente a +0,376 s) y un fichero más corto (16 líneas frente a 21). Además, Mage escribe las tareas como código Go que se compila en cada ejecución.
 - **Mantenimiento:** Task tiene la versión v3.54.0, de 01-10-2026. Este criterio no lo separa de just (1.59.0, 15-10-2026) ni de Mage (v1.17.2, 23-04-2026), que también están activos. Frente a make, la última versión que he encontrado es la 4.4.1, de 26-02-2023: es un argumento débil, porque que no haya versiones nuevas también puede indicar madurez y no abandono.
 
-Costes asumidos: 75 MB de binario, un fichero de tareas más largo que el de make o just, y unos 35 ms más por ejecución que make. just ofrece lo mismo con un binario diez veces menor, así que será la primera alternativa si en los objetivos 5 y 6 el tamaño o el tiempo de instalación resultan un problema.
+Costes asumidos: 4,629 s de instalación y unos 35 ms más por ejecución que make. Si en los objetivos 5 y 6 el tiempo de instalación resulta un problema, se revisará la decisión.
 
 Consecuencia: `Taskfile.yml` en la raíz con las tareas `install` y `check`, y `iv.yaml`
 
