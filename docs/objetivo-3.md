@@ -6,7 +6,7 @@ Este documento recoge cómo se eligieron las herramientas que automatizan las ta
 
 - El proyecto está escrito en Go y solo importa `time`, de la biblioteca estándar: no tiene dependencias externas.
 - No existe `go.mod`, así que `go build ./...` falla porque no hay módulo principal.
-- `iv.yaml` necesita apuntar a un fichero de tareas que declare `install`, `test` y `check`.
+- `iv.yaml` necesita apuntar a un fichero de tareas que declare `install` y `check`.
 
 ## Gestor de dependencias
 
@@ -58,7 +58,7 @@ Limitación: Task y Mage se compilan con Go durante la instalación; just se des
 
 #### Ejecución de la tarea `test` y tamaño del fichero de tareas
 
-Se crea una carpeta de prueba fuera del repositorio con el mismo `go.mod`, el mismo código y un fichero de tareas por herramienta (`Taskfile.yml`, `Makefile`, `magefile.go`) con las tres tareas `install`, `test` y `check`. Se calienta la caché de Go una vez y se ejecuta `test` dos veces con cada herramienta. Para comparar, se mide también `go test ./...` directo. El sobrecoste es la media de las diferencias con `go test` directo en cada pasada.
+Creé una carpeta de prueba fuera del repositorio con el mismo `go.mod`, el mismo código y un fichero de tareas por herramienta (`Taskfile.yml`, `Makefile`, `magefile.go` y `justfile`) con las tareas `install`, `test` y `check`. La tarea `test` no forma parte del `Taskfile.yml` del proyecto, porque este objetivo no la pide; se usa solo en esta prueba como orden de referencia para medir cuánto cuesta lanzar una tarea con cada herramienta. Las líneas de cada fichero que se indican abajo son las de estos ficheros de prueba, con las tres tareas. Calenté la caché de Go una vez y ejecuté `test` dos veces con cada herramienta. Para comparar, medí también `go test ./...` directo. El sobrecoste es la media de las diferencias con `go test` directo en cada pasada.
 
 - `go test ./...` directo: 0,245 s y 0,248 s. Captura: [captura](../media/tareas-ejecucion.png).
 - make: 0,295 s y 0,291 s, un sobrecoste medio de +0,047 s. El `Makefile` tiene 8 líneas. Captura: [captura](../media/tareas-ejecucion.png).
@@ -68,7 +68,7 @@ Se crea una carpeta de prueba fuera del repositorio con el mismo `go.mod`, el mi
 
 Limitaciones: el proyecto todavía no tiene tests, así que las diferencias reflejan sobre todo el tiempo de arranque de cada herramienta. Son dos ejecuciones por herramienta y las diferencias entre make y Task (unas decenas de milisegundos) pueden ser ruido. El `Taskfile.yml` tiene una línea `desc` por tarea, que sirve para `task --list`; el `Makefile` no tiene equivalente.
 
-**Decisión: Task.** Las medidas no dan un ganador claro. make y just son los que menos líneas necesitan (8), y just ocupa unas diez veces menos que Task (5,9 MB frente a 75 MB) con un sobrecoste de ejecución casi igual (+0,077 s frente a +0,082 s). Mage es el más barato de instalar con Go (2,497 s y 7,5 MB), pero el más lento de ejecutar (+0,376 s). Task es el que más ocupa (75 MB) y su fichero es el doble de largo que el de make o just (16 líneas, de las cuales tres son líneas `desc`).
+**Decisión: Task.** Las medidas no dan un ganador claro. make y just son los que menos líneas necesitan (8), y just ocupa unas diez veces menos que Task (5,9 MB frente a 75 MB) con un sobrecoste de ejecución casi igual (+0,077 s frente a +0,082 s). Mage es el más barato de instalar con Go (2,497 s y 7,5 MB), pero el más lento de ejecutar (+0,376 s). Task es el que más ocupa (75 MB) y su fichero es el doble de largo que el de make o just (16 líneas en la prueba, con las tres tareas, de las cuales tres son líneas `desc`).
 
 Se elige Task por estas razones:
 
@@ -78,7 +78,7 @@ Se elige Task por estas razones:
 
 Costes asumidos: 75 MB de binario, un fichero de tareas más largo que el de make o just, y unos 35 ms más por ejecución que make. just ofrece lo mismo con un binario diez veces menor, así que será la primera alternativa si en los objetivos 5 y 6 el tamaño o el tiempo de instalación resultan un problema.
 
-Consecuencia: `Taskfile.yml` en la raíz con las tareas `install`, `test` y `check`, y `iv.yaml` con la clave `automatizar`, que apunta a ese fichero y a la orden `task`.
+Consecuencia: `Taskfile.yml` en la raíz con las tareas `install` y `check`, y `iv.yaml`
 
 ## Tarea `check`
 
@@ -109,7 +109,7 @@ Costes asumidos: `gofmt -e` no detecta los errores de tipos ni que el código no
 ## Dónde está cada cosa
 
 - `go.mod`: módulo de Go.
-- `Taskfile.yml`: tareas `install`, `test` y `check`.
+- `Taskfile.yml`: tareas `install` y `check`.
 - `iv.yaml`: clave `automatizar` con `fichero: Taskfile.yml` y `orden: task`.
 - `README.md`: cómo instalar Task y ejecutar las tareas, y descripción de la entidad.
 - `media/`: capturas de las mediciones.
