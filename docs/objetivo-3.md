@@ -51,22 +51,18 @@ Se mide lo que cuesta tener cada herramienta disponible en la máquina de desarr
 
 - Task: la instalé con `go install`. Tardó 4,629 s y el binario ocupa 75.064.320 B (unos 75 MB). Captura: [captura](../media/tareas-instalacion.png).
 - Mage: la instalé con `go install` (v1.17.2). Tardó 2,497 s y el binario ocupa 7.531.520 B (unos 7,5 MB). Captura: [captura](../media/tareas-instalacion.png).
-- just: lo instalé con `winget install --id Casey.Just -e`. Tardó 12,209 s y el binario ocupa 5.922.304 B (unos 5,9 MB). Captura: [captura](../media/tareas-just-instalacion.png).
+- just: lo instalé con `winget install --id Casey.Just -e`. Tardó 12,209 s (incluye la descarga) y el binario ocupa 5.922.304 B (unos 5,9 MB). Captura: [captura](../media/tareas-just-instalacion.png).
 - make: ya estaba presente en el entorno (GNU Make 4.4.1, compilado para Cygwin). No se instala con Go, así que no medí su instalación. Captura: [captura](../media/tareas-instalacion.png).
-
-Limitación: Task y Mage se compilan con Go durante la instalación; just se descarga ya compilado con `winget`, así que su tiempo incluye la descarga y depende de la red; y make ya estaba disponible en el entorno. Los tiempos indican el coste real de cada vía, no una comparación entre binarios idénticos. La presencia de make depende del entorno: no viene con Go.
 
 #### Ejecución de la tarea `test` y tamaño del fichero de tareas
 
-Creé una carpeta de prueba fuera del repositorio con el mismo `go.mod`, el mismo código y un fichero de tareas por herramienta (`Taskfile.yml`, `Makefile`, `magefile.go` y `justfile`) con las tareas `install`, `test` y `check`. La tarea `test` no forma parte del `Taskfile.yml` del proyecto, porque este objetivo no la pide; se usa solo en esta prueba como orden de referencia para medir cuánto cuesta lanzar una tarea con cada herramienta. Las líneas de cada fichero que se indican abajo son las de estos ficheros de prueba, con las tres tareas. Calenté la caché de Go una vez y ejecuté `test` dos veces con cada herramienta. Para comparar, medí también `go test ./...` directo. El sobrecoste es la media de las diferencias con `go test` directo en cada pasada.
+Se mide ejecutar `test` con cada herramienta frente a `go test ./...` directo, en una carpeta de prueba con el mismo código (la tarea `test` solo existe en esta prueba). El sobrecoste es la media de las dos diferencias con `go test` directo.
 
 - `go test ./...` directo: 0,245 s y 0,248 s. Captura: [captura](../media/tareas-ejecucion.png).
 - make: 0,295 s y 0,291 s, un sobrecoste medio de +0,047 s. El `Makefile` tiene 8 líneas. Captura: [captura](../media/tareas-ejecucion.png).
 - Task: 0,337 s y 0,320 s, un sobrecoste medio de +0,082 s. El `Taskfile.yml` tiene 16 líneas. Captura: [captura](../media/tareas-ejecucion.png).
 - Mage: 0,722 s la primera vez, porque compila el `magefile.go`, y 0,522 s la segunda, un sobrecoste medio de +0,376 s. El `magefile.go` tiene 21 líneas. Captura: [captura](../media/tareas-ejecucion.png).
 - just: 0,344 s y 0,314 s, un sobrecoste medio de +0,077 s. El `justfile` tiene 8 líneas. Captura: [captura](../media/tareas-just-ejecucion.png).
-
-Limitaciones: el proyecto todavía no tiene tests, así que las diferencias reflejan sobre todo el tiempo de arranque de cada herramienta. Son dos ejecuciones por herramienta y las diferencias entre make y Task (unas decenas de milisegundos) pueden ser ruido. El `Taskfile.yml` tiene una línea `desc` por tarea, que sirve para `task --list`; el `Makefile` no tiene equivalente.
 
 **Decisión: Task.** Las medidas no dan un ganador claro. make y just son los que menos líneas necesitan (8), y just ocupa unas diez veces menos que Task (5,9 MB frente a 75 MB) con un sobrecoste de ejecución casi igual (+0,077 s frente a +0,082 s). Mage es el más barato de instalar con Go (2,497 s y 7,5 MB), pero el más lento de ejecutar (+0,376 s). Task es el que más ocupa (75 MB) y su fichero es el doble de largo que el de make o just (16 líneas en la prueba, con las tres tareas, de las cuales tres son líneas `desc`).
 
