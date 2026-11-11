@@ -10,20 +10,17 @@ Este documento recoge cómo se eligieron las herramientas que automatizan las ta
 
 ## Gestor de dependencias
 
-Go tiene un estándar propio para gestionar dependencias: los módulos (`go.mod` y `go.sum`), integrados en el comando `go`   y oficiales desde Go 1.11 ([notas de la versión](https://go.dev/doc/go1.11#modules)),. La guía del objetivo dice que, si hay un estándar, primero hay que conocerlo y después seguirlo, adaptando el resto de criterios. Por eso no se comparan otras herramientas.
+Go tiene un estándar propio para gestionar dependencias: los módulos (`go.mod` y `go.sum`), integrados en el comando `go` y oficiales desde Go 1.11 ([notas de la versión](https://go.dev/doc/go1.11#modules)). La guía del objetivo dice que, si hay un estándar, primero hay que conocerlo y después seguirlo, adaptando el resto de criterios. Por eso elijo los módulos directamente y no comparo otras herramientas.
 
-**Criterios:**
+**Criterio:** que sea el estándar del lenguaje. Es el único criterio que decide, y por eso no hay otros que comparar.
 
-1. Si es el estándar del lenguaje.
-2. Si hay que instalar algo aparte del toolchain de Go.
-3. Cuánto cuesta dejar el proyecto listo, porque se usará en los objetivos 5 y 6, donde la velocidad importa.
-4. Número de dependencias del proyecto: hoy, ninguna externa.
+**Otros gestores de dependencias para Go:** existen dep, glide y govendor, pero son anteriores a los módulos y están obsoletos. dep está archivado y recomienda migrar a los módulos, y según el aviso de Heroku del 10-03-2026 su buildpack de Go ya no admite glide ni govendor ([Heroku](https://devcenter.heroku.com/changelog-items/3619)). No los he examinado ni probado, porque al haber un estándar vigente no son candidatos.
 
-### Mediciones del gestor de dependencias
+### Medición de los módulos de Go
 
-Se mide cuánto cuesta dejar el proyecto listo. Máquina: la de desarrollo, con Windows, Git Bash y Go 1.27.3 (`go version go1.27.3 windows/amd64`).
+Esta medición no sirve para comparar, solo para comprobar cuánto cuesta dejar el proyecto listo, porque se usará en los objetivos 5 y 6, donde la velocidad importa. Máquina: la de desarrollo, con Windows, Git Bash y Go 1.27.3 (`go version go1.27.3 windows/amd64`).
 
-Módulos de Go: no hay que instalar nada aparte de Go. `go mod download` tarda 0,152 s (no descarga nada, porque el proyecto no tiene dependencias externas) y compilar el proyecto con `go build ./...` tarda 0,491 s. Captura: [captura](../media/dep-go-modules.png).
+Con los módulos de Go no hay que instalar nada aparte de Go. `go mod download` tarda 0,152 s (no descarga nada, porque el proyecto no tiene dependencias externas) y compilar el proyecto con `go build ./...` tarda 0,491 s. Captura: [captura](../media/dep-go-modules.png).
 
 **Decisión: módulos de Go.** Son el estándar del lenguaje, vienen en el propio comando `go` y no hay nada que instalar. Preparar el proyecto cuesta 0,152 s y compilarlo 0,491 s, y el proyecto no tiene dependencias externas, así que no hay ninguna razón para añadir otra herramienta. Tampoco se usan los módulos como gestor de tareas: gestionan dependencias, no tareas, y por eso hace falta una herramienta aparte, que se elige a continuación.
 
