@@ -154,7 +154,6 @@ Después, desde la raíz del repositorio:
 
 ```bash
 task install   # descarga las dependencias del módulo
-task test      # ejecuta los tests
 task check     # comprueba la sintaxis de los fuentes
 task --list    # lista las tareas
 ```
