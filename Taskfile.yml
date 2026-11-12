@@ -1,0 +1,12 @@
+version: '3'
+
+tasks:
+  install:
+    desc: Descarga las dependencias del módulo
+    cmds:
+      - go mod download
+
+  check:
+    desc: Comprueba la sintaxis de los fuentes y nada más
+    cmds:
+      - gofmt -e . > /dev/null
