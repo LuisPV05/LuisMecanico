@@ -99,11 +99,3 @@ Captura: [captura](../media/check-comandos.png).
 **Decisión: `gofmt -e . > /dev/null`.** Según la medición, es el único de los cuatro comandos que falla ante el error de sintaxis (salida 2) y pasa ante el error de tipos (salida 0): comprueba la sintaxis y nada más. `go build ./...`, `go vet ./...` y `go test ./...` fallan también ante el error de tipos, que no es un error de sintaxis, así que hacen más de lo que pide la tarea: según la documentación de Go, compilan, analizan el código o ejecutan los tests. Además, `gofmt -e .` es el más rápido en el proyecto correcto (0,294 s frente a 0,343 s - 0,435 s). Se redirige la salida estándar a `/dev/null` porque, según la documentación de `gofmt`, imprime el código formateado; los errores salen por la salida de error y siguen apareciendo.
 
 Costes asumidos: `gofmt -e` no detecta los errores de tipos ni que el código no compile. Eso lo detectan `go build ./...` y `go test ./...`, que fallan ante los dos errores, como muestra la medición, y que se podrán añadir como tareas cuando se pidan.
-
-## Dónde está cada cosa
-
-- `go.mod`: módulo de Go.
-- `Taskfile.yml`: tareas `install` y `check`.
-- `iv.yaml`: clave `automatizar` con `fichero: Taskfile.yml` y `orden: task`.
-- `README.md`: cómo instalar Task y ejecutar las tareas, y descripción de la entidad.
-- `media/`: capturas de las mediciones.
