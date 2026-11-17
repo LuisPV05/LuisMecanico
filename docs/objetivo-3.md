@@ -33,7 +33,7 @@ El comando `go` ejecuta subcomandos sueltos (`go build`, `go test`, `go mod down
 
 **Opciones:**
 
-- make: fichero de tareas `Makefile`. Viene del sistema operativo, no con Go. La última versión que he encontrado es la 4.4.1, de 26-02-2023 ([NEWS](https://fossies.org/linux/make/NEWS)).
+- make: fichero de tareas `Makefile`. No viene con Go, pero está en la mayoría de las imágenes y runners de CI. La última versión que he encontrado es la 4.4.1, de 26-02-2023 ([NEWS](https://fossies.org/linux/make/NEWS)).
 - just: fichero de tareas `justfile`. Es un binario ya compilado, escrito en Rust; en Windows se instala con `winget`. Versión 1.59.0, de 15-10-2026 ([crates.io](https://crates.io/crates/just)).
 - Task: fichero de tareas `Taskfile.yml`. Se instala con `go install`, con el toolchain de Go que el proyecto ya necesita. Versión v3.54.0, de 01-10-2026 ([GitHub](https://github.com/go-task/task/releases/tag/v3.54.0)).
 - Mage: fichero de tareas `magefile.go`, con las tareas escritas en Go. Se instala con `go install`. Versión v1.17.2, de 23-04-2026 ([GitHub](https://github.com/magefile/mage/releases)).
@@ -61,7 +61,7 @@ Se mide ejecutar `test` con cada herramienta frente a `go test ./...` directo, e
 
 Se elige Task por estas razones:
 
-- **Se instala con el toolchain de Go que el proyecto ya exige.** Con `go install` (4,629 s) no hace falta ningún gestor de paquetes del sistema ni descargar un binario aparte. make no viene con Go, y just lo conseguí con `winget` (12,209 s, con descarga). Es el único criterio medido en el que Task mejora a make y a just.
+- **Se instala con el toolchain de Go que el proyecto ya exige.** Con `go install` (4,629 s) no hace falta ningún gestor de paquetes del sistema ni descargar un binario aparte. make no se instala con Go, y just lo conseguí con `winget` (12,209 s, con descarga). Que make esté ya en muchos entornos de CI lo hace fácil de conseguir allí, así que este argumento pesa menos. Es el único criterio medido en el que Task mejora a make y a just.
 - **Frente a Mage:** Task tiene menos sobrecoste de ejecución (+0,082 s frente a +0,376 s) y un fichero más corto (16 líneas frente a 21). Además, Mage escribe las tareas como código Go que se compila en cada ejecución.
 - **Mantenimiento:** Task tiene la versión v3.54.0, de 01-10-2026. Este criterio no lo separa de just (1.59.0, 15-10-2026) ni de Mage (v1.17.2, 23-04-2026), que también están activos. Frente a make, la última versión que he encontrado es la 4.4.1, de 26-02-2023: es un argumento débil, porque que no haya versiones nuevas también puede indicar madurez y no abandono.
 
