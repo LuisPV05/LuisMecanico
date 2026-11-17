@@ -37,6 +37,9 @@ El comando `go` ejecuta subcomandos sueltos (`go build`, `go test`, `go mod down
 - just: fichero de tareas `justfile`. Es un binario ya compilado, escrito en Rust; en Windows se instala con `winget`. Versión 1.59.0, de 15-10-2026 ([crates.io](https://crates.io/crates/just)).
 - Task: fichero de tareas `Taskfile.yml`. Se instala con `go install`, con el toolchain de Go que el proyecto ya necesita. Versión v3.54.0, de 01-10-2026 ([GitHub](https://github.com/go-task/task/releases/tag/v3.54.0)).
 - Mage: fichero de tareas `magefile.go`, con las tareas escritas en Go. Se instala con `go install`. Versión v1.17.2, de 23-04-2026 ([GitHub](https://github.com/magefile/mage/releases)).
+- xc: las tareas se escriben como bloques de código dentro de un fichero Markdown, normalmente el `README.md`. Se instala con `go install`. Versión v0.9.0, de FECHA ([GitHub](https://github.com/joerdav/xc/releases)).
+- goyek: no es un programa aparte, sino una biblioteca de Go; las tareas son código Go dentro del propio proyecto. Se añade con `go get`. Versión v3.0.1, de FECHA ([GitHub](https://github.com/goyek/goyek/releases)).
+- mise: fichero de tareas `mise.toml`. Es un binario ya compilado, escrito en Rust; en Windows se instala con `winget`. Última versión 2026.11.9, de FECHA ([GitHub](https://github.com/jdx/mise/releases)); winget instala la 2026.11.2, de 05-11-2026.
 
 ### Mediciones de los gestores de tareas
 
@@ -46,6 +49,9 @@ Se mide lo que cuesta tener cada herramienta disponible en la máquina de desarr
 - Mage: la instalé con `go install` (v1.17.2). Tardó 2,497 s y el binario ocupa 7.531.520 B (unos 7,5 MB). Captura: [captura](../media/tareas-instalacion.png).
 - just: lo instalé con `winget install --id Casey.Just -e`. Tardó 12,209 s (incluye la descarga) y el binario ocupa 5.922.304 B (unos 5,9 MB). Captura: [captura](../media/tareas-just-instalacion.png).
 - make: ya estaba presente en el entorno (GNU Make 4.4.1, compilado para Cygwin). No se instala con Go, así que no medí su instalación. Captura: [captura](../media/tareas-instalacion.png).
+- xc: la instalé con `go install github.com/joerdav/xc/cmd/xc@latest` (v0.9.0). Tardó 52,488 s (incluye la descarga de sus dependencias) y el binario ocupa 9.081.856 B (unos 9,1 MB). Captura: [captura](../media/tareas-xc-instalacion.png).
+- goyek: la añadí a un módulo nuevo con `go get github.com/goyek/goyek/v3` (v3.0.1). Tardó 22,277 s (incluye la descarga) y no genera un binario aparte. Captura: [captura](../media/tareas-goyek-instalacion.png).
+- mise: lo instalé con `winget install --id jdx.mise -e` (2026.11.2), tras desinstalar una instalación previa. Tardó 17,775 s (incluye la descarga de 81,6 MB) y el binario ocupa 252.385.912 B (unos 252 MB). Captura: [captura](../media/tareas-mise-instalacion.png).
 
 #### Ejecución de la tarea `test` y tamaño del fichero de tareas
 
