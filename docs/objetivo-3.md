@@ -64,6 +64,7 @@ Se mide ejecutar `test` con cada herramienta frente a `go test ./...` directo, e
 - just: 0,344 s y 0,314 s, un sobrecoste medio de +0,077 s. El `justfile` tiene 8 líneas. Captura: [captura](../media/tareas-just-ejecucion.png).
 - xc: 0,582 s y 0,348 s, un sobrecoste medio de +0,067 s. El `README.md` con las tareas tiene 21 líneas. Captura: [captura](../media/tareas-xc-mise-ejecucion.png).
 - mise: 1,073 s y 0,692 s, un sobrecoste medio de +0,484 s. El `mise.toml` tiene 8 líneas. Captura: [captura](../media/tareas-xc-mise-ejecucion.png).
+- goyek: 0,438 s y 0,431 s, con su propio `go test ./...` directo de 0,248 s y 0,242 s, un sobrecoste medio de +0,190 s. Se ejecuta con `go run .`, que compila el programa en cada ejecución. El fichero `build/main.go` tiene 23 líneas y solo define la tarea `test`, no las tres. Captura: [captura](../media/tareas-goyek-ejecucion.png).
 
 **Decisión: Task.** Las medidas no dan un ganador en todos los criterios. make es el más rápido de ejecutar (+0,047 s frente a `go test` directo) y tiene el fichero más corto (8 líneas). Mage es el más barato de instalar (2,497 s), pero el más lento de ejecutar (+0,376 s). Task queda en medio en ejecución (+0,082 s) y en líneas (16), pero tarda 4,629 s en instalarse.
 
