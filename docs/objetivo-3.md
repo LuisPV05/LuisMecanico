@@ -10,11 +10,7 @@ Este documento recoge cómo se eligieron las herramientas que automatizan las ta
 
 ## Gestor de dependencias
 
-Go tiene un estándar propio para gestionar dependencias: los módulos (`go.mod` y `go.sum`), integrados en el comando `go` y oficiales desde Go 1.11 ([notas de la versión](https://go.dev/doc/go1.11#modules)). La guía del objetivo dice que, si hay un estándar, primero hay que conocerlo y después seguirlo, adaptando el resto de criterios. Por eso elijo los módulos directamente y no comparo otras herramientas.
-
-**Criterio:** que sea el estándar del lenguaje. Es el único criterio que decide, y por eso no hay otros que comparar.
-
-**Otros gestores de dependencias para Go:** existen dep, glide y govendor, pero son anteriores a los módulos y están obsoletos. dep está archivado y recomienda migrar a los módulos, y según el aviso de Heroku del 10-03-2026 su buildpack de Go ya no admite glide ni govendor ([Heroku](https://devcenter.heroku.com/changelog-items/3619)). No los he examinado ni probado, porque al haber un estándar vigente no son candidatos.
+Go tiene un estándar propio para gestionar dependencias: los módulos (`go.mod` y `go.sum`), integrados en el comando `go` y oficiales desde Go 1.11 ([notas de la versión](https://go.dev/doc/go1.11#modules)). La guía del objetivo dice que, si hay un estándar, primero hay que conocerlo y después seguirlo, adaptando el resto de criterios.
 
 ### Medición de los módulos de Go
 
