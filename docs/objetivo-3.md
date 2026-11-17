@@ -37,9 +37,9 @@ El comando `go` ejecuta subcomandos sueltos (`go build`, `go test`, `go mod down
 - just: fichero de tareas `justfile`. Es un binario ya compilado, escrito en Rust; en Windows se instala con `winget`. Versión 1.59.0, de 15-10-2026 ([crates.io](https://crates.io/crates/just)).
 - Task: fichero de tareas `Taskfile.yml`. Se instala con `go install`, con el toolchain de Go que el proyecto ya necesita. Versión v3.54.0, de 01-10-2026 ([GitHub](https://github.com/go-task/task/releases/tag/v3.54.0)).
 - Mage: fichero de tareas `magefile.go`, con las tareas escritas en Go. Se instala con `go install`. Versión v1.17.2, de 23-04-2026 ([GitHub](https://github.com/magefile/mage/releases)).
-- xc: las tareas se escriben como bloques de código dentro de un fichero Markdown, normalmente el `README.md`. Se instala con `go install`. Versión v0.9.0, de FECHA ([GitHub](https://github.com/joerdav/xc/releases)).
-- goyek: no es un programa aparte, sino una biblioteca de Go; las tareas son código Go dentro del propio proyecto. Se añade con `go get`. Versión v3.0.1, de FECHA ([GitHub](https://github.com/goyek/goyek/releases)).
-- mise: fichero de tareas `mise.toml`. Es un binario ya compilado, escrito en Rust; en Windows se instala con `winget`. Última versión 2026.11.9, de FECHA ([GitHub](https://github.com/jdx/mise/releases)); winget instala la 2026.11.2, de 05-11-2026.
+- xc: las tareas se escriben como bloques de código dentro de un fichero Markdown, normalmente el `README.md`. Se instala con `go install`. Versión v0.9.0, de 05-01-2026 ([GitHub](https://github.com/joerdav/xc/releases)).
+- goyek: no es un programa aparte, sino una biblioteca de Go; las tareas son código Go dentro del propio proyecto. Se añade con `go get`. Versión v3.0.1, de 09-12-2025 ([GitHub](https://github.com/goyek/goyek/releases)).
+- mise: fichero de tareas `mise.toml`. Es un binario ya compilado, escrito en Rust; en Windows se instala con `winget`. Última versión v2026.11.9, de 09-11-2026 ([GitHub](https://github.com/jdx/mise/releases)); winget instala la 2026.11.2, de 05-11-2026.
 
 ### Mediciones de los gestores de tareas
 
@@ -66,13 +66,15 @@ Se mide ejecutar `test` con cada herramienta frente a `go test ./...` directo, e
 - mise: 1,073 s y 0,692 s, un sobrecoste medio de +0,484 s. El `mise.toml` tiene 8 líneas. Captura: [captura](../media/tareas-xc-mise-ejecucion.png).
 - goyek: 0,438 s y 0,431 s, con su propio `go test ./...` directo de 0,248 s y 0,242 s, un sobrecoste medio de +0,190 s. Se ejecuta con `go run .`, que compila el programa en cada ejecución. El fichero `build/main.go` tiene 23 líneas y solo define la tarea `test`, no las tres. Captura: [captura](../media/tareas-goyek-ejecucion.png).
 
-**Decisión: Task.** Las medidas no dan un ganador en todos los criterios. make es el más rápido de ejecutar (+0,047 s frente a `go test` directo) y tiene el fichero más corto (8 líneas). Mage es el más barato de instalar (2,497 s), pero el más lento de ejecutar (+0,376 s). Task queda en medio en ejecución (+0,082 s) y en líneas (16), pero tarda 4,629 s en instalarse.
+**Decisión: Task.** Las medidas no dan un ganador en todos los criterios. make es el más rápido de ejecutar (+0,047 s frente a `go test` directo) y just, mise y make tienen el fichero más corto (8 líneas). Mage es el más barato de instalar (2,497 s), pero el más lento de ejecutar entre los que se instalan con Go (+0,376 s), y mise es todavía más lento (+0,484 s). Task queda entre los más rápidos de ejecutar (+0,082 s, a menos de 40 ms de make) y en líneas (16), pero tarda 4,629 s en instalarse.
 
 Se elige Task por estas razones:
 
-- **Se instala con el toolchain de Go que el proyecto ya exige.** Con `go install` (4,629 s) no hace falta ningún gestor de paquetes del sistema ni descargar un binario aparte. make no se instala con Go, y just lo conseguí con `winget` (12,209 s, con descarga). Que make esté ya en muchos entornos de CI lo hace fácil de conseguir allí, así que este argumento pesa menos. Es el único criterio medido en el que Task mejora a make y a just.
-- **Frente a Mage:** Task tiene menos sobrecoste de ejecución (+0,082 s frente a +0,376 s) y un fichero más corto (16 líneas frente a 21). Además, Mage escribe las tareas como código Go que se compila en cada ejecución.
-- **Mantenimiento:** Task tiene la versión v3.54.0, de 01-10-2026. Este criterio no lo separa de just (1.59.0, 15-10-2026) ni de Mage (v1.17.2, 23-04-2026), que también están activos. Frente a make, la última versión que he encontrado es la 4.4.1, de 26-02-2023: es un argumento débil, porque que no haya versiones nuevas también puede indicar madurez y no abandono.
+- **Se instala con el toolchain de Go que el proyecto ya exige.** Con `go install` (4,629 s) no hace falta ningún gestor de paquetes del sistema ni descargar un binario aparte. make no se instala con Go, y just y mise los conseguí con `winget` (12,209 s y 17,775 s, con descarga). Que make esté ya en muchos entornos de CI lo hace fácil de conseguir allí, así que este argumento pesa menos. Mage, xc y goyek también se instalan con Go, y en ellos decide el resto de criterios.
+- **Frente a Mage y goyek:** Task tiene menos sobrecoste de ejecución (+0,082 s frente a +0,376 s y +0,190 s) y un fichero más corto (16 líneas frente a 21 y a 23, y el de goyek solo define una tarea). Además, ambos escriben las tareas como código Go que se compila en cada ejecución.
+- **Frente a xc:** xc se instala con `go install`, pero tardó 52,488 s frente a 4,629 s de Task. Esa comparación no es exacta, porque el tiempo de xc incluye la descarga de sus dependencias. En ejecución, la diferencia (+0,067 s frente a +0,082 s) está dentro del ruido de la medición. xc escribe las tareas dentro de un Markdown.
+- **Frente a mise:** mise tiene el mayor sobrecoste de ejecución (+0,484 s) y tardó 17,775 s en instalarse con `winget`.
+- **Mantenimiento:** Task tiene la versión v3.54.0, de 01-10-2026. Este criterio no lo separa de just (1.59.0, 15-10-2026), de Mage (v1.17.2, 23-04-2026), de goyek ni de mise, que también están activos. Frente a make, la última versión que he encontrado es la 4.4.1, de 26-02-2023: es un argumento débil, porque que no haya versiones nuevas también puede indicar madurez y no abandono.
 
 Costes asumidos: 4,629 s de instalación y unos 35 ms más por ejecución que make. Si en los objetivos 5 y 6 el tiempo de instalación resulta un problema, se revisará la decisión.
 
