@@ -18,9 +18,7 @@ Esta medición no sirve para comparar, solo para comprobar cuánto cuesta dejar 
 
 Con los módulos de Go no hay que instalar nada aparte de Go. `go mod download` tarda 0,152 s (no descarga nada, porque el proyecto no tiene dependencias externas) y compilar el proyecto con `go build ./...` tarda 0,491 s. Captura: [captura](../media/dep-go-modules.png).
 
-**Decisión: módulos de Go.** Son el estándar del lenguaje, vienen en el propio comando `go` y no hay nada que instalar. Preparar el proyecto cuesta 0,152 s y compilarlo 0,491 s, y el proyecto no tiene dependencias externas, así que no hay ninguna razón para añadir otra herramienta. Tampoco se usan los módulos como gestor de tareas: gestionan dependencias, no tareas, y por eso hace falta una herramienta aparte, que se elige a continuación.
-
-Consecuencia: `go.mod` en la raíz, con el módulo `github.com/LuisPV05/LuisMecanico`, y la tarea `install` ejecuta `go mod download`, que hoy no descarga nada porque no hay dependencias externas.
+**Decisión: módulos de Go.** Son el estándar del lenguaje y no hay nada que instalar aparte de Go. 
 
 ## Gestor de tareas
 
