@@ -24,20 +24,19 @@ Con los módulos de Go no hay que instalar nada aparte de Go. `go mod download` 
 
 El comando `go` ejecuta subcomandos sueltos (`go build`, `go test`, `go mod download`), pero ninguno lee un fichero con tareas con nombre. `go generate` ejecuta comandos escritos en comentarios de los fuentes con la intención de crear o actualizar código Go. Los módulos de Go gestionan dependencias, no tareas, así que hace falta una herramienta aparte.
 
+**Criterios:**
+1. Mantenimiento: fecha de la última versión. Según el enunciado, una herramienta que no se mantiene con asiduidad aumenta la deuda técnica.
+2. Coste de instalación: tiempo medido, porque se usará en los objetivos 5 y 6.
+3. Coste de ejecución: sobrecoste medido frente a `go test ./...` directo.
+4. Cuánto hay que mantener: tamaño del fichero de tareas y si las tareas son configuración o código del proyecto.
+5. Si se instala con el toolchain de Go que el proyecto ya exige.
+
 **Opciones:**
 
 - make: fichero de tareas `Makefile`. Viene del sistema operativo, no con Go. La última versión que he encontrado es la 4.4.1, de 26-02-2023 ([NEWS](https://fossies.org/linux/make/NEWS)).
 - just: fichero de tareas `justfile`. Es un binario ya compilado, escrito en Rust; en Windows se instala con `winget`. Versión 1.59.0, de 15-10-2026 ([crates.io](https://crates.io/crates/just)).
 - Task: fichero de tareas `Taskfile.yml`. Se instala con `go install`, con el toolchain de Go que el proyecto ya necesita. Versión v3.54.0, de 01-10-2026 ([GitHub](https://github.com/go-task/task/releases/tag/v3.54.0)).
 - Mage: fichero de tareas `magefile.go`, con las tareas escritas en Go. Se instala con `go install`. Versión v1.17.2, de 23-04-2026 ([GitHub](https://github.com/magefile/mage/releases)).
-
-**Criterios:**
-
-1. Mantenimiento: fecha de la última versión. Según el enunciado, una herramienta que no se mantiene con asiduidad aumenta la deuda técnica.
-2. Coste de instalación: tiempo medido, porque se usará en los objetivos 5 y 6.
-3. Coste de ejecución: sobrecoste medido frente a `go test ./...` directo.
-4. Cuánto hay que mantener: tamaño del fichero de tareas y si las tareas son configuración o código del proyecto.
-5. Si se instala con el toolchain de Go que el proyecto ya exige.
 
 ### Mediciones de los gestores de tareas
 
