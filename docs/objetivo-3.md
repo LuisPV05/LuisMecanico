@@ -8,8 +8,6 @@ Go tiene un estándar propio para gestionar dependencias: los módulos (`go.mod`
 
 ## Gestor de tareas
 
-El comando `go` ejecuta subcomandos sueltos (`go build`, `go test`, `go mod download`), pero ninguno lee un fichero con tareas con nombre. `go generate` ejecuta comandos escritos en comentarios de los fuentes con la intención de crear o actualizar código Go. Los módulos de Go gestionan dependencias, no tareas, así que hace falta una herramienta aparte.
-
 **Criterios:**
 1. Mantenimiento: fecha de la última versión. Según el enunciado, una herramienta que no se mantiene con asiduidad aumenta la deuda técnica.
 2. Coste de instalación: tiempo medido, porque se usará en los objetivos 5 y 6.
