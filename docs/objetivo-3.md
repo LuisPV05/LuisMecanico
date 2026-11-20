@@ -20,7 +20,7 @@ Go tiene un estándar propio para gestionar dependencias: los módulos (`go.mod`
 - Mage: fichero de tareas `magefile.go`, con las tareas escritas en Go. Versión v1.17.2, de 23-04-2026 ([GitHub](https://github.com/magefile/mage/releases)).
 - xc: las tareas se escriben como bloques de código dentro de un fichero Markdown. Versión v0.9.0, de 05-01-2026 ([GitHub](https://github.com/joerdav/xc/releases)).
 - goyek: biblioteca de Go; las tareas son código Go dentro del proyecto. Versión v3.0.1, de 09-12-2025 ([GitHub](https://github.com/goyek/goyek/releases)).
-- mise: fichero de tareas `mise.toml`. Versión v2026.11.9, de 09-11-2026 ([GitHub](https://github.com/jdx/mise/releases)).
+- mise: fichero de tareas `mise.toml`. Versión v2026.11.10, de 18-11-2026 ([GitHub](https://github.com/jdx/mise/releases)).
 
 ### Mediciones de los gestores de tareas
 
@@ -48,19 +48,14 @@ Se mide en el mismo contenedor Linux, con una tarea `test` que ejecuta `go test 
 
 Captura: [captura](../media/tareas-linux-ejecucion.png).
 
-**Decisión: Task.** Las medidas no dan un ganador en todos los criterios. make es el más rápido de ejecutar (+0,047 s frente a `go test` directo) y just, mise y make tienen el fichero más corto (8 líneas). Mage es el más barato de instalar (2,497 s), pero el más lento de ejecutar entre los que se instalan con Go (+0,376 s), y mise es todavía más lento (+0,484 s). Task queda entre los más rápidos de ejecutar (+0,082 s, a menos de 40 ms de make) y en líneas (16), pero tarda 4,629 s en instalarse.
+**Decisión: just.** Cumple el criterio de mantenimiento y, entre las herramientas que lo cumplen, es la mejor en los dos criterios medidos: es la más rápida de instalar (1,193 s) y no añade un tiempo medible al ejecutar (−0,1 ms, dentro del ruido). Su última versión es la 1.59.0, de 15-10-2026.
 
-Se elige Task por estas razones:
+- **Frente a make:** en lo medido empatan, porque ejecuta igual (+2,1 ms, dentro del ruido) y ya viene en la imagen, sin coste de instalación. Lo que decide es el criterio de mantenimiento del enunciado: la última versión de make que he encontrado es la 4.4.1, de 26-02-2023, hace más de tres años, y el enunciado dice que una herramienta que no se mantiene con asiduidad aumenta la deuda técnica. Es el único criterio en el que se separan.
+- **Frente a Task, Mage, goyek, mise y xc:** todas están mantenidas, pero tardan más en instalarse (5,302 s, 19,419 s, 2,029 s, 11,013 s y 9,565 s). En ejecución, Task suma +56,6 ms, Mage +73,2 ms, goyek +65,5 ms y mise +17,3 ms. xc ejecuta igual que just (+2,1 ms, dentro del ruido), pero tarda más en instalarse.
 
-- **Se instala con el toolchain de Go que el proyecto ya exige.** Con `go install` (4,629 s) no hace falta ningún gestor de paquetes del sistema ni descargar un binario aparte. make no se instala con Go, y just y mise los conseguí con `winget` (12,209 s y 17,775 s, con descarga). Que make esté ya en muchos entornos de CI lo hace fácil de conseguir allí, así que este argumento pesa menos. Mage, xc y goyek también se instalan con Go, y en ellos decide el resto de criterios.
-- **Frente a Mage y goyek:** Task tiene menos sobrecoste de ejecución (+0,082 s frente a +0,376 s y +0,190 s) y un fichero más corto (16 líneas frente a 21 y a 23, y el de goyek solo define una tarea). Además, ambos escriben las tareas como código Go que se compila en cada ejecución.
-- **Frente a xc:** xc se instala con `go install`, pero tardó 52,488 s frente a 4,629 s de Task. Esa comparación no es exacta, porque el tiempo de xc incluye la descarga de sus dependencias. En ejecución, la diferencia (+0,067 s frente a +0,082 s) está dentro del ruido de la medición. xc escribe las tareas dentro de un Markdown.
-- **Frente a mise:** mise tiene el mayor sobrecoste de ejecución (+0,484 s) y tardó 17,775 s en instalarse con `winget`.
-- **Mantenimiento:** Task tiene la versión v3.54.0, de 01-10-2026. Este criterio no lo separa de just (1.59.0, 15-10-2026), de Mage (v1.17.2, 23-04-2026), de goyek ni de mise, que también están activos. Frente a make, la última versión que he encontrado es la 4.4.1, de 26-02-2023: es un argumento débil, porque que no haya versiones nuevas también puede indicar madurez y no abandono.
+Costes asumidos: hay que instalar just (1,193 s), mientras que make ya está en la imagen. Si en los objetivos 5 y 6 el tiempo de instalación resulta un problema, se revisará la decisión.
 
-Costes asumidos: 4,629 s de instalación y unos 35 ms más por ejecución que make. Si en los objetivos 5 y 6 el tiempo de instalación resulta un problema, se revisará la decisión.
-
-Consecuencia: `Taskfile.yml` en la raíz con las tareas `install` y `check`, y `iv.yaml` con `fichero: Taskfile.yml` y `orden: task` en la clave `automatizar`.
+Consecuencia: `justfile` en la raíz con la tarea `check`, y `iv.yaml` con `fichero: justfile` y `orden: just` en la clave `automatizar`.
 
 ## Tarea `check`
 
