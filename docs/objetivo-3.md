@@ -66,13 +66,6 @@ Consecuencia: `Taskfile.yml` en la raíz con las tareas `install` y `check`, y `
 
 El enunciado pide que `check` compruebe la sintaxis de los fuentes existentes y solo eso.
 
-**Opciones:** `gofmt -e .`, `go build ./...`, `go vet ./...` y `go test ./...`. Se prueban sobre tres proyectos mínimos (uno correcto, uno con una llave sin cerrar y otro con una variable que no existe) en Windows, Git Bash, Go 1.27.3. Captura: [captura](../media/check-comandos.png).
+**Decisión: `gofmt -e . > /dev/null`.** `gofmt -e` informa de todos los errores de sintaxis sin compilar el código. `go build`, `go vet` y `go test` también compilan, así que van más allá de la sintaxis. Se redirige la salida estándar porque `gofmt` imprime el código formateado; los errores salen por la salida de error y siguen apareciendo.
 
-- `gofmt -e .`: falla con el error de sintaxis (salida 2) y **pasa** con el error de tipos (salida 0). Tarda 0,294 s en el proyecto correcto.
-- `go build ./...`, `go vet ./...` y `go test ./...`: fallan con los dos errores (salida 1). Tardan entre 0,343 s y 0,435 s en el proyecto correcto.
-
-**Criterio:** que falle ante errores de sintaxis y no ante nada más, porque la tarea comprueba solo eso.
-
-**Decisión: `gofmt -e . > /dev/null`.** Es el único que falla ante el error de sintaxis y pasa ante el de tipos, y además es el más rápido. Se redirige la salida estándar porque `gofmt` imprime el código formateado; los errores salen por la salida de error y siguen apareciendo.
-
-Costes asumidos: `gofmt -e` no detecta los errores de tipos ni que el código no compile. Eso lo detectan `go build ./...` y `go test ./...`, que fallan ante los dos errores, como muestra la medición, y que se podrán añadir como tareas cuando se pidan.
+Costes asumidos: no detecta errores de tipos ni que el código no compile.
