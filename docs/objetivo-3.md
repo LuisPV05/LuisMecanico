@@ -26,26 +26,27 @@ Go tiene un estándar propio para gestionar dependencias: los módulos (`go.mod`
 
 Se mide lo que cuesta tener cada herramienta disponible en la máquina de desarrollo, porque se usarán en entornos donde la velocidad de instalación importa (objetivos 5 y 6). Máquina: Windows, Git Bash, Go 1.27.3.
 
-- Task: la instalé con `go install`. Tardó 4,629 s y el binario ocupa 75.064.320 B (unos 75 MB). Captura: [captura](../media/tareas-instalacion.png).
-- Mage: la instalé con `go install` (v1.17.2). Tardó 2,497 s y el binario ocupa 7.531.520 B (unos 7,5 MB). Captura: [captura](../media/tareas-instalacion.png).
-- just: lo instalé con `winget install --id Casey.Just -e`. Tardó 12,209 s (incluye la descarga) y el binario ocupa 5.922.304 B (unos 5,9 MB). Captura: [captura](../media/tareas-just-instalacion.png).
-- make: ya estaba presente en el entorno (GNU Make 4.4.1, compilado para Cygwin). No se instala con Go, así que no medí su instalación. Captura: [captura](../media/tareas-instalacion.png).
-- xc: la instalé con `go install github.com/joerdav/xc/cmd/xc@latest` (v0.9.0). Tardó 52,488 s (incluye la descarga de sus dependencias) y el binario ocupa 9.081.856 B (unos 9,1 MB). Captura: [captura](../media/tareas-xc-instalacion.png).
-- goyek: la añadí a un módulo nuevo con `go get github.com/goyek/goyek/v3` (v3.0.1). Tardó 22,277 s (incluye la descarga) y no genera un binario aparte. Captura: [captura](../media/tareas-goyek-instalacion.png).
-- mise: lo instalé con `winget install --id jdx.mise -e` (2026.11.2), tras desinstalar una instalación previa. Tardó 17,775 s (incluye la descarga de 81,6 MB) y el binario ocupa 252.385.912 B (unos 252 MB). Captura: [captura](../media/tareas-mise-instalacion.png).
+- Task: la instalé con `go install`. Tardó 4,629 s. Captura: [captura](../media/tareas-instalacion.png).
+- Mage: la instalé con `go install` (v1.17.2). Tardó 2,497 s. Captura: [captura](../media/tareas-instalacion.png).
+- just: lo instalé con `winget install --id Casey.Just -e`. Tardó 12,209 s (incluye la descarga). Captura: [captura](../media/tareas-just-instalacion.png).
+- xc: la instalé con `go install github.com/joerdav/xc/cmd/xc@latest` (v0.9.0). Tardó 52,488 s (incluye la descarga de sus dependencias). Captura: [captura](../media/tareas-xc-instalacion.png).
+- goyek: la añadí a un módulo nuevo con `go get github.com/goyek/goyek/v3` (v3.0.1). Tardó 22,277 s (incluye la descarga). Captura: [captura](../media/tareas-goyek-instalacion.png).
+- mise: lo instalé con `winget install --id jdx.mise -e` (2026.11.2), tras desinstalar una instalación previa. Tardó 17,775 s (incluye la descarga). Captura: [captura](../media/tareas-mise-instalacion.png).
+- make: ya estaba presente en el entorno (GNU Make 4.4.1, compilado para Cygwin), así que no medí su instalación. Captura: [captura](../media/tareas-instalacion.png).
 
-#### Ejecución de la tarea `test` y tamaño del fichero de tareas
+#### Ejecución de la tarea `test`
 
 Se mide ejecutar `test` con cada herramienta frente a `go test ./...` directo, en una carpeta de prueba con el mismo código (la tarea `test` solo existe en esta prueba). El sobrecoste es la media de las dos diferencias con `go test` directo.
 
 - `go test ./...` directo: 0,245 s y 0,248 s. Captura: [captura](../media/tareas-ejecucion.png).
-- make: 0,295 s y 0,291 s, un sobrecoste medio de +0,047 s. El `Makefile` tiene 8 líneas. Captura: [captura](../media/tareas-ejecucion.png).
-- Task: 0,337 s y 0,320 s, un sobrecoste medio de +0,082 s. El `Taskfile.yml` tiene 16 líneas. Captura: [captura](../media/tareas-ejecucion.png).
-- Mage: 0,722 s la primera vez, porque compila el `magefile.go`, y 0,522 s la segunda, un sobrecoste medio de +0,376 s. El `magefile.go` tiene 21 líneas. Captura: [captura](../media/tareas-ejecucion.png).
-- just: 0,344 s y 0,314 s, un sobrecoste medio de +0,077 s. El `justfile` tiene 8 líneas. Captura: [captura](../media/tareas-just-ejecucion.png).
-- xc: 0,582 s y 0,348 s, un sobrecoste medio de +0,067 s. El `README.md` con las tareas tiene 21 líneas. Captura: [captura](../media/tareas-xc-mise-ejecucion.png).
-- mise: 1,073 s y 0,692 s, un sobrecoste medio de +0,484 s. El `mise.toml` tiene 8 líneas. Captura: [captura](../media/tareas-xc-mise-ejecucion.png).
-- goyek: 0,438 s y 0,431 s, con su propio `go test ./...` directo de 0,248 s y 0,242 s, un sobrecoste medio de +0,190 s. Se ejecuta con `go run .`, que compila el programa en cada ejecución. El fichero `build/main.go` tiene 23 líneas y solo define la tarea `test`, no las tres. Captura: [captura](../media/tareas-goyek-ejecucion.png).
+- make: 0,295 s y 0,291 s, un sobrecoste medio de +0,047 s. Captura: [captura](../media/tareas-ejecucion.png).
+- Task: 0,337 s y 0,320 s, un sobrecoste medio de +0,082 s. Captura: [captura](../media/tareas-ejecucion.png).
+- Mage: 0,722 s la primera vez, porque compila el `magefile.go`, y 0,522 s la segunda, un sobrecoste medio de +0,376 s. Captura: [captura](../media/tareas-ejecucion.png).
+- just: 0,344 s y 0,314 s, un sobrecoste medio de +0,077 s. Captura: [captura](../media/tareas-just-ejecucion.png).
+- xc y mise se midieron en otra carpeta de prueba y otro momento, con su propio `go test ./...` directo: 0,452 s y 0,345 s.
+- xc: 0,582 s y 0,348 s, un sobrecoste medio de +0,067 s. Captura: [captura](../media/tareas-xc-mise-ejecucion.png).
+- mise: 1,073 s y 0,692 s, un sobrecoste medio de +0,484 s. Captura: [captura](../media/tareas-xc-mise-ejecucion.png).
+- goyek: 0,438 s y 0,431 s, con su propio `go test ./...` directo de 0,248 s y 0,242 s, un sobrecoste medio de +0,190 s. Se ejecuta con `go run .`, que compila el programa en cada ejecución. Captura: [captura](../media/tareas-goyek-ejecucion.png).
 
 **Decisión: Task.** Las medidas no dan un ganador en todos los criterios. make es el más rápido de ejecutar (+0,047 s frente a `go test` directo) y just, mise y make tienen el fichero más corto (8 líneas). Mage es el más barato de instalar (2,497 s), pero el más lento de ejecutar entre los que se instalan con Go (+0,376 s), y mise es todavía más lento (+0,484 s). Task queda entre los más rápidos de ejecutar (+0,082 s, a menos de 40 ms de make) y en líneas (16), pero tarda 4,629 s en instalarse.
 
