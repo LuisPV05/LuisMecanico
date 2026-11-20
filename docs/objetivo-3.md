@@ -24,15 +24,15 @@ Go tiene un estándar propio para gestionar dependencias: los módulos (`go.mod`
 
 ### Mediciones de los gestores de tareas
 
-Se mide lo que cuesta tener cada herramienta disponible en la máquina de desarrollo, porque se usarán en entornos donde la velocidad de instalación importa (objetivos 5 y 6). Máquina: Windows, Git Bash, Go 1.27.3.
+Se mide en Linux, porque es donde se probará y desplegará el proyecto: un contenedor Docker `golang:latest` (Debian 13, Go 1.27.4), nuevo para cada herramienta. Cada una se instala con el método que recomienda su documentación y los tiempos incluyen la descarga. Es una medición por herramienta.
 
-- Task: la instalé con `go install`. Tardó 4,629 s. Captura: [captura](../media/tareas-instalacion.png).
-- Mage: la instalé con `go install` (v1.17.2). Tardó 2,497 s. Captura: [captura](../media/tareas-instalacion.png).
-- just: lo instalé con `winget install --id Casey.Just -e`. Tardó 12,209 s (incluye la descarga). Captura: [captura](../media/tareas-just-instalacion.png).
-- xc: la instalé con `go install github.com/joerdav/xc/cmd/xc@latest` (v0.9.0). Tardó 52,488 s (incluye la descarga de sus dependencias). Captura: [captura](../media/tareas-xc-instalacion.png).
-- goyek: la añadí a un módulo nuevo con `go get github.com/goyek/goyek/v3` (v3.0.1). Tardó 22,277 s (incluye la descarga). Captura: [captura](../media/tareas-goyek-instalacion.png).
-- mise: lo instalé con `winget install --id jdx.mise -e` (2026.11.2), tras desinstalar una instalación previa. Tardó 17,775 s (incluye la descarga). Captura: [captura](../media/tareas-mise-instalacion.png).
-- make: ya estaba presente en el entorno (GNU Make 4.4.1, compilado para Cygwin), así que no medí su instalación. Captura: [captura](../media/tareas-instalacion.png).
+- make: ya viene en la imagen (GNU Make 4.4.1), así que no hay instalación que medir. Captura: [captura](../media/tareas-linux-instalacion.png).
+- just: con el script de su documentación (`curl --proto '=https' --tlsv1.2 -sSf https://just.systems/install.sh | bash -s -- --to ~/bin`). Tardó 1,193 s. Captura: [captura](../media/tareas-linux-instalacion.png).
+- goyek: `go get github.com/goyek/goyek/v3` (v3.0.1), porque es una biblioteca. Tardó 2,029 s. Captura: [captura](../media/tareas-linux-instalacion.png).
+- Task: con el script de su documentación (`sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b ~/.local/bin`). Tardó 5,302 s. Captura: [captura](../media/tareas-linux-instalacion.png).
+- xc: `go install github.com/joerdav/xc/cmd/xc@latest` (v0.9.0). Tardó 9,565 s. Captura: [captura](../media/tareas-linux-instalacion.png).
+- mise: `curl -fsSL https://mise.run | sh`. Tardó 11,013 s. Captura: [captura](../media/tareas-linux-instalacion.png).
+- Mage: `go install github.com/magefile/mage@latest` (v1.17.2). Tardó 19,419 s. Captura: [captura](../media/tareas-linux-instalacion.png).
 
 #### Ejecución de la tarea `test`
 
