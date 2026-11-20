@@ -36,17 +36,17 @@ Se mide en Linux, porque es donde se probará y desplegará el proyecto: un cont
 
 #### Ejecución de la tarea `test`
 
-Se mide ejecutar `test` con cada herramienta frente a `go test ./...` directo, en una carpeta de prueba con el mismo código (la tarea `test` solo existe en esta prueba). El sobrecoste es la media de las dos diferencias con `go test` directo.
+Se mide en el mismo contenedor Linux, con una tarea `test` que ejecuta `go test ./...` en cada herramienta, usando `hyperfine` (10 ejecuciones de calentamiento y 50 medidas por comando, todas en la misma tanda). El `go test ./...` directo se mide al principio y al final para comprobar que la máquina no cambia de velocidad: 109,3 ± 7,0 ms y 103,9 ± 2,8 ms. Se toma su media, 106,6 ms, y el sobrecoste de cada herramienta es su media menos esa. Una diferencia menor que la desviación no se considera medible.
 
-- `go test ./...` directo: 0,245 s y 0,248 s. Captura: [captura](../media/tareas-ejecucion.png).
-- make: 0,295 s y 0,291 s, un sobrecoste medio de +0,047 s. Captura: [captura](../media/tareas-ejecucion.png).
-- Task: 0,337 s y 0,320 s, un sobrecoste medio de +0,082 s. Captura: [captura](../media/tareas-ejecucion.png).
-- Mage: 0,722 s la primera vez, porque compila el `magefile.go`, y 0,522 s la segunda, un sobrecoste medio de +0,376 s. Captura: [captura](../media/tareas-ejecucion.png).
-- just: 0,344 s y 0,314 s, un sobrecoste medio de +0,077 s. Captura: [captura](../media/tareas-just-ejecucion.png).
-- xc y mise se midieron en otra carpeta de prueba y otro momento, con su propio `go test ./...` directo: 0,452 s y 0,345 s.
-- xc: 0,582 s y 0,348 s, un sobrecoste medio de +0,067 s. Captura: [captura](../media/tareas-xc-mise-ejecucion.png).
-- mise: 1,073 s y 0,692 s, un sobrecoste medio de +0,484 s. Captura: [captura](../media/tareas-xc-mise-ejecucion.png).
-- goyek: 0,438 s y 0,431 s, con su propio `go test ./...` directo de 0,248 s y 0,242 s, un sobrecoste medio de +0,190 s. Se ejecuta con `go run .`, que compila el programa en cada ejecución. Captura: [captura](../media/tareas-goyek-ejecucion.png).
+- just: 106,5 ± 3,1 ms, sin diferencia medible (−0,1 ms).
+- make: 108,7 ± 4,8 ms, +2,1 ms.
+- xc: 108,7 ± 4,3 ms, +2,1 ms.
+- mise: 123,9 ± 5,2 ms, +17,3 ms.
+- Task: 163,2 ± 5,1 ms, +56,6 ms.
+- goyek: 172,1 ± 3,1 ms, +65,5 ms. Se ejecuta con `go run .`, que compila el programa en cada ejecución.
+- Mage: 179,8 ± 5,4 ms, +73,2 ms. Compila el `magefile.go`.
+
+Captura: [captura](../media/tareas-linux-ejecucion.png).
 
 **Decisión: Task.** Las medidas no dan un ganador en todos los criterios. make es el más rápido de ejecutar (+0,047 s frente a `go test` directo) y just, mise y make tienen el fichero más corto (8 líneas). Mage es el más barato de instalar (2,497 s), pero el más lento de ejecutar entre los que se instalan con Go (+0,376 s), y mise es todavía más lento (+0,484 s). Task queda entre los más rápidos de ejecutar (+0,082 s, a menos de 40 ms de make) y en líneas (16), pero tarda 4,629 s en instalarse.
 
