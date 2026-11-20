@@ -6,14 +6,6 @@ Este documento recoge cómo se eligieron las herramientas que automatizan las ta
 
 Go tiene un estándar propio para gestionar dependencias: los módulos (`go.mod` y `go.sum`), integrados en el comando `go` y oficiales desde Go 1.11 ([notas de la versión](https://go.dev/doc/go1.11#modules)). La guía del objetivo dice que, si hay un estándar, primero hay que conocerlo y después seguirlo, adaptando el resto de criterios.
 
-### Medición de los módulos de Go
-
-Esta medición no sirve para comparar, solo para comprobar cuánto cuesta dejar el proyecto listo, porque se usará en los objetivos 5 y 6, donde la velocidad importa. Máquina: la de desarrollo, con Windows, Git Bash y Go 1.27.3 (`go version go1.27.3 windows/amd64`).
-
-Con los módulos de Go no hay que instalar nada aparte de Go. `go mod download` tarda 0,152 s (no descarga nada, porque el proyecto no tiene dependencias externas) y compilar el proyecto con `go build ./...` tarda 0,491 s. Captura: [captura](../media/dep-go-modules.png).
-
-**Decisión: módulos de Go.** Son el estándar del lenguaje y no hay nada que instalar aparte de Go. 
-
 ## Gestor de tareas
 
 El comando `go` ejecuta subcomandos sueltos (`go build`, `go test`, `go mod download`), pero ninguno lee un fichero con tareas con nombre. `go generate` ejecuta comandos escritos en comentarios de los fuentes con la intención de crear o actualizar código Go. Los módulos de Go gestionan dependencias, no tareas, así que hace falta una herramienta aparte.
