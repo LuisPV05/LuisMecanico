@@ -12,18 +12,15 @@ Go tiene un estándar propio para gestionar dependencias: los módulos (`go.mod`
 1. Mantenimiento: fecha de la última versión. Según el enunciado, una herramienta que no se mantiene con asiduidad aumenta la deuda técnica.
 2. Coste de instalación: tiempo medido, porque se usará en los objetivos 5 y 6.
 3. Coste de ejecución: sobrecoste medido frente a `go test ./...` directo.
-4. Cuánto hay que mantener: tamaño del fichero de tareas y si las tareas son configuración o código del proyecto.
-5. Si se instala con el toolchain de Go que el proyecto ya exige.
 
 **Opciones:**
-
-- make: fichero de tareas `Makefile`. No viene con Go, pero está en la mayoría de las imágenes y runners de CI. La última versión que he encontrado es la 4.4.1, de 26-02-2023 ([NEWS](https://fossies.org/linux/make/NEWS)).
-- just: fichero de tareas `justfile`. Es un binario ya compilado, escrito en Rust; en Windows se instala con `winget`. Versión 1.59.0, de 15-10-2026 ([crates.io](https://crates.io/crates/just)).
-- Task: fichero de tareas `Taskfile.yml`. Se instala con `go install`, con el toolchain de Go que el proyecto ya necesita. Versión v3.54.0, de 01-10-2026 ([GitHub](https://github.com/go-task/task/releases/tag/v3.54.0)).
-- Mage: fichero de tareas `magefile.go`, con las tareas escritas en Go. Se instala con `go install`. Versión v1.17.2, de 23-04-2026 ([GitHub](https://github.com/magefile/mage/releases)).
-- xc: las tareas se escriben como bloques de código dentro de un fichero Markdown, normalmente el `README.md`. Se instala con `go install`. Versión v0.9.0, de 05-01-2026 ([GitHub](https://github.com/joerdav/xc/releases)).
-- goyek: no es un programa aparte, sino una biblioteca de Go; las tareas son código Go dentro del propio proyecto. Se añade con `go get`. Versión v3.0.1, de 09-12-2025 ([GitHub](https://github.com/goyek/goyek/releases)).
-- mise: fichero de tareas `mise.toml`. Es un binario ya compilado, escrito en Rust; en Windows se instala con `winget`. Última versión v2026.11.9, de 09-11-2026 ([GitHub](https://github.com/jdx/mise/releases)); winget instala la 2026.11.2, de 05-11-2026.
+- make: fichero de tareas `Makefile`. La última versión que he encontrado es la 4.4.1, de 26-02-2023 ([NEWS](https://fossies.org/linux/make/NEWS)).
+- just: fichero de tareas `justfile`. Versión 1.59.0, de 15-10-2026 ([crates.io](https://crates.io/crates/just)).
+- Task: fichero de tareas `Taskfile.yml`. Versión v3.54.0, de 01-10-2026 ([GitHub](https://github.com/go-task/task/releases/tag/v3.54.0)).
+- Mage: fichero de tareas `magefile.go`, con las tareas escritas en Go. Versión v1.17.2, de 23-04-2026 ([GitHub](https://github.com/magefile/mage/releases)).
+- xc: las tareas se escriben como bloques de código dentro de un fichero Markdown. Versión v0.9.0, de 05-01-2026 ([GitHub](https://github.com/joerdav/xc/releases)).
+- goyek: biblioteca de Go; las tareas son código Go dentro del proyecto. Versión v3.0.1, de 09-12-2025 ([GitHub](https://github.com/goyek/goyek/releases)).
+- mise: fichero de tareas `mise.toml`. Versión v2026.11.9, de 09-11-2026 ([GitHub](https://github.com/jdx/mise/releases)).
 
 ### Mediciones de los gestores de tareas
 
