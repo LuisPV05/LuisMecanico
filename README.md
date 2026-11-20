@@ -139,28 +139,30 @@ Dentro del servicio, de la libreta saldrá qué elevadores están ocupados en ca
 
 ## Instalación y tareas
 
-Las tareas del proyecto se describen en [`Taskfile.yml`](Taskfile.yml) y se ejecutan con [Task](https://github.com/go-task/task). Hace falta tener instalado [Go](https://go.dev/dl/).
+Las tareas del proyecto se describen en [`justfile`](justfile) y se ejecutan con [just](https://github.com/casey/just). Hace falta tener instalado [Go](https://go.dev/dl/).
 
-Task se instala una vez con el propio Go:
+just se instala una vez con el script de binarios precompilados de su documentación:
 
 ```bash
-go install github.com/go-task/task/v3/cmd/task@latest
-task --version
+mkdir -p ~/bin
+curl --proto '=https' --tlsv1.2 -sSf https://just.systems/install.sh | bash -s -- --to ~/bin
+export PATH="$PATH:$HOME/bin"
+just --version
 ```
 
-Si `task` no se encuentra, añade `$(go env GOPATH)/bin` al `PATH`.
+La línea `export` conviene añadirla también a `~/.bashrc` para que no se pierda al cerrar la terminal.
 
 Después, desde la raíz del repositorio:
 
 ```bash
-task install   # descarga las dependencias del módulo
-task check     # comprueba la sintaxis de los fuentes
-task --list    # lista las tareas
+just check     # comprueba la sintaxis de los fuentes
+just --list    # lista las tareas
 ```
 
 ### Comprobar la sintaxis de la entidad
 
 ```bash
-task check
+just check
 ```
+
 Ejecuta `gofmt -e` sobre todo el repositorio, incluida `internal/taller/libreta.go`. Informa de los errores de sintaxis y de nada más: no comprueba tipos, formato ni estilo, ni ejecuta tests. Si hay un error de sintaxis, lo muestra y termina con error; si todo es correcto, no imprime nada.
