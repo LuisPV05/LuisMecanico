@@ -2,12 +2,6 @@
 
 Este documento recoge cómo se eligieron las herramientas que automatizan las tareas del proyecto. Cada decisión parte de un problema planteado en un issue del Milestone 1 y se toma con criterios que se pueden comprobar.
 
-## Punto de partida
-
-- El proyecto está escrito en Go y solo importa `time`, de la biblioteca estándar: no tiene dependencias externas.
-- No existe `go.mod`, así que `go build ./...` falla porque no hay módulo principal.
-- `iv.yaml` necesita apuntar a un fichero de tareas que declare `install` y `check`.
-
 ## Gestor de dependencias
 
 Go tiene un estándar propio para gestionar dependencias: los módulos (`go.mod` y `go.sum`), integrados en el comando `go` y oficiales desde Go 1.11 ([notas de la versión](https://go.dev/doc/go1.11#modules)). La guía del objetivo dice que, si hay un estándar, primero hay que conocerlo y después seguirlo, adaptando el resto de criterios.
