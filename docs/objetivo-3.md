@@ -61,6 +61,6 @@ Consecuencia: `justfile` en la raíz con la tarea `check`, y `iv.yaml` con `fich
 
 El enunciado pide que `check` compruebe la sintaxis de los fuentes existentes y solo eso.
 
-**Decisión: `gofmt -e . > /dev/null`.** `gofmt -e` informa de todos los errores de sintaxis sin compilar el código. `go build`, `go vet` y `go test` también compilan, así que van más allá de la sintaxis. Se redirige la salida estándar porque `gofmt` imprime el código formateado; los errores salen por la salida de error y siguen apareciendo.
+**Decisión: `gofmt -e . > /dev/null`.** `gofmt -e` informa de todos los errores de sintaxis sin compilar el código. `go build` y `go test` compilan, y `go vet` analiza también los tipos, así que van más allá de la sintaxis. Se redirige la salida estándar porque `gofmt` imprime el código formateado; los errores salen por la salida de error y siguen apareciendo.
 
 Costes asumidos: no detecta errores de tipos ni que el código no compile.
