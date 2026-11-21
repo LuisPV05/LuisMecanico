@@ -9,6 +9,7 @@ Go tiene un estándar propio para gestionar dependencias: los módulos (`go.mod`
 ## Gestor de tareas
 
 **Criterios:**
+
 1. Mantenimiento: fecha de la última versión. Según el enunciado, una herramienta que no se mantiene con asiduidad aumenta la deuda técnica. Se considera mantenida la que ha publicado una versión en el último año.
 2. Coste de instalación: tiempo medido, porque se usará en los objetivos 5 y 6.
 3. Coste de ejecución: sobrecoste medido frente a `go test ./...` directo.
@@ -54,8 +55,6 @@ Captura: [captura](../media/tareas-linux-ejecucion.png).
 - **Frente a Task, Mage, goyek, mise y xc:** todas están mantenidas, pero tardan más en instalarse (5,302 s, 19,419 s, 2,029 s, 11,013 s y 9,565 s). En ejecución, Task suma +56,6 ms, Mage +73,2 ms, goyek +65,5 ms y mise +17,3 ms. xc ejecuta igual que just (+2,1 ms, dentro del ruido), pero tarda más en instalarse.
 
 Costes asumidos: hay que instalar just (1,193 s), mientras que make ya está en la imagen. Si en los objetivos 5 y 6 el tiempo de instalación resulta un problema, se revisará la decisión.
-
-Consecuencia: `justfile` en la raíz con la tarea `check`, y `iv.yaml` con `fichero: justfile` y `orden: just` en la clave `automatizar`.
 
 ## Tarea `check`
 
