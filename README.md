@@ -120,6 +120,7 @@ Para la solucíon, esta en comprender el foco del problema y definir correctamen
 ## Documentación adicional y configuración
 
 La documentación relativa al objetivo 0 se encuentra [aquí](docs/objetivo-0.md).
+La justificación de las herramientas que automatizan las tareas del proyecto (objetivo 3) se encuentra [aquí](docs/objetivo-3.md).
 
 ## Planificación
 
@@ -129,3 +130,39 @@ La planificación relativa al objetivo 1 se encuentra respectivamente en los sig
 - [Jornadas de usuario](docs/user-journeys.md)
 - [Historias de usuario](docs/historias-usuarios.md)
 - [Milestones](docs/milestones.md)
+
+## La entidad: `Libreta`
+
+La entidad del modelo es `Libreta`, en [`internal/taller/libreta.go`](internal/taller/libreta.go). Es el único sitio donde están todas las citas del taller. Cada [`Cita`](internal/taller/cita.go) tiene un inicio y un tipo de reparación (nombre, duración y si usa elevador). El horario del taller (de 8:00 a 21:00) y el número de elevadores (3) son constantes de la propia libreta.
+
+Dentro del servicio, de la libreta saldrá qué elevadores están ocupados en cada momento, que nunca pueden ser más de tres. Así se detectará el conflicto al organizar la cita y no cuando empieza la reparación. Por ahora es solo el modelo: la lógica llega en el Milestone 1.
+
+## Instalación y tareas
+
+Las tareas del proyecto se describen en [`justfile`](justfile) y se ejecutan con [just](https://github.com/casey/just). Hace falta tener instalado [Go](https://go.dev/dl/).
+
+just se instala una vez con el script de binarios precompilados de su documentación:
+
+```bash
+mkdir -p ~/bin
+curl --proto '=https' --tlsv1.2 -sSf https://just.systems/install.sh | bash -s -- --to ~/bin
+export PATH="$PATH:$HOME/bin"
+just --version
+```
+
+La línea `export` conviene añadirla también a `~/.bashrc` para que no se pierda al cerrar la terminal.
+
+Después, desde la raíz del repositorio:
+
+```bash
+just check     # comprueba la sintaxis de los fuentes
+just --list    # lista las tareas
+```
+
+### Comprobar la sintaxis de la entidad
+
+```bash
+just check
+```
+
+Ejecuta `gofmt -e` sobre todo el repositorio, incluida `internal/taller/libreta.go`. Informa de los errores de sintaxis y de nada más: no comprueba tipos, formato ni estilo, ni ejecuta tests. Si hay un error de sintaxis, lo muestra y termina con error; si todo es correcto, no imprime nada.
