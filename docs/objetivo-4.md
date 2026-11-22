@@ -53,6 +53,14 @@ Resultado por criterio:
 - Coste de descarga y compilación frente a `testing`: testify +5,9 s, gomega +8,0 s, shoenig/test +1,4 s.
 - Sobrecarga de ejecución frente a `testing`: testify +1,1 ms, gomega +1,6 ms, shoenig/test +1,3 ms. Las diferencias entre las tres están dentro de la desviación.
 
+### Decisión
+
+Me quedo con `testing`, sin biblioteca externa.
+
+Las cuatro opciones cumplen mantenimiento, comprobar errores con `errors.Is`, comparar estructuras con `time.Time` y no escribir junto a los fuentes. Lo que las separa es el coste: `testing` no añade ningún módulo ni tiempo de descarga o compilación, mientras que shoenig/test añade 2 módulos y 1,4 s, testify 3 módulos y 5,9 s y gomega 12 módulos y 8,0 s. La sobrecarga de ejecución (entre 1,1 y 1,6 ms) queda dentro de la desviación y no desempata.
+
+Descarto shoenig/test, testify y gomega porque ninguna aporta algo que mis criterios premien y todas añaden dependencias y tiempo. El precio de `testing` es escribir las comparaciones a mano, que mis criterios no medían.
+
 ## Test runner
 
 ### Criterios
