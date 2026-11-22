@@ -77,3 +77,22 @@ No lo cumplen y se descartan:
 
 - gotestsum v1.13.0 (11-09-2025).
 - richgo v0.3.12 (26-02-2023).
+
+### Medidas
+
+Un mismo test escrito para cada opción, en Linux (imagen `golang:latest`). La instalación se hace con `go install` y las cachés vacías. La ejecución se mide con hyperfine (30 ejecuciones, 3 de calentamiento) sobre `go test -count=1 ./...`, o el comando equivalente de cada runner, con la compilación ya en caché; `go test` se mide al principio y al final para detectar deriva de la máquina. El solo lectura se prueba ejecutando como un usuario sin permisos de escritura en el directorio de los fuentes, con la caché de compilación en otro sitio. La variante de ginkgo usa su propio estilo de tests (`Describe` e `It`).
+
+![Medidas de los test runners](../media/runner-medidas.png)
+
+- `go test`: incluido en Go. Ejecución 254,3 ± 13,9 ms al inicio y 254,8 ± 9,3 ms al final (referencia: 254,6 ms).
+- gotest: instalación 6,311 s. Ejecución 272,0 ± 24,0 ms.
+- ginkgo: instalación 13,458 s, más 4,595 s de descarga de su biblioteca en el proyecto. Ejecución 739,1 ± 22,2 ms.
+
+Resultado por criterio:
+
+- Instalación: `go test` ninguna; gotest 6,3 s; ginkgo 13,5 s.
+- Sobrecarga de ejecución frente a `go test`: gotest +17,4 ms, dentro de su desviación y por tanto no distinguible del ruido; ginkgo +484,5 ms.
+- Solo lectura: `go test` y gotest pasan (código 0). `ginkgo` falla (código 1), con y sin `--output-dir`, porque copia el binario de test compilado al directorio del paquete (`permission denied`). Compilando el test fuera con `go test -c -o` y pasándole el binario a ginkgo, pasa (código 0), pero son dos comandos.
+- Informe: `go test` y gotest muestran tests pasados y fallados y el porcentaje de cobertura (100 % en esta prueba); ginkgo muestra specs pasados y fallados. La cobertura de ginkgo no se midió, porque falló antes por el solo lectura.
+
+![Ginkgo con el binario compilado fuera de los fuentes](../media/ginkgo-solo-lectura.png)
