@@ -104,3 +104,9 @@ Resultado por criterio:
 - Informe: `go test` y gotest muestran tests pasados y fallados y el porcentaje de cobertura (100 % en esta prueba); ginkgo muestra specs pasados y fallados. La cobertura de ginkgo no se midió, porque falló antes por el solo lectura.
 
 ![Ginkgo con el binario compilado fuera de los fuentes](../media/ginkgo-solo-lectura.png)
+
+### Decisión
+
+Me quedo con `go test`.
+
+Cumple los cinco criterios: viene con Go sin instalar nada, muestra tests pasados, fallados y cobertura, y pasa con los fuentes en solo lectura. gotest cumple lo mismo, pero no aporta nada medible: tarda 6,3 s en instalarse y su sobrecarga (+17,4 ms) queda dentro de la desviación. Descarto ginkgo porque tarda 13,5 s en instalarse, añade +484,5 ms por ejecución y falla con los fuentes en solo lectura salvo que se compile el test fuera, lo que obliga a usar dos comandos. Esto último pesa para el objetivo 5.
