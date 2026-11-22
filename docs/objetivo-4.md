@@ -11,13 +11,6 @@ Una biblioteca de aserciones compara el resultado obtenido con el esperado y da 
 - Coste: tiempo de descarga y compilación, y sobrecarga en la ejecución frente a usar `testing` solo.
 - Permite comprobar errores con `errors.Is` y comparar structs y `time.Time`.
 - No escribe ficheros junto a los fuentes (lo exige el objetivo 5).
-EOF
-git add docs/objetivo-4.md
-git commit -m "#26 Criterios para elegir la biblioteca de aserciones"
-
-Commit 2 (#27): criterios del runner
-
-cat >> docs/objetivo-4.md <<'EOF'
 
 ## Test runner
 
