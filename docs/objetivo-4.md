@@ -110,3 +110,29 @@ Resultado por criterio:
 Me quedo con `go test`.
 
 Cumple los cinco criterios: viene con Go sin instalar nada, muestra tests pasados, fallados y cobertura, y pasa con los fuentes en solo lectura. gotest cumple lo mismo, pero no aporta nada medible: tarda 6,3 s en instalarse y su sobrecarga (+17,4 ms) queda dentro de la desviación. Descarto ginkgo porque tarda 13,5 s en instalarse, añade +484,5 ms por ejecución y falla con los fuentes en solo lectura salvo que se compile el test fuera, lo que obliga a usar dos comandos. Esto último pesa para el objetivo 5.
+
+## Calidad de los tests
+
+El objetivo pide tests sin código repetido, con baja complejidad y sin ficheros enormes. Sin límites medibles, "está bien escrito" es una opinión, así que fijo los límites antes de medir y los justifico.
+
+### Criterios
+
+| Criterio | Límite | Cómo se comprueba |
+|---|---|---|
+| Complejidad ciclomática | 10 por función | herramienta de análisis estático |
+| Longitud de función | 50 líneas | herramienta de análisis estático |
+| Longitud de fichero | 300 líneas | `wc -l` sobre los ficheros `.go` |
+| Código duplicado | ningún bloque en los tests | herramienta de análisis estático |
+| Independientes | pasan en orden aleatorio | `go test -shuffle=on -count=10 ./...` |
+| Repetibles | pasan dos veces seguidas, sin red ni reloj | `go test -count=2 ./...` y `grep -rn "time.Now\|net/http" internal/` sin resultados |
+| Rápidos | todo el conjunto en menos de 1 s | tiempo que imprime `go test ./...` |
+| Autovalidables | romper una regla hace fallar un test | cambio a propósito en el código y `go test ./...` en rojo |
+| Oportunos | el test se escribe antes que el código | en `git log`, el commit de tests va antes que el del código |
+
+### Por qué estos límites
+
+- **Complejidad 10.** Es el límite que propuso McCabe al definir la métrica y el que suelen usar las herramientas. Una función con más caminos es difícil de probar entera y de entender. El código del taller usa funciones puras pequeñas, así que es un límite alcanzable.
+- **50 líneas por función.** Cabe en una pantalla. No uso 30 porque los tests con tabla son largos solo por los datos de los casos, no por lógica, y con 30 fallarían sin estar mal escritos.
+- **300 líneas por fichero.** Obliga a separar por responsabilidad, como ya se hace (`cita.go`, `horario.go`, `jornada.go`, `elevadores.go`), y evita ficheros enormes.
+- **Sin duplicados.** Si el mismo bloque aparece varias veces en los tests, un cambio en la regla obliga a tocar muchos sitios. Se resuelve con funciones auxiliares (`fecha`, `citaDe`, `citasALaVez`) y tests con tabla.
+- **F.I.R.S.T.** Cada letra tiene una comprobación concreta y automática. Independientes y repetibles aseguran que un test no depende del orden, de la red ni de la hora. Rápidos hace que se ejecuten siempre. Autovalidables evita tests que pasan aunque el código esté roto. Oportunos hace que los tests guíen el diseño (TDD).
