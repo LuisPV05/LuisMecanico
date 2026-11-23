@@ -226,3 +226,17 @@ Criterio de mantenimiento: al menos un release en el último año (fecha de cons
 ![Versiones de las herramientas de documentación](../media/docs-versiones.png)
 
 `gomarkdoc` queda descartada por no tener release en el último año. `godoc` no se incluye: la fecha de su módulo, `golang.org/x/tools`, es la de todo el módulo y no demuestra que `godoc` se mantenga.
+
+### Medidas antes de documentar
+
+Medido en Linux (contenedor `golang:latest`, Go 1.27) sobre `internal/taller`. revive v1.17.1, instalado con `go install`, con la regla `exported`.
+
+| Criterio | Límite | Medido | ¿Cumple? |
+|---|---|---|---|
+| Exportados con comentario de documentación | 100 % | 0 de 8 declaraciones (15 identificadores) | no |
+| Comentario empieza por el nombre | 100 % | no hay comentarios | no |
+| Documentación generada | un comando | `go doc -all ./internal/taller` muestra los nombres sin descripción | no |
+
+Los 15 identificadores exportados son los 11 errores, `Cita`, `Libreta`, `TipoReparacion` y `Libreta.Apuntar`. revive cuenta por declaración, y un bloque `var (...)` cuenta como una.
+
+`godoc-lint` queda descartada como comprobador: `go install` no encontró el paquete en el módulo y no la pude instalar. revive cubre los mismos criterios.
