@@ -35,3 +35,7 @@ func (c Cita) solapaConTramo(inicio, fin time.Time) bool {
 func solapan(a, b Cita) bool {
 	return a.solapaConTramo(b.inicio, b.fin())
 }
+
+func (c Cita) ocupaElevadorEn(momento time.Time) bool {
+	return c.tipo.usaElevador && !momento.Before(c.inicio) && momento.Before(c.fin())
+}
