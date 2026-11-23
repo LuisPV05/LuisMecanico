@@ -209,3 +209,20 @@ Los tipos y funciones exportados no están documentados. La documentación se ge
 ### Convivencia con la regla de no comentar el código
 
 Dentro de las funciones no hay comentarios. Los únicos comentarios son los de documentación, justo encima de cada identificador exportado, y describen el contrato, no la implementación.
+
+### Opciones
+
+Criterio de mantenimiento: al menos un release en el último año (fecha de consulta: 23/11/2026).
+
+| Herramienta | Para qué | Último release | Mantenida |
+|---|---|---|---|
+| go doc | genera la documentación en texto desde los comentarios; viene con Go | incluida en Go 1.27 | sí |
+| pkgsite | genera la documentación como web local, la misma que muestra pkg.go.dev | 2026-11-18 | sí |
+| doc2go | genera la documentación como HTML estático | 2026-05-17 | sí |
+| revive | comprueba que los exportados tienen comentario con la forma correcta | 2026-10-07 | sí |
+| godoc-lint | comprueba la forma de los comentarios de documentación | 2026-08-28 | sí |
+| gomarkdoc | genera la documentación en Markdown | 2023-06-17 | no |
+
+![Versiones de las herramientas de documentación](../media/docs-versiones.png)
+
+`gomarkdoc` queda descartada por no tener release en el último año. `godoc` no se incluye: la fecha de su módulo, `golang.org/x/tools`, es la de todo el módulo y no demuestra que `godoc` se mantenga.
