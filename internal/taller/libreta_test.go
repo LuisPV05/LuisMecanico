@@ -18,11 +18,17 @@ func TestElevadoresOcupados(t *testing.T) {
 	}{
 		{"libreta vacía", Libreta{}, 0},
 		{"una cita en el tramo", Libreta{citas: []Cita{citaDe(fecha(23, 9, 15), 30)}}, 1},
-		{"tres citas en el tramo", Libreta{citas: []Cita{
+		{"tres citas a la vez", Libreta{citas: []Cita{
 			citaDe(fecha(23, 9, 0), 60),
 			citaDe(fecha(23, 8, 30), 60),
-			citaDe(fecha(23, 9, 30), 120),
+			citaDe(fecha(23, 9, 15), 60),
 		}}, 3},
+		{"tres citas seguidas, una detrás de otra", Libreta{citas: []Cita{
+			citaDe(fecha(23, 9, 0), 20),
+			citaDe(fecha(23, 9, 20), 20),
+			citaDe(fecha(23, 9, 40), 20),
+		}}, 1},
+		{"cita que empieza antes del tramo y sigue dentro", Libreta{citas: []Cita{citaDe(fecha(23, 8, 30), 60)}}, 1},
 		{"cita anterior al tramo", Libreta{citas: []Cita{citaDe(fecha(23, 8, 0), 30)}}, 0},
 		{"cita contigua por delante", Libreta{citas: []Cita{citaDe(fecha(23, 8, 0), 60)}}, 0},
 		{"cita contigua por detrás", Libreta{citas: []Cita{citaDe(fecha(23, 10, 0), 30)}}, 0},
