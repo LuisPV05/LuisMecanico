@@ -173,3 +173,15 @@ Medido en Linux (contenedor `golang:latest`, Go 1.27), sobre la rama `Objetivo-4
 Sobre oportunos: `d26804c` (`ocupaElevadorEn`) solo extrae código que ya cubrían los tests de #35, y `apuntar.go` tiene dos commits porque la segunda versión simplifica la primera, ambas después de sus tests.
 
 ![Medidas de calidad de los tests](../media/calidad-medidas.png)
+
+### Decisión
+
+Uso **golangci-lint** (v2.15.0) con los analizadores `cyclop`, `funlen` y `dupl`, y los límites fijados antes de medir: complejidad 10, función 50 líneas, duplicados con umbral de 100 tokens. La longitud de fichero (300 líneas) se comprueba con `wc -l`, y F.I.R.S.T. con `go test`, `grep` y `git log`.
+
+Por qué:
+- Con una sola instalación y un solo comando mide tres de los criterios (complejidad, longitud de función y duplicados). Las alternativas mantenidas (`gocognit`, `dupl`, `scc`) obligan a instalar y ejecutar cada una por separado, y `gocognit` mide complejidad cognitiva, no la ciclomática que fijé.
+- Se mantiene: último release el 16/10/2026. `gocyclo` y `cyclop` sueltos están descartados por no tener release en el último año.
+- Se instala con el script de binarios de su documentación, sin añadir dependencias al módulo de Go.
+- La medida dio `0 issues` con los límites fijados, así que el código actual los cumple sin tener que cambiar ningún límite.
+
+Lo que no cubre: golangci-lint no mide la longitud de fichero, por eso uso `wc -l`. Los límites no se relajan para que pasen: si algún día una función los supera, se divide la función.
