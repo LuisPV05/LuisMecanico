@@ -23,3 +23,15 @@ func nuevaCita(catalogo []TipoReparacion, nombreTipo string, inicio time.Time) (
 	}
 	return Cita{inicio: inicio, tipo: encontrado}, nil
 }
+
+func (c Cita) fin() time.Time {
+	return finDeCita(c.inicio, c.tipo.duracion)
+}
+
+func (c Cita) solapaConTramo(inicio, fin time.Time) bool {
+	return c.inicio.Before(fin) && inicio.Before(c.fin())
+}
+
+func solapan(a, b Cita) bool {
+	return a.solapaConTramo(b.inicio, b.fin())
+}
