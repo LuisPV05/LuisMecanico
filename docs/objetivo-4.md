@@ -185,3 +185,27 @@ Por qué:
 - La medida dio `0 issues` con los límites fijados, así que el código actual los cumple sin tener que cambiar ningún límite.
 
 Lo que no cubre: golangci-lint no mide la longitud de fichero, por eso uso `wc -l`. Los límites no se relajan para que pasen: si algún día una función los supera, se divide la función.
+
+## Documentación del código
+
+Los tipos y funciones exportados no están documentados. La documentación se genera desde el código y no se escribe a mano, para que no se desincronice.
+
+### Criterios
+
+| Criterio | Límite | Cómo se comprueba |
+|---|---|---|
+| Identificadores exportados con comentario de documentación | 100 % | herramienta de análisis estático |
+| Cada comentario empieza por el nombre del identificador | 100 % | herramienta de análisis estático |
+| Los comentarios describen qué recibe, qué devuelve y qué errores, no cómo lo hace | revisión del contenido | lectura de la documentación generada |
+| La documentación se genera con una herramienta | un comando que la produce desde el código | ejecución en Linux |
+
+### Por qué estos límites
+
+- **100 %.** El taller expone pocos identificadores (`Libreta`, `Cita`, `TipoReparacion`, `Apuntar` y los errores). Con tan pocos, dejar uno sin documentar es un descuido, no una carga.
+- **Empieza por el nombre.** Es la convención de Go, y las herramientas que generan la documentación la esperan.
+- **Qué y no cómo.** Un comentario que explica la implementación se queda viejo cuando cambia el código. El contrato cambia menos.
+- **Generada.** Si la documentación sale del código, no puede contradecirlo.
+
+### Convivencia con la regla de no comentar el código
+
+Dentro de las funciones no hay comentarios. Los únicos comentarios son los de documentación, justo encima de cada identificador exportado, y describen el contrato, no la implementación.
