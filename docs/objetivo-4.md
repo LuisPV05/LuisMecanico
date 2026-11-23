@@ -153,3 +153,23 @@ Busco herramientas que midan los límites de arriba. Criterio de mantenimiento: 
 ![Versiones de las herramientas de calidad](../media/calidad-versiones.png)
 
 `gocyclo` y `cyclop` quedan descartadas como programas sueltos por no tener release en el último año. `gocognit` mide complejidad cognitiva, que no es el criterio fijado (ciclomática).
+
+### Medidas
+
+Medido en Linux (contenedor `golang:latest`, Go 1.27), sobre la rama `Objetivo-4`. golangci-lint v2.15.0, instalado con su script oficial de binarios, con `cyclop` (10), `funlen` (50 líneas) y `dupl` (umbral de 100 tokens).
+
+| Criterio | Límite | Medido | ¿Cumple? |
+|---|---|---|---|
+| Complejidad ciclomática | 10 | ninguna función lo supera (`0 issues`) | sí |
+| Longitud de función | 50 líneas | ninguna lo supera (`0 issues`) | sí |
+| Longitud de fichero | 300 líneas | máximo 118 (`catalogo.go`) | sí |
+| Código duplicado | ninguno | ninguno (`0 issues`) | sí |
+| Independientes | 10 pasadas en orden aleatorio | 10 de 10 en `ok` | sí |
+| Repetibles | 2 pasadas, sin red ni reloj | 2 de 2 en `ok`; `grep` sin resultados; `git status` vacío | sí |
+| Rápidos | menos de 1 s | entre 0,019 s y 0,101 s | sí |
+| Autovalidables | romper una regla hace fallar un test | al cambiar `>=` por `>` en `elevadores.go` fallan `TestApuntar`, `TestApuntarNuncaSuperaLosElevadores` y `TestComprobarElevador`; al restaurar, `ok` | sí |
+| Oportunos | test antes que código | en cada regla, el commit de tests precede al de su código | sí |
+
+Sobre oportunos: `d26804c` (`ocupaElevadorEn`) solo extrae código que ya cubrían los tests de #35, y `apuntar.go` tiene dos commits porque la segunda versión simplifica la primera, ambas después de sus tests.
+
+![Medidas de calidad de los tests](../media/calidad-medidas.png)
