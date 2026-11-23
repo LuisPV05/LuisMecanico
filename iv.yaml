@@ -1,5 +1,6 @@
 lenguaje: Go
 entidad: internal/taller/libreta.go
+test: internal/taller/apuntar_test.go
 automatizar:
   fichero: justfile
   orden: just
