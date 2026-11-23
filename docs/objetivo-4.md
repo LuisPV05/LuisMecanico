@@ -185,3 +185,38 @@ Por qué:
 - La medida dio `0 issues` con los límites fijados, así que el código actual los cumple sin tener que cambiar ningún límite.
 
 Lo que no cubre: golangci-lint no mide la longitud de fichero, por eso uso `wc -l`. Los límites no se relajan para que pasen: si algún día una función los supera, se divide la función.
+
+## Producto mínimo viable (PMV)
+
+El PMV es el Milestone 1: apuntar una cita en la libreta cumpliendo todas las reglas de HU001, detectando el conflicto al organizar la cita y no cuando empieza la reparación.
+
+### Tests que debe pasar
+
+El PMV está terminado cuando `just test` pasa y estos comportamientos tienen test:
+
+- Apuntar en una libreta vacía añade la cita.
+- Una cita en domingo se rechaza (`ErrDomingo`).
+- Una cita fuera de las 8:00 a 21:00 se rechaza (`ErrFueraDeHorario`).
+- Un tipo que no está en el catálogo se rechaza (`ErrTipoDesconocido`).
+- Una cita con el mismo inicio y el mismo tipo que otra se rechaza (`ErrCitaDuplicada`).
+- Si los tres elevadores están ocupados a la vez, una cita que necesita elevador se rechaza (`ErrSinElevadorLibre`).
+- Si los tres elevadores están ocupados, una cita que no usa elevador se apunta.
+- Una reparación larga sigue en la siguiente jornada y se salta el domingo.
+- Tras cualquier secuencia de citas, nunca hay más de tres elevadores ocupados a la vez.
+- Rechazar una cita no cambia la libreta.
+
+### Niveles de test
+
+- **Unitarios:** funciones puras, una por regla (leer el catálogo, validar el horario, calcular cuándo acaba una cita, contar los elevadores ocupados). Se prueban solas, con tablas de casos.
+- **Integración:** `Libreta.Apuntar` junta todas las reglas, y la carga del catálogo se prueba contra el fichero real `tipos_reparacion.csv`.
+- **De propiedad:** una secuencia larga de citas comprueba que nunca se superan los tres elevadores.
+- **No hay tests de interfaz ni de extremo a extremo**: el PMV no tiene interfaz.
+
+### Qué queda fuera y por qué
+
+- **HU002 y HU003:** van al Milestone 2. El PMV solo necesita detectar el conflicto de elevadores para demostrar el valor de la solución.
+- **Guardar la libreta en disco o en una base de datos:** el conflicto se detecta igual con la libreta en memoria.
+- **Una interfaz para el recepcionista:** el PMV se prueba con tests, no a mano.
+- **Herramientas y máquinas distintas del elevador:** el elevador es el único recurso de uso continuo que bloquea citas, según la descripción del problema. Los demás se usan de forma puntual.
+- **Mecánicos asignados, retrasos y precio:** no intervienen en decidir si cabe una cita.
+- **Buscar otro horario libre:** el PMV avisa del conflicto, pero no propone alternativas.
