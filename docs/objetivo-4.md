@@ -136,3 +136,20 @@ El objetivo pide tests sin código repetido, con baja complejidad y sin ficheros
 - **300 líneas por fichero.** Obliga a separar por responsabilidad, como ya se hace (`cita.go`, `horario.go`, `jornada.go`, `elevadores.go`), y evita ficheros enormes.
 - **Sin duplicados.** Si el mismo bloque aparece varias veces en los tests, un cambio en la regla obliga a tocar muchos sitios. Se resuelve con funciones auxiliares (`fecha`, `citaDe`, `citasALaVez`) y tests con tabla.
 - **F.I.R.S.T.** Cada letra tiene una comprobación concreta y automática. Independientes y repetibles aseguran que un test no depende del orden, de la red ni de la hora. Rápidos hace que se ejecuten siempre. Autovalidables evita tests que pasan aunque el código esté roto. Oportunos hace que los tests guíen el diseño (TDD).
+
+### Opciones
+
+Busco herramientas que midan los límites de arriba. Criterio de mantenimiento: al menos un release en el último año (fecha de consulta: 23/11/2026).
+
+| Herramienta | Qué mide | Último release | Mantenida |
+|---|---|---|---|
+| gocyclo | complejidad ciclomática | 2022-06-15 | no |
+| cyclop | complejidad ciclomática | 2024-10-16 | no |
+| gocognit | complejidad cognitiva | 2026-10-06 | sí |
+| dupl | código duplicado | 2026-03-04 | sí |
+| scc | líneas por fichero | 2026-02-27 | sí |
+| golangci-lint | agrupa varios analizadores (entre ellos cyclop, funlen y dupl) | 2026-10-16 | sí |
+
+![Versiones de las herramientas de calidad](../media/calidad-versiones.png)
+
+`gocyclo` y `cyclop` quedan descartadas como programas sueltos por no tener release en el último año. `gocognit` mide complejidad cognitiva, que no es el criterio fijado (ciclomática).
