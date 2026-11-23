@@ -89,12 +89,12 @@ func TestCargarCatalogo(t *testing.T) {
 		tipo("Mantenimiento básico", 45, true),
 		tipo("Cambio de pastillas y discos de freno", 90, true),
 		tipo("Cambio de neumáticos y alineación", 60, true),
-		tipo("Cambio de kit de distribución", 240, true),
+		tipo("Cambio de kit de distribución (Bomba de agua y correas)", 240, true),
 		tipo("Reparación del sistema de embrague", 300, true),
 		tipo("Sustitución del alternador o motor de arranque", 120, true),
-		tipo("Diagnóstico y reparación de falla eléctrica", 180, true),
+		tipo("Diagnóstico y reparación de falla eléctrica (Cortocircuito o sensor defectuoso)", 180, true),
 		tipo("Reemplazo de la batería principal y comprobación del alternador", 30, false),
-		tipo("Sustitución de amortiguadores", 150, true),
+		tipo("Sustitución de amortiguadores (Suspensión delantera o trasera)", 150, true),
 		tipo("Sustitución completa del motor", 2340, true),
 	}
 	obtenido, err := cargarCatalogo("tipos_reparacion.csv")
