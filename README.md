@@ -134,9 +134,9 @@ La planificación relativa al objetivo 1 se encuentra respectivamente en los sig
 
 ## La entidad: `Libreta`
 
-La entidad del modelo es `Libreta`, en [`internal/taller/libreta.go`](internal/taller/libreta.go). Es el único sitio donde están todas las citas del taller. Cada [`Cita`](internal/taller/cita.go) tiene un inicio y un tipo de reparación (nombre, duración y si usa elevador). El horario del taller (de 8:00 a 21:00) y el número de elevadores (3) son constantes de la propia libreta.
+La entidad del modelo es `Libreta`, en [`internal/taller/libreta/libreta.go`](internal/taller/libreta/libreta.go). Es el único sitio donde están todas las citas del taller. Cada [`Cita`](internal/taller/cita/cita.go) tiene un inicio y un tipo de reparación ([`catalogo`](internal/taller/catalogo/tipo.go): nombre, duración y si usa elevador). El horario del taller (de 8:00 a 21:00) está en [`horario`](internal/taller/horario/horario.go) y los 3 elevadores en [`elevadores`](internal/taller/elevadores/elevadores.go).
 
-De la libreta sale cuántos elevadores están ocupados en un tramo de tiempo, que nunca pueden ser más de tres. Con eso, `Libreta.Apuntar` apunta una cita solo si cumple las reglas de HU001: el tipo existe y tiene duración válida, el horario es de lunes a sábado de 8:00 a 21:00, no hay otra cita igual y queda un elevador libre. Así el conflicto se detecta al organizar la cita y no cuando empieza la reparación. Si una regla falla, la libreta queda como estaba y se devuelve el error.
+[`elevadores`](internal/taller/elevadores/elevadores.go) calcula cuántos elevadores están ocupados a la vez en un tramo de tiempo, que nunca pueden ser más de tres. Con eso, `Libreta.Apuntar` apunta una cita solo si cumple las reglas de HU001: el tipo existe y tiene duración válida, el horario es de lunes a sábado de 8:00 a 21:00, no hay otra cita igual y queda un elevador libre. Así el conflicto se detecta al organizar la cita y no cuando empieza la reparación. Si una regla falla, la libreta queda como estaba y se devuelve el error.
 
 ## Instalación y tareas
 
@@ -167,7 +167,7 @@ just --list    # lista las tareas
 just check
 ```
 
-Ejecuta `gofmt -e` sobre todo el repositorio, incluida `internal/taller/libreta.go`. Informa de los errores de sintaxis y de nada más: no comprueba tipos, formato ni estilo, ni ejecuta tests. Si hay un error de sintaxis, lo muestra y termina con error; si todo es correcto, no imprime nada.
+Ejecuta `gofmt -e` sobre todo el repositorio, incluida `internal/taller/libreta/libreta.go`. Informa de los errores de sintaxis y de nada más: no comprueba tipos, formato ni estilo, ni ejecuta tests. Si hay un error de sintaxis, lo muestra y termina con error; si todo es correcto, no imprime nada.
 
 ### Ejecutar los tests
 
@@ -177,4 +177,4 @@ just test
 
 Ejecuta `go test ./...`, que lanza todos los tests del proyecto con el paquete `testing` de la biblioteca estándar de Go. No hace falta instalar nada más que Go. Si todo es correcto, imprime `ok` por cada paquete; si algún test falla, lo muestra y termina con error.
 
-El test de referencia está declarado en `iv.yaml` (`test:`) y es [`internal/taller/apuntar_test.go`](internal/taller/apuntar_test.go): comprueba las reglas de HU001 al apuntar una cita, que rechazar una cita no cambia la libreta y que nunca hay más de tres elevadores ocupados a la vez.
+El test de referencia está declarado en `iv.yaml` (`test:`) y es [`internal/taller/libreta/libreta_test.go`](internal/taller/libreta/libreta_test.go): comprueba las reglas de HU001 al apuntar una cita, que rechazar una cita no cambia la libreta y que nunca hay más de tres elevadores ocupados a la vez.
