@@ -1,6 +1,6 @@
 lenguaje: Go
-entidad: internal/taller/libreta.go
-test: internal/taller/apuntar_test.go
+entidad: internal/taller/libreta/libreta.go
+test: internal/taller/libreta/libreta_test.go
 automatizar:
   fichero: justfile
   orden: just
