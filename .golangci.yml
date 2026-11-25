@@ -1,0 +1,15 @@
+version: "1"
+linters:
+  default: none
+  enable:
+    - cyclop
+    - funlen
+    - dupl
+  settings:
+    cyclop:
+      max-complexity: 10
+    funlen:
+      lines: 50
+      statements: -1
+    dupl:
+      threshold: 100
