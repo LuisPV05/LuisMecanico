@@ -158,6 +158,7 @@ Después, desde la raíz del repositorio:
 ```bash
 just check     # comprueba la sintaxis de los fuentes
 just test      # ejecuta los tests
+just calidad   # comprueba los límites de calidad
 just --list    # lista las tareas
 ```
 
@@ -178,3 +179,11 @@ just test
 Ejecuta `go test ./...`, que lanza todos los tests del proyecto con el paquete `testing` de la biblioteca estándar de Go. No hace falta instalar nada más que Go. Si todo es correcto, imprime `ok` por cada paquete; si algún test falla, lo muestra y termina con error.
 
 El test de referencia está declarado en `iv.yaml` (`test:`) y es [`internal/taller/libreta/libreta_test.go`](internal/taller/libreta/libreta_test.go): comprueba las reglas de HU001 al apuntar una cita, que rechazar una cita no cambia la libreta y que nunca hay más de tres elevadores ocupados a la vez.
+
+### Comprobar la calidad del código
+
+```bash
+just calidad
+```
+
+Ejecuta golangci-lint con la configuración de [`.golangci.yml`](.golangci.yml) (complejidad ciclomática máxima 10, funciones de hasta 50 líneas y sin bloques duplicados) y comprueba que ningún fichero `.go` pase de 300 líneas. Si algún límite se supera, lo muestra y termina con error; si todo es correcto, no imprime nada.
