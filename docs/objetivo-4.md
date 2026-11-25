@@ -118,7 +118,7 @@ Linux (contenedor `golang:latest`, Go 1.27), rama `Objetivo-4`, golangci-lint v2
 
 ### Decisión
 
-Uso golangci-lint (v2.15.0) con `cyclop`, `funlen` y `dupl`, y los límites fijados antes de medir. Con una instalación y un comando mide tres criterios; las alternativas mantenidas obligan a usar una herramienta por criterio, y gocognit mide otra complejidad. Se instala con su script de binarios, sin añadir dependencias a `go.mod`. La longitud de fichero se comprueba con `wc -l` y F.I.R.S.T. con `go test`, `grep` y `git log`. Los límites no se relajan para que pasen.
+Uso golangci-lint (v2.15.0) con `cyclop`, `funlen` y `dupl`, y los límites fijados antes de medir. Con una instalación y un comando mide tres criterios; las alternativas mantenidas obligan a usar una herramienta por criterio, y gocognit mide otra complejidad. Se instala con su script de binarios, sin añadir dependencias a `go.mod`. La longitud de fichero se comprueba con `wc -l` y F.I.R.S.T. con `go test`, `grep` y `git log`. Los límites no se relajan para que pasen. Se ejecuta con `just calidad`, que usa la configuración `.golangci.yml` del repositorio y además falla si algún fichero pasa de 300 líneas.
 
 ## Producto mínimo viable (PMV)
 
