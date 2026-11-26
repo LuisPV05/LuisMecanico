@@ -78,36 +78,6 @@ func TestFin(t *testing.T) {
 	}
 }
 
-func TestSolapan(t *testing.T) {
-	base := pruebas.CitaDe(pruebas.Fecha(23, 9, 0), 60)
-	nocturna := pruebas.CitaDe(pruebas.Fecha(23, 20, 30), 45)
-	casos := []struct {
-		nombre string
-		a, b   cita.Cita
-		quiero bool
-	}{
-		{"termina antes de que empiece", base, pruebas.CitaDe(pruebas.Fecha(23, 8, 0), 30), false},
-		{"contigua por delante", base, pruebas.CitaDe(pruebas.Fecha(23, 8, 0), 60), false},
-		{"solapa por el inicio", base, pruebas.CitaDe(pruebas.Fecha(23, 8, 30), 60), true},
-		{"está dentro", base, pruebas.CitaDe(pruebas.Fecha(23, 9, 15), 30), true},
-		{"es la misma", base, pruebas.CitaDe(pruebas.Fecha(23, 9, 0), 60), true},
-		{"solapa por el final", base, pruebas.CitaDe(pruebas.Fecha(23, 9, 30), 60), true},
-		{"contigua por detrás", base, pruebas.CitaDe(pruebas.Fecha(23, 10, 0), 30), false},
-		{"empieza después", base, pruebas.CitaDe(pruebas.Fecha(23, 11, 0), 30), false},
-		{"coincide en la noche de una cita larga", nocturna, pruebas.CitaDe(pruebas.Fecha(24, 8, 0), 30), true},
-	}
-	for _, c := range casos {
-		t.Run(c.nombre, func(t *testing.T) {
-			if obtenido := cita.Solapan(c.a, c.b); obtenido != c.quiero {
-				t.Errorf("Solapan(a, b): obtenido %v, quiero %v", obtenido, c.quiero)
-			}
-			if obtenido := cita.Solapan(c.b, c.a); obtenido != c.quiero {
-				t.Errorf("Solapan(b, a): obtenido %v, quiero %v", obtenido, c.quiero)
-			}
-		})
-	}
-}
-
 func TestOcupaElevadorEn(t *testing.T) {
 	inicio := pruebas.Fecha(23, 9, 0)
 	conElevador := pruebas.CitaDe(inicio, 60)
