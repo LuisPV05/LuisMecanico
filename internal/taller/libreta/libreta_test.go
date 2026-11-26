@@ -4,7 +4,6 @@ import (
 	"errors"
 	"io/fs"
 	"reflect"
-	"slices"
 	"testing"
 	"time"
 
@@ -34,13 +33,11 @@ func catalogoDePrueba() []catalogo.TipoReparacion {
 	}
 }
 
-func apuntadas(t *testing.T, tipos []catalogo.TipoReparacion, inicio time.Time, nombres ...string) libreta.Libreta {
+func apuntadas(t *testing.T, inicio time.Time, nombres ...string) *libreta.Libreta {
 	t.Helper()
-	agenda := libreta.Nueva(tipos)
+	agenda := libreta.Nueva(catalogoDePrueba())
 	for _, nombre := range nombres {
-		var err error
-		agenda, err = agenda.Apuntar(nombre, inicio)
-		if err != nil {
+		if err := agenda.Apuntar(nombre, inicio); err != nil {
 			t.Fatal(err)
 		}
 	}
@@ -48,54 +45,53 @@ func apuntadas(t *testing.T, tipos []catalogo.TipoReparacion, inicio time.Time, 
 }
 
 func TestApuntar(t *testing.T) {
-	tipos := catalogoDePrueba()
 	nueve := pruebas.Fecha(23, 9, 0)
-	vacia := libreta.Nueva(tipos)
-	tres := apuntadas(t, tipos, nueve, neumaticos, pastillas, mantenimiento)
+	tres := []string{neumaticos, pastillas, mantenimiento}
 	casos := []struct {
 		nombre      string
-		previa      libreta.Libreta
+		previas     []string
 		reparacion  string
 		inicio      time.Time
 		quiero      error
 		quieroCitas int
 	}{
-		{"libreta vacía", vacia, mantenimiento, nueve, nil, 1},
-		{"dos citas a la vez", apuntadas(t, tipos, nueve, neumaticos, pastillas), mantenimiento, nueve, nil, 3},
-		{"domingo", vacia, mantenimiento, pruebas.Fecha(22, 10, 0), horario.ErrDomingo, 0},
-		{"fuera de horario", vacia, mantenimiento, pruebas.Fecha(23, 7, 59), horario.ErrFueraDeHorario, 0},
-		{"tipo desconocido", vacia, "Lavado de coche", nueve, catalogo.ErrTipoDesconocido, 0},
-		{"tipo desconocido en domingo", vacia, "Lavado de coche", pruebas.Fecha(22, 10, 0), catalogo.ErrTipoDesconocido, 0},
-		{"cita duplicada", apuntadas(t, tipos, nueve, mantenimiento), mantenimiento, nueve, libreta.ErrCitaDuplicada, 1},
+		{"libreta vacía", nil, mantenimiento, nueve, nil, 1},
+		{"dos citas a la vez", []string{neumaticos, pastillas}, mantenimiento, nueve, nil, 3},
+		{"domingo", nil, mantenimiento, pruebas.Fecha(22, 10, 0), horario.ErrDomingo, 0},
+		{"fuera de horario", nil, mantenimiento, pruebas.Fecha(23, 7, 59), horario.ErrFueraDeHorario, 0},
+		{"tipo desconocido", nil, "Lavado de coche", nueve, catalogo.ErrTipoDesconocido, 0},
+		{"tipo desconocido en domingo", nil, "Lavado de coche", pruebas.Fecha(22, 10, 0), catalogo.ErrTipoDesconocido, 0},
+		{"cita duplicada", []string{mantenimiento}, mantenimiento, nueve, libreta.ErrCitaDuplicada, 1},
 		{"duplicada con los tres elevadores ocupados", tres, mantenimiento, nueve, libreta.ErrCitaDuplicada, 3},
 		{"tres citas a la vez", tres, alternador, nueve, elevadores.ErrSinElevadorLibre, 3},
 		{"tres citas a la vez y la nueva no usa elevador", tres, bateria, nueve, nil, 4},
 	}
 	for _, c := range casos {
 		t.Run(c.nombre, func(t *testing.T) {
-			antes := slices.Clone(c.previa.Citas())
-			obtenida, err := c.previa.Apuntar(c.reparacion, c.inicio)
+			agenda := apuntadas(t, nueve, c.previas...)
+			antes := agenda.Citas()
+			err := agenda.Apuntar(c.reparacion, c.inicio)
 			if !errors.Is(err, c.quiero) {
 				t.Errorf("error obtenido %v, quiero %v", err, c.quiero)
 			}
-			if len(obtenida.Citas()) != c.quieroCitas {
-				t.Errorf("citas obtenidas %d, quiero %d", len(obtenida.Citas()), c.quieroCitas)
+			if len(agenda.Citas()) != c.quieroCitas {
+				t.Errorf("citas obtenidas %d, quiero %d", len(agenda.Citas()), c.quieroCitas)
 			}
-			if !reflect.DeepEqual(c.previa.Citas(), antes) {
-				t.Error("la libreta original ha cambiado")
+			if err != nil && !reflect.DeepEqual(agenda.Citas(), antes) {
+				t.Error("una cita rechazada ha cambiado la libreta")
 			}
 		})
 	}
 }
 
 func TestApuntarAnadeLaCita(t *testing.T) {
-	obtenida, err := libreta.Nueva(catalogoDePrueba()).Apuntar(mantenimiento, pruebas.Fecha(23, 9, 0))
-	if err != nil {
+	agenda := libreta.Nueva(catalogoDePrueba())
+	if err := agenda.Apuntar(mantenimiento, pruebas.Fecha(23, 9, 0)); err != nil {
 		t.Fatal(err)
 	}
 	quiero := []cita.Cita{pruebas.CitaDe(pruebas.Fecha(23, 9, 0), 45)}
-	if !reflect.DeepEqual(obtenida.Citas(), quiero) {
-		t.Errorf("obtenidas %v, quiero %v", obtenida.Citas(), quiero)
+	if !reflect.DeepEqual(agenda.Citas(), quiero) {
+		t.Errorf("obtenidas %v, quiero %v", agenda.Citas(), quiero)
 	}
 }
 
@@ -110,8 +106,7 @@ func TestApuntarNuncaSuperaLosElevadores(t *testing.T) {
 	for _, minuto := range []int{0, 30} {
 		for hora := 8; hora < 21; hora++ {
 			for _, tipo := range tipos {
-				var err error
-				agenda, err = agenda.Apuntar(tipo.Nombre(), pruebas.Fecha(23, hora, minuto))
+				err := agenda.Apuntar(tipo.Nombre(), pruebas.Fecha(23, hora, minuto))
 				if errors.Is(err, elevadores.ErrSinElevadorLibre) {
 					rechazos++
 				}
@@ -132,12 +127,11 @@ func TestAbrirCargaElCatalogoDelTaller(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	obtenida, err := agenda.Apuntar(mantenimiento, pruebas.Fecha(23, 9, 0))
-	if err != nil {
+	if err := agenda.Apuntar(mantenimiento, pruebas.Fecha(23, 9, 0)); err != nil {
 		t.Fatal(err)
 	}
-	if len(obtenida.Citas()) != 1 {
-		t.Errorf("citas obtenidas %d, quiero 1", len(obtenida.Citas()))
+	if len(agenda.Citas()) != 1 {
+		t.Errorf("citas obtenidas %d, quiero 1", len(agenda.Citas()))
 	}
 }
 
