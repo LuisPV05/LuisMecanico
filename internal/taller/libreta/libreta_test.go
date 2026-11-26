@@ -101,16 +101,16 @@ func TestApuntarNuncaSuperaLosElevadores(t *testing.T) {
 		pruebas.Tipo("Media", 60, true),
 		pruebas.Tipo("Larga", 90, true),
 	}
-	agenda := libreta.Nueva(tipos)
+	taller := libreta.Nueva(tipos)
 	rechazos := 0
 	for _, minuto := range []int{0, 30} {
 		for hora := 8; hora < 21; hora++ {
 			for _, tipo := range tipos {
-				err := agenda.Apuntar(tipo.Nombre(), pruebas.Fecha(23, hora, minuto))
+				err := taller.Apuntar(tipo.Nombre(), pruebas.Fecha(23, hora, minuto))
 				if errors.Is(err, elevadores.ErrSinElevadorLibre) {
 					rechazos++
 				}
-				ocupados := elevadores.Ocupados(agenda.Citas(), pruebas.Fecha(23, 8, 0), pruebas.Fecha(25, 21, 0))
+				ocupados := elevadores.Ocupados(taller.Citas(), pruebas.Fecha(23, 8, 0), pruebas.Fecha(25, 21, 0))
 				if ocupados > elevadores.Cantidad {
 					t.Fatalf("hay %d elevadores ocupados a la vez, el máximo es %d", ocupados, elevadores.Cantidad)
 				}
