@@ -18,29 +18,29 @@ type Libreta struct {
 	citas []cita.Cita
 }
 
-func Nueva(tipos []catalogo.TipoReparacion) Libreta {
-	return Libreta{tipos: slices.Clone(tipos)}
+func Nueva(tipos []catalogo.TipoReparacion) *Libreta {
+	return &Libreta{tipos: slices.Clone(tipos)}
 }
 
-func Abrir(rutaCatalogo string) (Libreta, error) {
+func Abrir(rutaCatalogo string) (*Libreta, error) {
 	tipos, err := catalogo.Cargar(rutaCatalogo)
 	if err != nil {
-		return Libreta{}, err
+		return nil, err
 	}
 	return Nueva(tipos), nil
 }
 
-func (l Libreta) Citas() []cita.Cita {
+func (l *Libreta) Citas() []cita.Cita {
 	return slices.Clone(l.citas)
 }
 
-func (l Libreta) contieneLaMisma(nueva cita.Cita) bool {
+func (l *Libreta) contieneLaMisma(nueva cita.Cita) bool {
 	return slices.ContainsFunc(l.citas, func(c cita.Cita) bool {
 		return c.Inicio().Equal(nueva.Inicio()) && c.Tipo() == nueva.Tipo()
 	})
 }
 
-func (l Libreta) validar(nueva cita.Cita) error {
+func (l *Libreta) validar(nueva cita.Cita) error {
 	if err := horario.ValidarInicio(nueva.Inicio()); err != nil {
 		return err
 	}
@@ -50,13 +50,14 @@ func (l Libreta) validar(nueva cita.Cita) error {
 	return elevadores.Comprobar(l.citas, nueva)
 }
 
-func (l Libreta) Apuntar(nombreTipo string, inicio time.Time) (Libreta, error) {
+func (l *Libreta) Apuntar(nombreTipo string, inicio time.Time) error {
 	nueva, err := cita.Nueva(l.tipos, nombreTipo, inicio)
 	if err != nil {
-		return l, err
+		return err
 	}
 	if err := l.validar(nueva); err != nil {
-		return l, err
+		return err
 	}
-	return Libreta{tipos: l.tipos, citas: append(slices.Clone(l.citas), nueva)}, nil
+	l.citas = append(l.citas, nueva)
+	return nil
 }
