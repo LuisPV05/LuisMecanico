@@ -14,11 +14,20 @@ import (
 var ErrCitaDuplicada = errors.New("ya hay una cita igual apuntada")
 
 type Libreta struct {
+	tipos []catalogo.TipoReparacion
 	citas []cita.Cita
 }
 
-func Desde(citas []cita.Cita) Libreta {
-	return Libreta{citas: slices.Clone(citas)}
+func Nueva(tipos []catalogo.TipoReparacion) Libreta {
+	return Libreta{tipos: slices.Clone(tipos)}
+}
+
+func Abrir(rutaCatalogo string) (Libreta, error) {
+	tipos, err := catalogo.Cargar(rutaCatalogo)
+	if err != nil {
+		return Libreta{}, err
+	}
+	return Nueva(tipos), nil
 }
 
 func (l Libreta) Citas() []cita.Cita {
@@ -41,13 +50,13 @@ func (l Libreta) validar(nueva cita.Cita) error {
 	return elevadores.Comprobar(l.citas, nueva)
 }
 
-func (l Libreta) Apuntar(tipos []catalogo.TipoReparacion, nombreTipo string, inicio time.Time) (Libreta, error) {
-	nueva, err := cita.Nueva(tipos, nombreTipo, inicio)
+func (l Libreta) Apuntar(nombreTipo string, inicio time.Time) (Libreta, error) {
+	nueva, err := cita.Nueva(l.tipos, nombreTipo, inicio)
 	if err != nil {
 		return l, err
 	}
 	if err := l.validar(nueva); err != nil {
 		return l, err
 	}
-	return Libreta{citas: append(slices.Clone(l.citas), nueva)}, nil
+	return Libreta{tipos: l.tipos, citas: append(slices.Clone(l.citas), nueva)}, nil
 }
