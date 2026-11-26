@@ -11,30 +11,22 @@ const Cantidad = 3
 
 var ErrSinElevadorLibre = errors.New("no hay ningún elevador libre")
 
-func ocupadosEn(citas []cita.Cita, momento time.Time) int {
-	ocupados := 0
-	for _, c := range citas {
-		if c.OcupaElevadorEn(momento) {
-			ocupados++
-		}
-	}
-	return ocupados
-}
-
-func iniciosDentroDe(citas []cita.Cita, inicio, fin time.Time) []time.Time {
+func Ocupados(citas []cita.Cita, inicio, fin time.Time) int {
 	instantes := []time.Time{inicio}
 	for _, c := range citas {
 		if c.Inicio().After(inicio) && c.Inicio().Before(fin) {
 			instantes = append(instantes, c.Inicio())
 		}
 	}
-	return instantes
-}
-
-func Ocupados(citas []cita.Cita, inicio, fin time.Time) int {
 	maximo := 0
-	for _, instante := range iniciosDentroDe(citas, inicio, fin) {
-		maximo = max(maximo, ocupadosEn(citas, instante))
+	for _, instante := range instantes {
+		ocupados := 0
+		for _, c := range citas {
+			if c.OcupaElevadorEn(instante) {
+				ocupados++
+			}
+		}
+		maximo = max(maximo, ocupados)
 	}
 	return maximo
 }
