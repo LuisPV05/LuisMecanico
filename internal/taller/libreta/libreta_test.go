@@ -2,6 +2,7 @@ package libreta_test
 
 import (
 	"errors"
+	"io/fs"
 	"reflect"
 	"slices"
 	"testing"
@@ -15,18 +16,42 @@ import (
 	"github.com/LuisPV05/LuisMecanico/internal/taller/pruebas"
 )
 
+const (
+	mantenimiento = "Mantenimiento básico"
+	neumaticos    = "Cambio de neumáticos y alineación"
+	pastillas     = "Cambio de pastillas y discos de freno"
+	alternador    = "Sustitución del alternador o motor de arranque"
+	bateria       = "Reemplazo de la batería"
+)
+
 func catalogoDePrueba() []catalogo.TipoReparacion {
 	return []catalogo.TipoReparacion{
-		pruebas.Tipo("Mantenimiento básico", 45, true),
-		pruebas.Tipo("Cambio de neumáticos y alineación", 60, true),
-		pruebas.Tipo("Reemplazo de la batería", 30, false),
+		pruebas.Tipo(mantenimiento, 45, true),
+		pruebas.Tipo(neumaticos, 60, true),
+		pruebas.Tipo(pastillas, 90, true),
+		pruebas.Tipo(alternador, 120, true),
+		pruebas.Tipo(bateria, 30, false),
 	}
+}
+
+func apuntadas(t *testing.T, tipos []catalogo.TipoReparacion, inicio time.Time, nombres ...string) libreta.Libreta {
+	t.Helper()
+	agenda := libreta.Nueva(tipos)
+	for _, nombre := range nombres {
+		var err error
+		agenda, err = agenda.Apuntar(nombre, inicio)
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+	return agenda
 }
 
 func TestApuntar(t *testing.T) {
 	tipos := catalogoDePrueba()
-	mantenimiento := pruebas.CitaDe(pruebas.Fecha(23, 9, 0), 45)
-	tresALaVez := pruebas.CitasALaVez(3, pruebas.Fecha(23, 9, 0), 60)
+	nueve := pruebas.Fecha(23, 9, 0)
+	vacia := libreta.Nueva(tipos)
+	tres := apuntadas(t, tipos, nueve, neumaticos, pastillas, mantenimiento)
 	casos := []struct {
 		nombre      string
 		previa      libreta.Libreta
@@ -35,21 +60,21 @@ func TestApuntar(t *testing.T) {
 		quiero      error
 		quieroCitas int
 	}{
-		{"libreta vacía", libreta.Libreta{}, "Mantenimiento básico", pruebas.Fecha(23, 9, 0), nil, 1},
-		{"dos citas a la vez", libreta.Desde(pruebas.CitasALaVez(2, pruebas.Fecha(23, 9, 0), 60)), "Cambio de neumáticos y alineación", pruebas.Fecha(23, 9, 0), nil, 3},
-		{"domingo", libreta.Libreta{}, "Mantenimiento básico", pruebas.Fecha(22, 10, 0), horario.ErrDomingo, 0},
-		{"fuera de horario", libreta.Libreta{}, "Mantenimiento básico", pruebas.Fecha(23, 7, 59), horario.ErrFueraDeHorario, 0},
-		{"tipo desconocido", libreta.Libreta{}, "Lavado de coche", pruebas.Fecha(23, 9, 0), catalogo.ErrTipoDesconocido, 0},
-		{"tipo desconocido en domingo", libreta.Libreta{}, "Lavado de coche", pruebas.Fecha(22, 10, 0), catalogo.ErrTipoDesconocido, 0},
-		{"cita duplicada", libreta.Desde([]cita.Cita{mantenimiento}), "Mantenimiento básico", pruebas.Fecha(23, 9, 0), libreta.ErrCitaDuplicada, 1},
-		{"duplicada con los tres elevadores ocupados", libreta.Desde(append(pruebas.CitasALaVez(2, pruebas.Fecha(23, 9, 0), 60), mantenimiento)), "Mantenimiento básico", pruebas.Fecha(23, 9, 0), libreta.ErrCitaDuplicada, 3},
-		{"tres citas a la vez", libreta.Desde(tresALaVez), "Cambio de neumáticos y alineación", pruebas.Fecha(23, 9, 0), elevadores.ErrSinElevadorLibre, 3},
-		{"tres citas a la vez y la nueva no usa elevador", libreta.Desde(tresALaVez), "Reemplazo de la batería", pruebas.Fecha(23, 9, 0), nil, 4},
+		{"libreta vacía", vacia, mantenimiento, nueve, nil, 1},
+		{"dos citas a la vez", apuntadas(t, tipos, nueve, neumaticos, pastillas), mantenimiento, nueve, nil, 3},
+		{"domingo", vacia, mantenimiento, pruebas.Fecha(22, 10, 0), horario.ErrDomingo, 0},
+		{"fuera de horario", vacia, mantenimiento, pruebas.Fecha(23, 7, 59), horario.ErrFueraDeHorario, 0},
+		{"tipo desconocido", vacia, "Lavado de coche", nueve, catalogo.ErrTipoDesconocido, 0},
+		{"tipo desconocido en domingo", vacia, "Lavado de coche", pruebas.Fecha(22, 10, 0), catalogo.ErrTipoDesconocido, 0},
+		{"cita duplicada", apuntadas(t, tipos, nueve, mantenimiento), mantenimiento, nueve, libreta.ErrCitaDuplicada, 1},
+		{"duplicada con los tres elevadores ocupados", tres, mantenimiento, nueve, libreta.ErrCitaDuplicada, 3},
+		{"tres citas a la vez", tres, alternador, nueve, elevadores.ErrSinElevadorLibre, 3},
+		{"tres citas a la vez y la nueva no usa elevador", tres, bateria, nueve, nil, 4},
 	}
 	for _, c := range casos {
 		t.Run(c.nombre, func(t *testing.T) {
 			antes := slices.Clone(c.previa.Citas())
-			obtenida, err := c.previa.Apuntar(tipos, c.reparacion, c.inicio)
+			obtenida, err := c.previa.Apuntar(c.reparacion, c.inicio)
 			if !errors.Is(err, c.quiero) {
 				t.Errorf("error obtenido %v, quiero %v", err, c.quiero)
 			}
@@ -64,7 +89,7 @@ func TestApuntar(t *testing.T) {
 }
 
 func TestApuntarAnadeLaCita(t *testing.T) {
-	obtenida, err := libreta.Libreta{}.Apuntar(catalogoDePrueba(), "Mantenimiento básico", pruebas.Fecha(23, 9, 0))
+	obtenida, err := libreta.Nueva(catalogoDePrueba()).Apuntar(mantenimiento, pruebas.Fecha(23, 9, 0))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -80,13 +105,13 @@ func TestApuntarNuncaSuperaLosElevadores(t *testing.T) {
 		pruebas.Tipo("Media", 60, true),
 		pruebas.Tipo("Larga", 90, true),
 	}
-	agenda := libreta.Libreta{}
+	agenda := libreta.Nueva(tipos)
 	rechazos := 0
 	for _, minuto := range []int{0, 30} {
 		for hora := 8; hora < 21; hora++ {
 			for _, tipo := range tipos {
 				var err error
-				agenda, err = agenda.Apuntar(tipos, tipo.Nombre(), pruebas.Fecha(23, hora, minuto))
+				agenda, err = agenda.Apuntar(tipo.Nombre(), pruebas.Fecha(23, hora, minuto))
 				if errors.Is(err, elevadores.ErrSinElevadorLibre) {
 					rechazos++
 				}
@@ -99,5 +124,26 @@ func TestApuntarNuncaSuperaLosElevadores(t *testing.T) {
 	}
 	if rechazos == 0 {
 		t.Error("la secuencia no ha rechazado ninguna cita por falta de elevador")
+	}
+}
+
+func TestAbrirCargaElCatalogoDelTaller(t *testing.T) {
+	agenda, err := libreta.Abrir("../catalogo/tipos_reparacion.csv")
+	if err != nil {
+		t.Fatal(err)
+	}
+	obtenida, err := agenda.Apuntar(mantenimiento, pruebas.Fecha(23, 9, 0))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(obtenida.Citas()) != 1 {
+		t.Errorf("citas obtenidas %d, quiero 1", len(obtenida.Citas()))
+	}
+}
+
+func TestAbrirFicheroInexistente(t *testing.T) {
+	_, err := libreta.Abrir("no_existe.csv")
+	if !errors.Is(err, fs.ErrNotExist) {
+		t.Errorf("obtenido %v, quiero %v", err, fs.ErrNotExist)
 	}
 }
