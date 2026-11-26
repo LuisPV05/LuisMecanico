@@ -138,7 +138,7 @@ La entidad del modelo es `Libreta`, en [`internal/taller/libreta/libreta.go`](in
 
 [`elevadores`](internal/taller/elevadores/elevadores.go) calcula cuántos elevadores están ocupados a la vez en un tramo de tiempo, que nunca pueden ser más de tres. Con eso, `Libreta.Apuntar` apunta una cita solo si cumple las reglas de HU001: el tipo existe y tiene duración válida, el horario es de lunes a sábado de 8:00 a 21:00, no hay otra cita igual y queda un elevador libre. Así el conflicto se detecta al organizar la cita y no cuando empieza la reparación. Si una regla falla, la libreta queda como estaba y se devuelve el error.
 
-La libreta se crea con el catálogo de tipos de reparación del taller: `libreta.Abrir` lo carga de [`tipos_reparacion.csv`](internal/taller/catalogo/tipos_reparacion.csv) y `libreta.Nueva` lo recibe ya cargado. `Apuntar` solo conoce los tipos de ese catálogo y devuelve una libreta nueva sin modificar la anterior: quien la usa guarda la última.
+La libreta se crea con el catálogo de tipos de reparación del taller: `libreta.Abrir` lo carga de [`tipos_reparacion.csv`](internal/taller/catalogo/tipos_reparacion.csv) y `libreta.Nueva` lo recibe ya cargado. `Apuntar` solo conoce los tipos de ese catálogo y añade la cita a la propia libreta, que es la que guarda las citas.
 
 ## Instalación y tareas
 
