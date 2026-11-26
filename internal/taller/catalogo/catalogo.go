@@ -35,52 +35,31 @@ func leerFilas(ruta string) ([][]string, error) {
 	return lector.ReadAll()
 }
 
-func convertirNombre(texto string) (string, error) {
-	nombre := strings.TrimSpace(texto)
-	if nombre == "" {
-		return "", ErrNombreVacio
-	}
-	return nombre, nil
-}
-
-func convertirDuracion(texto string) (time.Duration, error) {
-	minutos, err := strconv.Atoi(strings.TrimSpace(texto))
-	if err != nil {
-		return 0, ErrMinutosNoNumericos
-	}
-	if minutos <= 0 {
-		return 0, ErrDuracionInvalida
-	}
-	return time.Duration(minutos) * time.Minute, nil
-}
-
-func convertirUsaElevador(texto string) (bool, error) {
-	switch strings.TrimSpace(texto) {
-	case "true":
-		return true, nil
-	case "false":
-		return false, nil
-	}
-	return false, ErrUsaElevadorInvalido
-}
-
 func convertirFila(fila []string) (TipoReparacion, error) {
 	if len(fila) != columnasPorFila {
 		return TipoReparacion{}, ErrFilaIncompleta
 	}
-	nombre, err := convertirNombre(fila[0])
-	if err != nil {
-		return TipoReparacion{}, err
+	nombre := strings.TrimSpace(fila[0])
+	if nombre == "" {
+		return TipoReparacion{}, ErrNombreVacio
 	}
-	duracion, err := convertirDuracion(fila[1])
+	minutos, err := strconv.Atoi(strings.TrimSpace(fila[1]))
 	if err != nil {
-		return TipoReparacion{}, err
+		return TipoReparacion{}, ErrMinutosNoNumericos
 	}
-	usaElevador, err := convertirUsaElevador(fila[2])
-	if err != nil {
-		return TipoReparacion{}, err
+	if minutos <= 0 {
+		return TipoReparacion{}, ErrDuracionInvalida
 	}
-	return NuevoTipo(nombre, duracion, usaElevador), nil
+	var usaElevador bool
+	switch strings.TrimSpace(fila[2]) {
+	case "true":
+		usaElevador = true
+	case "false":
+		usaElevador = false
+	default:
+		return TipoReparacion{}, ErrUsaElevadorInvalido
+	}
+	return NuevoTipo(nombre, time.Duration(minutos)*time.Minute, usaElevador), nil
 }
 
 func DesdeFilas(filas [][]string) ([]TipoReparacion, error) {
