@@ -124,7 +124,7 @@ Uso golangci-lint (v2.15.0) con `cyclop`, `funlen` y `dupl`, y los límites fija
 
 El PMV es el Milestone 1: apuntar una cita cumpliendo todas las reglas de HU001, detectando el conflicto al organizar la cita y no cuando empieza la reparación.
 
-Paquetes del PMV, cada uno con sus tests: `horario` (horario y jornada), `catalogo` (tipos de reparación), `cita`, `elevadores` y `libreta` (punto de entrada: `Libreta.Apuntar`).
+Paquetes del PMV, cada uno con sus tests: `horario` (horario y jornada), `catalogo` (tipos de reparación), `cita`, `elevadores` y `libreta` (guarda el catálogo del taller y las citas; punto de entrada: `Libreta.Apuntar`).
 
 ### Tests que debe pasar
 
@@ -143,6 +143,6 @@ El PMV está terminado cuando `just test` pasa y estos comportamientos tienen te
 ### Niveles de test
 
 - Unitarios: funciones puras de cada paquete, con tablas de casos.
-- Integración: `Libreta.Apuntar` junta las reglas de todos los paquetes, y `catalogo.Cargar` se prueba contra el fichero real `tipos_reparacion.csv`.
+- Integración: `Libreta.Apuntar` junta las reglas de todos los paquetes, y `libreta.Abrir` se prueba con el fichero real `tipos_reparacion.csv`.
 - De propiedad: una secuencia larga de citas comprueba que nunca se superan los tres elevadores.
 - No hay tests de interfaz ni de extremo a extremo: el PMV no tiene interfaz.
