@@ -35,10 +35,6 @@ func (c Cita) Fin() time.Time {
 	return horario.FinDeCita(c.inicio, c.tipo.Duracion())
 }
 
-func Solapan(a, b Cita) bool {
-	return a.inicio.Before(b.Fin()) && b.inicio.Before(a.Fin())
-}
-
 func (c Cita) OcupaElevadorEn(momento time.Time) bool {
 	return c.tipo.UsaElevador() && !momento.Before(c.inicio) && momento.Before(c.Fin())
 }
