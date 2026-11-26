@@ -121,6 +121,7 @@ Para la solucíon, esta en comprender el foco del problema y definir correctamen
 
 La documentación relativa al objetivo 0 se encuentra [aquí](docs/objetivo-0.md).
 La justificación de las herramientas que automatizan las tareas del proyecto (objetivo 3) se encuentra [aquí](docs/objetivo-3.md).
+La justificación de las herramientas de test (objetivo 4) se encuentra [aquí](docs/objetivo-4.md).
 
 ## Planificación
 
@@ -133,9 +134,11 @@ La planificación relativa al objetivo 1 se encuentra respectivamente en los sig
 
 ## La entidad: `Libreta`
 
-La entidad del modelo es `Libreta`, en [`internal/taller/libreta.go`](internal/taller/libreta.go). Es el único sitio donde están todas las citas del taller. Cada [`Cita`](internal/taller/cita.go) tiene un inicio y un tipo de reparación (nombre, duración y si usa elevador). El horario del taller (de 8:00 a 21:00) y el número de elevadores (3) son constantes de la propia libreta.
+La entidad del modelo es `Libreta`, en [`internal/taller/libreta/libreta.go`](internal/taller/libreta/libreta.go). Es el único sitio donde están todas las citas del taller. Cada [`Cita`](internal/taller/cita/cita.go) tiene un inicio y un tipo de reparación ([`catalogo`](internal/taller/catalogo/tipo.go): nombre, duración y si usa elevador). El horario del taller (de 8:00 a 21:00) está en [`horario`](internal/taller/horario/horario.go) y los 3 elevadores en [`elevadores`](internal/taller/elevadores/elevadores.go).
 
-Dentro del servicio, de la libreta saldrá qué elevadores están ocupados en cada momento, que nunca pueden ser más de tres. Así se detectará el conflicto al organizar la cita y no cuando empieza la reparación. Por ahora es solo el modelo: la lógica llega en el Milestone 1.
+[`elevadores`](internal/taller/elevadores/elevadores.go) calcula cuántos elevadores están ocupados a la vez en un tramo de tiempo, que nunca pueden ser más de tres. Con eso, `Libreta.Apuntar` apunta una cita solo si cumple las reglas de HU001: el tipo existe y tiene duración válida, el horario es de lunes a sábado de 8:00 a 21:00, no hay otra cita igual y queda un elevador libre. Así el conflicto se detecta al organizar la cita y no cuando empieza la reparación. Si una regla falla, la libreta queda como estaba y se devuelve el error.
+
+La libreta se crea con el catálogo de tipos de reparación del taller: `libreta.Abrir` lo carga de [`tipos_reparacion.csv`](internal/taller/catalogo/tipos_reparacion.csv) y `libreta.Nueva` lo recibe ya cargado. `Apuntar` solo conoce los tipos de ese catálogo y añade la cita a la propia libreta, que es la que guarda las citas.
 
 ## Instalación y tareas
 
@@ -156,6 +159,8 @@ Después, desde la raíz del repositorio:
 
 ```bash
 just check     # comprueba la sintaxis de los fuentes
+just test      # ejecuta los tests
+just calidad   # comprueba los límites de calidad
 just --list    # lista las tareas
 ```
 
@@ -165,4 +170,22 @@ just --list    # lista las tareas
 just check
 ```
 
-Ejecuta `gofmt -e` sobre todo el repositorio, incluida `internal/taller/libreta.go`. Informa de los errores de sintaxis y de nada más: no comprueba tipos, formato ni estilo, ni ejecuta tests. Si hay un error de sintaxis, lo muestra y termina con error; si todo es correcto, no imprime nada.
+Ejecuta `gofmt -e` sobre todo el repositorio, incluida `internal/taller/libreta/libreta.go`. Informa de los errores de sintaxis y de nada más: no comprueba tipos, formato ni estilo, ni ejecuta tests. Si hay un error de sintaxis, lo muestra y termina con error; si todo es correcto, no imprime nada.
+
+### Ejecutar los tests
+
+```bash
+just test
+```
+
+Ejecuta `go test ./...`, que lanza todos los tests del proyecto con el paquete `testing` de la biblioteca estándar de Go. No hace falta instalar nada más que Go. Si todo es correcto, imprime `ok` por cada paquete; si algún test falla, lo muestra y termina con error.
+
+El test de referencia está declarado en `iv.yaml` (`test:`) y es [`internal/taller/libreta/libreta_test.go`](internal/taller/libreta/libreta_test.go): comprueba las reglas de HU001 al apuntar una cita, que rechazar una cita no cambia la libreta y que nunca hay más de tres elevadores ocupados a la vez.
+
+### Comprobar la calidad del código
+
+```bash
+just calidad
+```
+
+Ejecuta golangci-lint con la configuración de [`.golangci.yml`](.golangci.yml) (complejidad ciclomática máxima 10, funciones de hasta 50 líneas y sin bloques duplicados) y comprueba que ningún fichero `.go` pase de 300 líneas. Si algún límite se supera, lo muestra y termina con error; si todo es correcto, no imprime nada.
